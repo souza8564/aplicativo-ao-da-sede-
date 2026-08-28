@@ -77,7 +77,9 @@
         .notification-dropdown.open { display: block; }
         .purchase-status { font-weight: bold; }
         .purchase-urgent { color: #d00; font-weight: bold; }
-        #grafico-compras-status, #grafico-compras-urgencia, #grafico-compras-mes, #grafico-compras-valor { height: 220px !important; width: 100% !important; }
+        #grafico-compras-status, #grafico-compras-urgencia, #grafico-compras-mes, #grafico-compras-valor, #grafico-compras-tipo, #grafico-compras-maquina { height: 220px !important; width: 100% !important; }
+        .relatorio-grafico { min-width: 0; height: 280px; padding: 12px; border: 1px solid #ddd; border-radius: 6px; background: #fff; box-sizing: border-box; }
+        .relatorio-grafico h3 { margin: 0 0 8px; color: #00843d; font-size: 1em; }
         .sidebar-menu {
             flex: 1;
             display: flex;
@@ -511,6 +513,218 @@
             .mini-chart-card { width: 100%; }
         }
 
+        /* Identidade visual futurista da empresa */
+        :root {
+            --verde-neon: #39ff14;
+            --verde-institucional: #00843d;
+            --grafite-profundo: #081012;
+            --grafite-painel: #101b1e;
+            --linha-tecnica: rgba(57, 255, 20, 0.16);
+            --texto-claro: #e8f5ed;
+        }
+        * {
+            scrollbar-color: var(--verde-institucional) var(--grafite-profundo);
+            scrollbar-width: thin;
+        }
+        body {
+            font-family: "Bahnschrift", "Arial Narrow", sans-serif;
+            color: #17251f;
+            background-color: var(--grafite-profundo);
+            background-image: linear-gradient(rgba(57,255,20,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(57,255,20,.045) 1px, transparent 1px), radial-gradient(circle at 80% 0%, rgba(0,132,61,.26), transparent 34%);
+            background-size: 34px 34px, 34px 34px, 100% 100%;
+        }
+        .main-layout {
+            position: relative;
+        }
+        .sidebar {
+            width: 248px;
+            background: linear-gradient(180deg, #111b1e 0%, #070c0e 100%);
+            border-right: 1px solid rgba(57,255,20,.28);
+            box-shadow: 8px 0 30px rgba(0,0,0,.28), inset -1px 0 rgba(57,255,20,.08);
+        }
+        .sidebar-header {
+            background: var(--verde-neon);
+            color: #07110b;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 0 18px rgba(57,255,20,.55), 0 8px 24px rgba(0,0,0,.3);
+            font-family: "Bahnschrift", "Arial Narrow", sans-serif;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .sidebar-header .subtitle {
+            color: #075d32;
+            letter-spacing: 1px;
+            text-transform: none;
+        }
+        .sidebar-header .empresa-marca {
+            display: inline-flex;
+            align-items: center;
+            color: #050505;
+            font-family: Arial, sans-serif;
+            font-size: 1.25em;
+            font-weight: 800;
+            line-height: .9;
+            text-transform: none;
+            margin-bottom: 10px;
+            position: relative;
+            padding-right: .58em;
+        }
+        .sidebar-header .empresa-marca::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: .42em;
+            height: .42em;
+            border: 1.5px solid #050505;
+            border-radius: 3px;
+            transform: translateY(-50%) rotate(45deg);
+        }
+        .sidebar-header .empresa-marca::after {
+            content: "a";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 1em;
+            text-align: center;
+            transform: translateY(calc(-50% - 2px));
+            font-size: .42em;
+            font-weight: 800;
+            line-height: 1;
+            color: #050505;
+        }
+        .sidebar-menu {
+            padding: 0 10px;
+            gap: 5px;
+        }
+        .sidebar-btn {
+            position: relative;
+            border-left: 2px solid transparent;
+            color: #b8cbc0;
+            letter-spacing: .2px;
+            transition: background .2s, color .2s, border-color .2s, transform .2s;
+        }
+        .sidebar-btn.active, .sidebar-btn:hover {
+            background: linear-gradient(90deg, rgba(57,255,20,.2), rgba(57,255,20,.04));
+            border-left-color: var(--verde-neon);
+            color: var(--verde-neon);
+            transform: translateX(3px);
+        }
+        .container {
+            max-width: 1240px;
+            padding: 36px 40px 48px;
+        }
+        .tabcontent {
+            animation: fadeEffect .35s ease-out;
+        }
+        .os-card {
+            max-width: 1080px;
+            background: rgba(248,252,249,.97);
+            border: 1px solid rgba(0,132,61,.2);
+            border-radius: 4px;
+            box-shadow: 0 18px 45px rgba(0,0,0,.24), 0 0 0 1px rgba(57,255,20,.06);
+            position: relative;
+            overflow: hidden;
+        }
+        .os-card::before {
+            content: "";
+            display: block;
+            height: 3px;
+            position: absolute;
+            inset: 0 0 auto;
+            background: linear-gradient(90deg, var(--verde-neon), var(--verde-institucional), transparent 80%);
+        }
+        .os-card h2 {
+            color: var(--verde-institucional);
+            letter-spacing: .7px;
+            text-transform: uppercase;
+        }
+        label {
+            color: #264238;
+            letter-spacing: .2px;
+        }
+        input[type="text"], input[type="date"], input[type="tel"], input[type="email"], input[type="password"], input[type="search"], input[type="number"], select, textarea {
+            border-color: #b6c9bd;
+            border-radius: 3px;
+            background: #f3f8f4;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.04);
+        }
+        input[type="text"]:focus, input[type="date"]:focus, input[type="tel"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+            border-color: var(--verde-institucional);
+            box-shadow: 0 0 0 3px rgba(57,255,20,.16), 0 0 12px rgba(57,255,20,.2);
+        }
+        button, .btn-action {
+            font-family: inherit;
+            border-radius: 3px;
+            letter-spacing: .25px;
+            transition: transform .18s, filter .18s, box-shadow .18s;
+        }
+        button:hover, .btn-action:hover {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+        button[type="submit"] {
+            background: linear-gradient(100deg, var(--verde-neon), var(--verde-institucional));
+            border-radius: 3px;
+            box-shadow: 0 5px 18px rgba(0,132,61,.2), 0 0 12px rgba(57,255,20,.16);
+        }
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border: 1px solid #c5d6ca;
+            border-radius: 3px;
+        }
+        th {
+            background: #10251d;
+            color: #d9f9e4;
+            border-color: #244c38;
+            text-transform: uppercase;
+            font-size: .78em;
+            letter-spacing: .6px;
+        }
+        th, td {
+            border-width: 0 1px 1px 0;
+        }
+        tr:nth-child(even) {
+            background: #edf6ef;
+        }
+        tr:hover {
+            background: rgba(57,255,20,.1);
+        }
+        .chart-card, .relatorio-grafico, .mini-chart-card {
+            border: 1px solid rgba(0,132,61,.24);
+            border-radius: 4px;
+            box-shadow: 0 8px 20px rgba(0,0,0,.08), inset 0 0 24px rgba(57,255,20,.025);
+        }
+        .chart-card h3, .relatorio-grafico h3 {
+            letter-spacing: .35px;
+        }
+        .notification-button {
+            border: 1px solid rgba(57,255,20,.4);
+            box-shadow: 0 0 10px rgba(57,255,20,.12);
+        }
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 100vw;
+                border-right: 0;
+                border-bottom: 1px solid rgba(57,255,20,.28);
+            }
+            .sidebar-menu {
+                padding: 0;
+            }
+            .sidebar-btn.active, .sidebar-btn:hover {
+                transform: none;
+                border-left-color: transparent;
+                border-bottom: 2px solid var(--verde-neon);
+            }
+        }
+        @media (max-width: 700px) {
+            .container {
+                padding: 24px 10px 34px;
+            }
+        }
+
         /* Loading */
         .loading {
             display: inline-block;
@@ -590,7 +804,8 @@
     <div class="main-layout" style="display:none;" id="app-main-layout">
         <nav class="sidebar">
             <div class="sidebar-header">
-                ambipar <span class="subtitle">environment</span>
+                <div class="empresa-marca">ambipar</div>
+                <span class="subtitle">environment</span>
             </div>
             <div class="sidebar-menu">
                 <button class="sidebar-btn active" data-tab="dashboard">
@@ -612,6 +827,10 @@
                 <button class="sidebar-btn" data-tab="gerenciar-os">
                     <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zm0-6v2h14V7H7z"/></svg>
                     Gerenciar OS
+                </button>
+                <button class="sidebar-btn" data-tab="visualizar-os">
+                    <svg viewBox="0 0 24 24"><path d="M12 5c-5 0-9 3.5-11 7 2 3.5 6 7 11 7s9-3.5 11-7c-2-3.5-6-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2.5A2.5 2.5 0 1 0 12 9a2.5 2.5 0 0 0 0 5.5z"/></svg>
+                    Visualizar OS
                 </button>
                 <button class="sidebar-btn" data-tab="historico-os">
                     <svg viewBox="0 0 24 24"><path d="M13 3a9 9 0 1 0 8.95 10.11h-2.02A7 7 0 1 1 12 5v4l3.89-3.89L12 2v4a9 9 0 0 0 1 17.93V21a7 7 0 1 1 7-7h2a9 9 0 0 0-9-9z"/></svg>
@@ -644,6 +863,10 @@
                 <button id="btn-compras" class="sidebar-btn" data-tab="compras" style="display:none;">
                     <svg viewBox="0 0 24 24"><path d="M7 4h-2l-1 2v2h2l2 10h10l2-8H8M9 20a1 1 0 1 0 2 0 1 1 0 0 0-2 0m8 0a1 1 0 1 0 2 0 1 1 0 0 0-2 0"/></svg>
                     Compras
+                </button>
+                <button class="sidebar-btn" data-tab="relatorio-compras">
+                    <svg viewBox="0 0 24 24"><path d="M5 3h14v18H5V3zm3 4h8v2H8V7zm0 4h8v2H8v-2zm0 4h5v2H8v-2z"/></svg>
+                    Relatório de compras
                 </button>
                 <button class="sidebar-btn" data-tab="nova-compra">
                     <svg viewBox="0 0 24 24"><path d="M7 4h-2l-1 2v2h2l2 10h10l2-8H8m1 16v-3m-1.5 1.5h3M9 20a1 1 0 1 0 2 0 1 1 0-2 0m8 0a1 1 0 1 0 2 0 1 1 0-2 0"/></svg>
@@ -740,6 +963,11 @@
                                 <option value="comprador">Compras</option>
                             </select>
                         </div>
+                        <input type="hidden" id="admin-usuario-id">
+                        <div class="form-group">
+                            <label>Abas permitidas:</label>
+                            <div id="admin-usuario-abas" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;padding:10px;border:1px solid #ddd;border-radius:6px;"></div>
+                        </div>
                         <button type="submit">Criar usuário</button>
                     </form>
                     <div id="admin-usuario-erro" style="color:#d00;display:none;margin-top:10px;"></div>
@@ -782,34 +1010,32 @@
             <!-- Compras e serviços terceirizados -->
             <div id="compras" class="tabcontent">
                 <div class="os-card">
-                    <h2>Compras e Serviços Terceirizados</h2>
-                    <form id="solicitacaoCompraForm">
-                        <div class="form-group"><label for="compra-os">OS:</label><select id="compra-os" required></select></div>
-                        <div class="form-group"><label for="compra-tipo">Tipo:</label><select id="compra-tipo" required><option value="peca">Peça</option><option value="servico">Serviço</option></select></div>
-                        <div class="form-group"><label for="compra-item">Nome do item/serviço:</label><input id="compra-item" required></div>
-                        <div class="form-group"><label for="compra-quantidade">Quantidade:</label><input id="compra-quantidade" type="number" min="1" value="1"></div>
-                        <div class="form-group"><label for="compra-urgencia">Urgência:</label><select id="compra-urgencia" required><option value="baixa">Baixa</option><option value="media">Média</option><option value="alta">Alta</option><option value="critica">Crítica</option></select></div>
-                        <div class="form-group"><label for="compra-prazo">Prazo necessário:</label><input id="compra-prazo" type="date" required></div>
-                        <div class="form-group"><label for="compra-descricao">Descrição do problema:</label><textarea id="compra-descricao" rows="3" required></textarea></div>
-                        <button type="submit">Solicitar peça/serviço</button>
-                    </form>
-                </div>
-                <div class="os-card">
                     <h3>Solicitações</h3>
                     <div style="margin-bottom:15px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                        <input id="compras-filtro-codigo" type="search" placeholder="Pesquisar número da SC" aria-label="Pesquisar número da SC">
                         <select id="compras-filtro-status"><option value="">Todos os status</option><option value="pendente">Pendente</option><option value="aprovada">Aprovada</option><option value="rejeitado">Rejeitado</option><option value="cotacao">Em Cotação</option><option value="solicitado">Solicitado</option><option value="recebido">Recebido</option></select>
                         <select id="compras-filtro-urgencia"><option value="">Todas as urgências</option><option value="baixa">Baixa</option><option value="media">Média</option><option value="alta">Alta</option><option value="critica">Crítica</option></select>
                         <select id="compras-filtro-tipo"><option value="">Peça e serviço</option><option value="peca">Peça</option><option value="servico">Serviço</option></select>
                         <select id="compras-filtro-tecnico"><option value="">Todos os técnicos</option></select>
                         <button type="button" id="btn-exportar-compras">Exportar CSV</button><button type="button" id="btn-imprimir-compras">Imprimir relatório</button>
                     </div>
-                    <table id="tabela-compras"><thead><tr><th>OS</th><th>Item</th><th>Tipo</th><th>Urgência</th><th>Status</th><th>Técnico</th><th>Data</th><th>Ações</th></tr></thead><tbody></tbody></table>
-                    <h3 style="margin-top:24px;">Relatório de compras</h3>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
-                        <canvas id="grafico-compras-status" height="220"></canvas>
-                        <canvas id="grafico-compras-urgencia" height="220"></canvas>
-                        <canvas id="grafico-compras-mes" height="220"></canvas>
-                        <canvas id="grafico-compras-valor" height="220"></canvas>
+                    <table id="tabela-compras"><thead><tr><th>Código</th><th>OS</th><th>Item</th><th>Tipo</th><th>Urgência</th><th>Status</th><th>Técnico</th><th>Data</th><th>Ações</th></tr></thead><tbody></tbody></table>
+                </div>
+            </div>
+
+            <div id="relatorio-compras" class="tabcontent">
+                <div class="os-card">
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+                        <h2 style="margin-bottom:0;">Relatório de compras</h2>
+                        <button type="button" id="btn-imprimir-relatorio-compras" class="btn-action btn-print">Imprimir relatório</button>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+                        <div class="relatorio-grafico"><h3>Status das solicitações</h3><canvas id="grafico-compras-status"></canvas></div>
+                        <div class="relatorio-grafico"><h3>Urgência das solicitações</h3><canvas id="grafico-compras-urgencia"></canvas></div>
+                        <div class="relatorio-grafico"><h3>Quantidade por mês</h3><canvas id="grafico-compras-mes"></canvas></div>
+                        <div class="relatorio-grafico"><h3>Valor gasto por mês</h3><canvas id="grafico-compras-valor"></canvas></div>
+                        <div class="relatorio-grafico"><h3>Gasto em peças e serviços</h3><canvas id="grafico-compras-tipo"></canvas></div>
+                        <div class="relatorio-grafico"><h3>Gasto por máquina</h3><canvas id="grafico-compras-maquina"></canvas></div>
                     </div>
                 </div>
             </div>
@@ -1014,6 +1240,16 @@
                                 <th>Ações</th>
                             </tr>
                         </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="visualizar-os" class="tabcontent">
+                <div class="os-card">
+                    <h2>Visualizar e imprimir OS</h2>
+                    <table id="tabela-os-visualizacao">
+                        <thead><tr><th>Número</th><th>Solicitante</th><th>Setor</th><th>Equipamento</th><th>Data</th><th>Status</th><th>Ações</th></tr></thead>
                         <tbody></tbody>
                     </table>
                 </div>
@@ -1226,6 +1462,12 @@
                     <form id="apontamentoForm">
                         <div class="form-group"><label for="apontamento-tipo">Tipo:</label><select id="apontamento-tipo" required><option value="os">Ordem de servico</option><option value="preventiva">Preventiva</option></select></div>
                         <div class="form-group" id="apontamento-os-grupo"><label for="apontamento-os-numero">Numero da OS:</label><input id="apontamento-os-numero" type="number" min="1" placeholder="Ex.: 125"></div>
+                        <div class="form-group" id="apontamento-pecas-grupo" style="display:none;flex-basis:100%;">
+                            <label>Peças utilizadas nesta OS:</label>
+                            <div id="apontamento-pecas-lista" style="display:grid;gap:8px;"></div>
+                            <button type="button" id="btn-apontamento-adicionar-peca" class="btn-action" style="margin-top:8px;background:#00843d;color:#fff;">+ Adicionar peça utilizada</button>
+                            <small>Informe somente as peças realmente utilizadas. O estoque será atualizado ao registrar a baixa.</small>
+                        </div>
                         <div class="form-group" id="apontamento-preventiva-grupo" style="display:none;"><label for="apontamento-preventiva">Preventiva:</label><select id="apontamento-preventiva"></select></div>
                         <div class="form-group"><label for="apontamento-data">Data de execucao:</label><input id="apontamento-data" type="date" required></div>
                         <div class="form-group"><label for="apontamento-codigo">Codigo do executor:</label><input id="apontamento-codigo" required placeholder="Codigo do eletricista ou mecanico"></div>
@@ -1472,21 +1714,39 @@
     let apontamentos = [];
     const graficosCompras = {};
     const EMAIL_MESTRE_SISTEMA = 'souza73e@gmail.com';
+    const ABAS_DISPONIVEIS = [
+        ['dashboard', 'Painel'],
+        ['usuarios', 'Usuários'],
+        ['solicitantes', 'Solicitantes'],
+        ['tecnicos', 'Técnicos'],
+        ['nova-os', 'Nova OS'],
+        ['gerenciar-os', 'Gerenciar OS'],
+        ['visualizar-os', 'Visualizar OS'],
+        ['historico-os', 'Histórico'],
+        ['maquinas', 'Máquinas'],
+        ['pecas', 'Peças'],
+        ['preventivas', 'Preventivas'],
+        ['apontamentos', 'Apontamentos'],
+        ['relatorios', 'Relatórios'],
+        ['nova-compra', 'Nova compra'],
+        ['compras', 'Compras'],
+        ['relatorio-compras', 'Relatório de compras']
+    ];
 
     const PERMISSOES_POR_PERFIL = {
         admin: [
-            'dashboard','usuarios','solicitantes','tecnicos','nova-os','gerenciar-os','historico-os','maquinas','pecas','preventivas','apontamentos','relatorios','nova-compra','compras'
+            'dashboard','usuarios','solicitantes','tecnicos','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','preventivas','apontamentos','relatorios','nova-compra','compras','relatorio-compras'
         ],
         apontador: [
-            'dashboard','nova-os','gerenciar-os','historico-os','maquinas','pecas','preventivas','apontamentos','relatorios','nova-compra'
+            'dashboard','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','preventivas','apontamentos','relatorios','nova-compra'
         ],
         supervisor: [
-            'dashboard','historico-os','nova-compra','compras','pecas'
+            'dashboard','historico-os','visualizar-os','nova-compra','compras','relatorio-compras','pecas'
         ],
-        comprador: ['dashboard','nova-compra','compras'],
-        manutencao: ['dashboard','nova-os','gerenciar-os','historico-os','preventivas','apontamentos','relatorios'],
-        producao: ['dashboard','historico-os'],
-        compras: ['dashboard','compras']
+        comprador: ['dashboard','nova-compra','compras','relatorio-compras','visualizar-os'],
+        manutencao: ['dashboard','nova-os','gerenciar-os','visualizar-os','historico-os','preventivas','apontamentos','relatorios'],
+        producao: ['dashboard','historico-os','visualizar-os'],
+        compras: ['dashboard','compras','relatorio-compras','visualizar-os']
     };
 
     function getPerfilUsuario(user) {
@@ -1501,6 +1761,8 @@
     }
 
     function usuarioTemAcesso(tabId) {
+        if (isAdmin) return true;
+        if (usuarioLogado && Array.isArray(usuarioLogado.abasPermitidas)) return usuarioLogado.abasPermitidas.includes(tabId);
         const perfil = getPerfilUsuario(usuarioLogado);
         const permissoes = PERMISSOES_POR_PERFIL[perfil] || PERMISSOES_POR_PERFIL.apontador;
         return permissoes.includes(tabId);
@@ -1664,7 +1926,10 @@
                 admin: isAdmin
             };
             db.collection('usuarios').doc(user.uid).get().then(doc => {
-                if (doc.exists) usuarioLogado.tipo = doc.data().tipo || '';
+                if (doc.exists) {
+                    usuarioLogado.tipo = doc.data().tipo || '';
+                    usuarioLogado.abasPermitidas = doc.data().abasPermitidas;
+                }
                 mostrarBotoesAdmin(isAdmin);
                 aplicarRestricoesDePerfil();
             }).catch(() => {});
@@ -1959,7 +2224,98 @@
     function atualizarCamposApontamento() {
         const tipo = document.getElementById('apontamento-tipo').value;
         document.getElementById('apontamento-os-grupo').style.display = tipo === 'os' ? 'block' : 'none';
+        document.getElementById('apontamento-pecas-grupo').style.display = tipo === 'os' ? 'block' : 'none';
         document.getElementById('apontamento-preventiva-grupo').style.display = tipo === 'preventiva' ? 'block' : 'none';
+        if (tipo === 'os') atualizarPecasApontamento();
+    }
+
+    function atualizarPecasApontamento() {
+        const numero = Number(document.getElementById('apontamento-os-numero').value);
+        const container = document.getElementById('apontamento-pecas-lista');
+        if (!container) return;
+        const os = ordensServico.find(item => Number(item.numero) === numero);
+        const maquina = os && maquinas.find(item => item.id === os.maquinaId);
+        const lista = maquina && Array.isArray(maquina.pecas) ? maquina.pecas : [];
+        container.innerHTML = '';
+        if (!lista.length) {
+            container.innerHTML = '<span style="color:#777;">Nenhuma peça cadastrada para a máquina desta OS.</span>';
+            return;
+        }
+        adicionarLinhaPecaApontamento(lista);
+    }
+
+    function adicionarLinhaPecaApontamento(lista) {
+        const container = document.getElementById('apontamento-pecas-lista');
+        const linha = document.createElement('div');
+        linha.className = 'apontamento-peca-linha';
+        linha.style.cssText = 'display:flex;align-items:center;gap:8px;border:1px solid #ddd;padding:8px;border-radius:5px;background:#fafafa;';
+        linha.innerHTML = `<select class="apontamento-peca-select" required style="flex:1;">
+            <option value="">Selecione a peça</option>
+            ${lista.map((item, index) => {
+                const peca = typeof item === 'string' ? { nome: item } : item;
+                return `<option value="${index}">${peca.nome || ''} (Estoque: ${Number(peca.quantidadeEstoque || 0)})</option>`;
+            }).join('')}
+        </select>
+        <input type="number" class="apontamento-peca-quantidade" min="1" value="1" required style="width:70px;">
+        <button type="button" class="btn-action btn-remover-peca-apontamento" style="background:#d00;color:#fff;">Remover</button>`;
+        linha.querySelector('.btn-remover-peca-apontamento').addEventListener('click', () => linha.remove());
+        container.appendChild(linha);
+    }
+
+    function obterPecasApontamento(os) {
+        const maquina = maquinas.find(item => item.id === os.maquinaId);
+        const selecionadas = [];
+        document.querySelectorAll('.apontamento-peca-linha').forEach(linha => {
+            const index = Number(linha.querySelector('.apontamento-peca-select').value);
+            const item = maquina && maquina.pecas ? maquina.pecas[index] : null;
+            if (!item || typeof item === 'string') return;
+            const quantidade = Number(linha.querySelector('.apontamento-peca-quantidade').value || 0);
+            if (quantidade > 0) selecionadas.push({ pecaId: item.id, nome: item.nome, quantidade });
+        });
+        return selecionadas;
+    }
+
+    async function debitarPecasECriarSolicitacoes(os, pecasConsumidas) {
+        if (!pecasConsumidas.length || os.pecasBaixadas) return [];
+        const solicitacoes = [];
+        await db.runTransaction(async transaction => {
+            const maquinaRef = db.collection('maquinas').doc(os.maquinaId);
+            const osRef = db.collection('ordensServico').doc(os.id);
+            const maquinaSnapshot = await transaction.get(maquinaRef);
+            const maquina = maquinaSnapshot.data();
+            const lista = Array.isArray(maquina.pecas) ? maquina.pecas.map(item => typeof item === 'string' ? { nome: item, quantidadeEstoque: 0 } : { ...item }) : [];
+            pecasConsumidas.forEach(consumo => {
+                const index = lista.findIndex(item => item.id === consumo.pecaId);
+                if (index < 0) throw new Error(`Peça não encontrada: ${consumo.nome}`);
+                const estoqueAtual = Number(lista[index].quantidadeEstoque || 0);
+                if (consumo.quantidade > estoqueAtual) throw new Error(`Estoque insuficiente para ${consumo.nome}. Disponível: ${estoqueAtual}.`);
+                lista[index].quantidadeEstoque = estoqueAtual - consumo.quantidade;
+                lista[index].status = Number(lista[index].estoqueMinimo || 0) > 0 && lista[index].quantidadeEstoque <= lista[index].estoqueMinimo ? 'baixo' : 'ok';
+                if (Number(lista[index].estoqueMinimo || 0) > 0 && lista[index].quantidadeEstoque <= lista[index].estoqueMinimo) solicitacoes.push({ peca: lista[index], quantidade: Number(lista[index].quantidadeUsada || 1) });
+            });
+            transaction.update(maquinaRef, { pecas: lista });
+            transaction.update(osRef, { pecasConsumidas, pecasBaixadas: true });
+        });
+        return solicitacoes;
+    }
+
+    async function criarSolicitacoesAutomaticas(os, itens) {
+        for (const item of itens) {
+            const existente = await db.collection('solicitacoesCompras').where('pecaId', '==', item.peca.id).get();
+            const ativa = existente.docs.some(doc => !['recebido', 'rejeitado'].includes(doc.data().status));
+            if (ativa) continue;
+            const dados = {
+                osId: os.id, osNumero: os.numero, tecnicoId: os.tecnicoId, tecnicoNome: os.tecnicoNome || '',
+                tipo: 'peca', item: item.peca.nome, pecaId: item.peca.id, quantidade: item.quantidade,
+                quantidadePadrao: item.quantidade, urgencia: 'media', prazo: new Date().toISOString().split('T')[0],
+                descricao: `Solicitação automática: estoque da peça atingiu o mínimo (${item.peca.estoqueMinimo}).`,
+                automatica: true, origem: 'estoque-minimo', status: 'pendente', data: new Date().toISOString().split('T')[0],
+                criadoPor: currentUser.uid, criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
+                historico: [{ status: 'pendente', usuario: usuarioLogado.nome, observacao: 'Solicitação automática por estoque mínimo', data: new Date().toISOString() }]
+            };
+            dados.codigo = gerarCodigoSolicitacao();
+            await db.collection('solicitacoesCompras').add(dados);
+        }
     }
 
     function registrarApontamento(event) {
@@ -1981,7 +2337,10 @@
             const os = ordensServico.find(item => Number(item.numero) === numero);
             if (!os) { alert('OS não encontrada.'); return; }
             dados.osId = os.id; dados.osNumero = os.numero;
-            atualizacao = db.collection('ordensServico').doc(os.id).update({ status: 'concluida', dataConclusao: dataExecucao, executadoPorId: executor.id, executadoPorNome: executor.nome, executadoPorCodigo: executor.codigo });
+            dados.pecasConsumidas = obterPecasApontamento(os);
+            atualizacao = debitarPecasECriarSolicitacoes(os, dados.pecasConsumidas).then(itens => {
+                return db.collection('ordensServico').doc(os.id).update({ status: 'concluida', dataConclusao: dataExecucao, executadoPorId: executor.id, executadoPorNome: executor.nome, executadoPorCodigo: executor.codigo }).then(() => criarSolicitacoesAutomaticas(os, itens));
+            });
         } else {
             const preventiva = preventivas.find(item => item.id === document.getElementById('apontamento-preventiva').value);
             if (!preventiva) { alert('Selecione uma preventiva.'); return; }
@@ -1989,7 +2348,7 @@
             const proximaData = calcularProximaPreventiva(dataExecucao, preventiva.periodicidade);
             atualizacao = db.collection('preventivas').doc(preventiva.id).update({ status: 'pendente', resultado: 'ok', ultimaExecucao: dataExecucao, dataPreventiva: dataExecucao, proximaData, proximaHorario: '07:00', executadoPorId: executor.id, executadoPorNome: executor.nome, executadoPorCodigo: executor.codigo });
         }
-        atualizacao.then(() => db.collection('apontamentos').add(dados)).then(() => { alert('Baixa registrada com sucesso.'); document.getElementById('apontamentoForm').reset(); document.getElementById('apontamento-data').valueAsDate = new Date(); atualizarCamposApontamento(); carregarApontamentos(); carregarOrdensServico(); carregarPreventivas(); }).catch(error => alert('Erro ao registrar baixa: ' + error.message));
+        atualizacao.then(() => db.collection('apontamentos').add(dados)).then(() => { alert('Baixa registrada com sucesso.'); document.getElementById('apontamentoForm').reset(); document.getElementById('apontamento-data').valueAsDate = new Date(); atualizarCamposApontamento(); carregarApontamentos(); carregarOrdensServico(); carregarPreventivas(); carregarMaquinas(); carregarSolicitacoesCompras(); }).catch(error => alert('Erro ao registrar baixa: ' + error.message));
     }
 
     function carregarOrdensServico() {
@@ -2002,6 +2361,7 @@
             });
             localStorage.setItem('ordensServico', JSON.stringify(ordensServico));
             atualizarTabelaOS();
+            atualizarTabelaOSVisualizacao();
             atualizarTabelaHistorico();
             atualizarDashboard();
             preencherOSNovaCompra();
@@ -2103,11 +2463,20 @@
         };
     }
 
+    function gerarCodigoSolicitacao() {
+        const agora = new Date();
+        const doisDigitos = valor => String(valor).padStart(2, '0');
+        const diaMes = `${doisDigitos(agora.getDate())}${doisDigitos(agora.getMonth() + 1)}`;
+        const aleatorio = Math.random().toString(36).slice(2, 4).toUpperCase();
+        return `${diaMes}${aleatorio}`;
+    }
+
     function salvarSolicitacao(dados, aoConcluir) {
         if (!currentUser) {
             alert('Faça login antes de salvar a solicitação.');
             return Promise.resolve();
         }
+        dados.codigo = dados.codigo || gerarCodigoSolicitacao();
         return db.collection('solicitacoesCompras').add(dados).then(ref => {
             alert('Solicitação salva com sucesso.');
             aoConcluir();
@@ -2159,11 +2528,12 @@
     }
 
     function obterSolicitacoesFiltradas() {
+        const codigo = document.getElementById('compras-filtro-codigo').value.trim().toLowerCase();
         const status = document.getElementById('compras-filtro-status').value;
         const urgencia = document.getElementById('compras-filtro-urgencia').value;
         const tipo = document.getElementById('compras-filtro-tipo').value;
         const tecnicoId = document.getElementById('compras-filtro-tecnico').value;
-        return solicitacoesCompras.filter(s => (!status || s.status === status) && (!urgencia || s.urgencia === urgencia) && (!tipo || s.tipo === tipo) && (!tecnicoId || s.tecnicoId === tecnicoId));
+        return solicitacoesCompras.filter(s => (!codigo || (s.codigo || '').toLowerCase().includes(codigo)) && (!status || s.status === status) && (!urgencia || s.urgencia === urgencia) && (!tipo || s.tipo === tipo) && (!tecnicoId || s.tecnicoId === tecnicoId));
     }
 
     function renderizarCompras() {
@@ -2177,10 +2547,12 @@
             const os = ordensServico.find(o => o.id === s.osId) || {};
             const urgente = ['alta', 'critica'].includes(s.urgencia);
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td>#${os.numero || s.osNumero || ''}</td><td>${s.item}</td><td>${s.tipo === 'peca' ? 'Peça' : 'Serviço'}</td><td class="${urgente ? 'purchase-urgent' : ''}">${s.urgencia}</td><td class="purchase-status">${textoStatusCompra(s.status)}</td><td>${tecnico.nome || s.tecnicoNome || ''}</td><td>${formatarData(s.data || '')}</td><td><button class="btn-action btn-compra-detalhe" data-id="${s.id}">Gerenciar</button></td>`;
+            tr.innerHTML = `<td><strong>${s.codigo || '—'}</strong>${s.automatica ? '<br><small style="color:#d00;font-weight:bold;">AUTOMÁTICA</small>' : ''}</td><td>#${os.numero || s.osNumero || ''}</td><td>${s.item}</td><td>${s.tipo === 'peca' ? 'Peça' : 'Serviço'}</td><td class="${urgente ? 'purchase-urgent' : ''}">${s.urgencia}</td><td class="purchase-status">${textoStatusCompra(s.status)}</td><td>${tecnico.nome || s.tecnicoNome || ''}</td><td>${formatarData(s.data || '')}</td><td><button class="btn-action btn-compra-detalhe" data-id="${s.id}">Gerenciar</button><button class="btn-action btn-imprimir-compra" data-id="${s.id}">Imprimir</button>${usuarioMestreSistema() ? `<button class="btn-action btn-delete btn-excluir-compra" data-id="${s.id}">Apagar</button>` : ''}</td>`;
             tbody.appendChild(tr);
         });
         tbody.querySelectorAll('.btn-compra-detalhe').forEach(btn => btn.addEventListener('click', () => gerenciarSolicitacao(btn.dataset.id)));
+        tbody.querySelectorAll('.btn-imprimir-compra').forEach(btn => btn.addEventListener('click', () => imprimirSolicitacaoCompra(btn.dataset.id)));
+        tbody.querySelectorAll('.btn-excluir-compra').forEach(btn => btn.addEventListener('click', () => excluirSolicitacaoCompra(btn.dataset.id)));
         atualizarGraficosCompras();
         atualizarPainelCompras();
     }
@@ -2190,11 +2562,12 @@
         const canvas = document.getElementById(id);
         if (!canvas) return;
         if (graficosCompras[id]) graficosCompras[id].destroy();
-        graficosCompras[id] = new Chart(canvas.getContext('2d'), { type: tipo, data: { labels, datasets: [{ label, data, backgroundColor: cores || ['#00843d', '#39ff14', '#f90', '#d00', '#39f', '#777'] }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: tipo === 'doughnut' } } } });
+        const exibeMoeda = label.toLowerCase().includes('valor') || label.toLowerCase().includes('gasto');
+        graficosCompras[id] = new Chart(canvas.getContext('2d'), { type: tipo, data: { labels, datasets: [{ label, data, backgroundColor: cores || ['#00843d', '#39ff14', '#f90', '#d00', '#39f', '#777'] }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: tipo === 'doughnut' } }, scales: tipo === 'bar' ? { y: { ticks: { callback: valor => exibeMoeda ? `R$ ${Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : valor } } } : undefined } });
     }
 
     function atualizarGraficosCompras() {
-        const lista = obterSolicitacoesFiltradas();
+        const lista = solicitacoesCompras;
         if (typeof Chart === 'undefined') {
             const script = document.createElement('script');
             script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
@@ -2208,6 +2581,16 @@
         const meses = [...new Set(lista.map(s => (s.data || '').slice(0, 7)).filter(Boolean))].sort();
         criarGraficoCompras('grafico-compras-mes', 'bar', meses, meses.map(mes => lista.filter(s => (s.data || '').slice(0, 7) === mes).length), 'Solicitações por mês');
         criarGraficoCompras('grafico-compras-valor', 'bar', meses, meses.map(mes => lista.filter(s => (s.data || '').slice(0, 7) === mes).reduce((total, s) => total + Number(s.valor || 0), 0)), 'Valor por mês', ['#00843d']);
+        const tipos = ['peca', 'servico'];
+        criarGraficoCompras('grafico-compras-tipo', 'bar', ['Peças', 'Serviços'], tipos.map(tipo => lista.filter(s => s.tipo === tipo).reduce((total, s) => total + Number(s.valor || 0), 0)), 'Gastos por tipo', ['#00843d', '#f90']);
+        const gastosPorMaquina = {};
+        lista.forEach(s => {
+            const os = ordensServico.find(item => item.id === s.osId) || {};
+            const maquina = os.equipamento || s.equipamento || 'Máquina não informada';
+            gastosPorMaquina[maquina] = (gastosPorMaquina[maquina] || 0) + Number(s.valor || 0);
+        });
+        const maquinasComGastos = Object.entries(gastosPorMaquina).sort((a, b) => b[1] - a[1]);
+        criarGraficoCompras('grafico-compras-maquina', 'bar', maquinasComGastos.map(item => item[0]), maquinasComGastos.map(item => item[1]), 'Gastos por máquina', ['#d00']);
     }
 
     function gerenciarSolicitacao(id) {
@@ -2229,6 +2612,35 @@
         document.getElementById('gerenciar-compra-observacao').value = s.observacao || '';
         renderizarHistoricoCompra(s.historico || []);
         document.getElementById('modal-gerenciar-compra').style.display = 'flex';
+    }
+
+    function usuarioMestreSistema() {
+        return Boolean(usuarioLogado && (usuarioLogado.email || '').toLowerCase().trim() === EMAIL_MESTRE_SISTEMA);
+    }
+
+    function excluirSolicitacaoCompra(id) {
+        if (!usuarioMestreSistema()) {
+            alert('Apenas o usuário mestre pode apagar solicitações.');
+            return;
+        }
+        const solicitacao = solicitacoesCompras.find(item => item.id === id);
+        if (!solicitacao || !confirm(`Deseja apagar a solicitação ${solicitacao.codigo || ''}?`)) return;
+        db.collection('solicitacoesCompras').doc(id).delete()
+            .then(() => carregarSolicitacoesCompras())
+            .catch(error => alert('Erro ao apagar solicitação: ' + error.message));
+    }
+
+    function imprimirSolicitacaoCompra(id) {
+        const solicitacao = solicitacoesCompras.find(item => item.id === id);
+        if (!solicitacao) return;
+        const os = ordensServico.find(item => item.id === solicitacao.osId) || {};
+        const tecnico = tecnicos.find(item => item.id === solicitacao.tecnicoId) || {};
+        const janela = window.open('', '_blank', 'width=850,height=700');
+        if (!janela) return;
+        const tipo = solicitacao.tipo === 'peca' ? 'Peça' : 'Serviço';
+        janela.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Solicitação ${solicitacao.codigo || ''}</title><style>body{font-family:Arial,sans-serif;margin:30px;color:#222}.cabecalho{text-align:center;border-bottom:2px solid #00843d;padding-bottom:10px;margin-bottom:14px}.empresa{display:inline-flex;align-items:center;color:#050505;font-weight:800;font-size:2.5em;line-height:.9;position:relative;padding-right:.58em}.empresa:before{content:"";position:absolute;right:0;top:50%;width:.42em;height:.42em;border:1.5px solid #050505;border-radius:3px;transform:translateY(-50%) rotate(45deg)}.empresa:after{content:"a";position:absolute;right:0;top:50%;width:1em;text-align:center;transform:translateY(-50%);font-size:.42em;font-weight:800;line-height:1}.cabecalho h1{color:#00843d;font-size:1.4em;margin:10px 0 4px}.codigo{font-weight:800;font-size:1.05em}.bloco{border:1px solid #ddd;padding:12px;margin:12px 0}.bloco h2{color:#00843d;font-size:1em;border-bottom:1px solid #eee;padding-bottom:4px;margin:0 0 8px}.linha{margin:5px 0}.descricao{white-space:pre-line}.assinatura{margin-top:70px;display:flex;gap:80px}.linha-assinatura{border-top:1px solid #222;text-align:center;padding-top:8px;width:260px}@media print{button{display:none}}</style></head><body><div class="cabecalho"><div class="empresa">ambipar</div><h1>SOLICITAÇÃO DE COMPRA</h1><div class="codigo">Código: ${solicitacao.codigo || '—'}</div></div><div class="bloco"><h2>Identificação</h2><div class="linha"><strong>OS:</strong> ${os.numero || solicitacao.osNumero || 'Não informada'}</div><div class="linha"><strong>Item/serviço:</strong> ${solicitacao.item || 'Não informado'}</div><div class="linha"><strong>Tipo:</strong> ${tipo}</div><div class="linha"><strong>Quantidade:</strong> ${solicitacao.quantidade || 1}</div></div><div class="bloco"><h2>Acompanhamento</h2><div class="linha"><strong>Urgência:</strong> ${solicitacao.urgencia || 'Não informada'}</div><div class="linha"><strong>Status:</strong> ${textoStatusCompra(solicitacao.status)}</div><div class="linha"><strong>Técnico:</strong> ${tecnico.nome || solicitacao.tecnicoNome || 'Não informado'}</div><div class="linha"><strong>Data da solicitação:</strong> ${formatarData(solicitacao.data || '')}</div><div class="linha"><strong>Prazo necessário:</strong> ${formatarData(solicitacao.prazo || '')}</div></div><div class="bloco"><h2>Descrição / justificativa</h2><div class="descricao">${solicitacao.descricao || 'Não informada'}</div></div><div class="assinatura"><div class="linha-assinatura">Solicitante</div><div class="linha-assinatura">Responsável por Compras</div></div></body></html>`);
+        janela.document.close();
+        janela.onload = () => { janela.focus(); janela.print(); };
     }
 
     function renderizarHistoricoCompra(historico) {
@@ -2362,6 +2774,44 @@
         janela.document.write(`<html><head><title>Relatório de Compras</title><style>body{font-family:Arial;margin:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:6px;text-align:left}</style></head><body><h1>Relatório de Compras</h1>${conteudo}</body></html>`); janela.document.close(); janela.focus(); janela.print();
     }
 
+    function imprimirRelatorioCompras() {
+        const imagensGraficos = new Map();
+        document.getElementById('relatorio-compras').querySelectorAll('canvas').forEach(canvas => {
+            imagensGraficos.set(canvas.id, canvas.toDataURL('image/png'));
+        });
+        const relatorio = document.getElementById('relatorio-compras').querySelector('.os-card').cloneNode(true);
+        relatorio.querySelector('#btn-imprimir-relatorio-compras')?.remove();
+        relatorio.querySelectorAll('canvas').forEach(canvas => {
+            const imagem = document.createElement('img');
+            imagem.src = imagensGraficos.get(canvas.id) || '';
+            imagem.alt = canvas.parentElement.querySelector('h3')?.textContent || 'Gráfico do relatório';
+            imagem.style.cssText = 'display:block;width:100%;height:220px;object-fit:contain;';
+            canvas.replaceWith(imagem);
+        });
+        const janela = window.open('', '_blank');
+        if (!janela) return;
+        janela.document.write(`<html><head><title>Relatório de compras</title><style>body{font-family:Arial,sans-serif;margin:20px;color:#222}.relatorio{max-width:1000px;margin:0 auto}.relatorio h2{text-align:center;color:#00843d}.graficos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.relatorio-grafico{height:280px;padding:12px;border:1px solid #ddd;border-radius:6px;box-sizing:border-box;page-break-inside:avoid}.relatorio-grafico h3{margin:0 0 8px;color:#00843d;font-size:1em}@media print{body{margin:10mm}.graficos{grid-template-columns:repeat(2,minmax(0,1fr))}}</style></head><body><div class="relatorio">${relatorio.innerHTML}</div></body></html>`);
+        janela.document.close();
+        janela.focus();
+        const imagens = Array.from(janela.document.images);
+        const imprimirQuandoPronto = () => janela.setTimeout(() => janela.print(), 150);
+        if (!imagens.length || imagens.every(imagem => imagem.complete)) {
+            imprimirQuandoPronto();
+        } else {
+            let imagensCarregadas = 0;
+            imagens.forEach(imagem => {
+                imagem.addEventListener('load', () => {
+                    imagensCarregadas += 1;
+                    if (imagensCarregadas === imagens.length) imprimirQuandoPronto();
+                });
+                imagem.addEventListener('error', () => {
+                    imagensCarregadas += 1;
+                    if (imagensCarregadas === imagens.length) imprimirQuandoPronto();
+                });
+            });
+        }
+    }
+
     // ============================================
     // EVENTOS DE LOGIN/REGISTRO
     // ============================================
@@ -2492,6 +2942,9 @@
                     case 'compras':
                         carregarSolicitacoesCompras();
                         break;
+                    case 'relatorio-compras':
+                        carregarSolicitacoesCompras();
+                        break;
                 }
             });
         });
@@ -2519,15 +2972,18 @@
         document.getElementById('btn-notificacoes').addEventListener('click', () => { document.getElementById('notification-dropdown').classList.toggle('open'); marcarNotificacoesLidas(); });
         document.getElementById('btn-exportar-compras').addEventListener('click', exportarComprasCSV);
         document.getElementById('btn-imprimir-compras').addEventListener('click', imprimirCompras);
+        document.getElementById('btn-imprimir-relatorio-compras').addEventListener('click', imprimirRelatorioCompras);
         ['compras-filtro-status', 'compras-filtro-urgencia', 'compras-filtro-tipo', 'compras-filtro-tecnico'].forEach(id => document.getElementById(id).addEventListener('change', renderizarCompras));
+        document.getElementById('compras-filtro-codigo').addEventListener('input', renderizarCompras);
         document.getElementById('fechar-modal-compra').addEventListener('click', () => document.getElementById('modal-solicitacao-compra').style.display = 'none');
         document.getElementById('modalSolicitacaoCompraForm').addEventListener('submit', enviarSolicitacaoCompraModal);
-        document.getElementById('solicitacaoCompraForm').addEventListener('submit', enviarSolicitacaoCompra);
         document.getElementById('fechar-gerenciar-compra').addEventListener('click', () => document.getElementById('modal-gerenciar-compra').style.display = 'none');
         document.getElementById('gerenciarCompraForm').addEventListener('submit', salvarGerenciamentoCompra);
         document.getElementById('historico-setor').addEventListener('change', carregarOrdensServico);
         document.getElementById('historico-periodo').addEventListener('change', carregarOrdensServico);
         document.getElementById('adminUsuarioForm').addEventListener('submit', criarUsuarioAdmin);
+        document.getElementById('admin-usuario-tipo').addEventListener('change', atualizarAbasDoPerfil);
+        atualizarAbasDoPerfil();
         document.getElementById('preventivaForm').addEventListener('submit', salvarPreventiva);
         document.getElementById('btn-cancelar-preventiva').addEventListener('click', limparFormularioPreventiva);
         document.getElementById('btn-add-item-preventiva').addEventListener('click', () => adicionarItemPreventivaNaLista());
@@ -2536,6 +2992,18 @@
         document.getElementById('preventiva-proxima-data').value = calcularProximaPreventiva(new Date().toISOString().split('T')[0], document.getElementById('preventiva-periodicidade').value);
         document.getElementById('apontamentoForm').addEventListener('submit', registrarApontamento);
         document.getElementById('apontamento-tipo').addEventListener('change', atualizarCamposApontamento);
+        document.getElementById('apontamento-os-numero').addEventListener('input', atualizarPecasApontamento);
+        document.getElementById('btn-apontamento-adicionar-peca').addEventListener('click', function() {
+            const numero = Number(document.getElementById('apontamento-os-numero').value);
+            const os = ordensServico.find(item => Number(item.numero) === numero);
+            const maquina = os && maquinas.find(item => item.id === os.maquinaId);
+            const lista = maquina && Array.isArray(maquina.pecas) ? maquina.pecas : [];
+            if (!lista.length) {
+                alert('Cadastre as peças da máquina antes de registrar o consumo.');
+                return;
+            }
+            adicionarLinhaPecaApontamento(lista);
+        });
         document.getElementById('apontamento-data').valueAsDate = new Date();
         atualizarCamposApontamento();
     });
@@ -2573,53 +3041,45 @@
         });
     }
 
+    function renderizarAbasPermitidas(abasSelecionadas = []) {
+        const container = document.getElementById('admin-usuario-abas');
+        if (!container) return;
+        container.innerHTML = ABAS_DISPONIVEIS.map(([id, nome]) => `<label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" name="admin-usuario-aba" value="${id}" ${abasSelecionadas.includes(id) ? 'checked' : ''}>${nome}</label>`).join('');
+    }
+
+    function obterAbasPermitidas() {
+        return [...document.querySelectorAll('input[name="admin-usuario-aba"]:checked')].map(input => input.value);
+    }
+
+    function atualizarAbasDoPerfil() {
+        const tipo = document.getElementById('admin-usuario-tipo').value;
+        const permissoes = PERMISSOES_POR_PERFIL[tipo] || [];
+        renderizarAbasPermitidas(permissoes);
+    }
+
     function editarUsuario(usuarioId) {
         if (!usuarioPodeGerenciarUsuarios()) {
             alert('Apenas o administrador pode gerenciar usuários.');
             return;
         }
-
         db.collection('usuarios').doc(usuarioId).get().then(doc => {
             if (!doc.exists) {
                 alert('Usuário não encontrado.');
                 return;
             }
-
             const usuario = doc.data();
-            const novoNome = prompt('Nome completo:', usuario.nome || '');
-            if (novoNome === null) return;
-            const novoEmail = prompt('Email:', usuario.email || '');
-            if (novoEmail === null) return;
-            const novoTelefone = prompt('Telefone:', usuario.telefone || '');
-            if (novoTelefone === null) return;
-            const novoTipo = prompt('Perfil (admin, apontador, supervisor, manutencao, producao, comprador):', usuario.tipo || '');
-            if (novoTipo === null) return;
-
-            const emailNormalizado = novoEmail.trim().toLowerCase();
-            if (!emailNormalizado || !emailNormalizado.includes('@')) {
-                alert('Informe um e-mail válido.');
-                return;
-            }
-
-            const perfilValido = ['admin', 'apontador', 'supervisor', 'manutencao', 'producao', 'comprador'];
-            const tipoFinal = perfilValido.includes((novoTipo || '').trim().toLowerCase()) ? (novoTipo || '').trim().toLowerCase() : usuario.tipo || '';
-
-            db.collection('usuarios').doc(usuarioId).update({
-                nome: novoNome.trim(),
-                email: emailNormalizado,
-                telefone: novoTelefone.trim(),
-                tipo: tipoFinal
-            }).then(() => {
-                alert('Usuário atualizado com sucesso.');
-                renderizarUsuarios();
-            }).catch(err => {
-                const detalhe = err.code === 'permission-denied' ? 'O Firebase bloqueou a alteração pelas regras do Firestore.' : (err.message || 'erro desconhecido');
-                alert(`Erro ao atualizar usuário [${err.code || 'desconhecido'}]: ${detalhe}`);
-            });
-        }).catch(err => {
-            const detalhe = err.code === 'permission-denied' ? 'O Firebase bloqueou a leitura pelas regras do Firestore.' : (err.message || 'erro desconhecido');
-            alert(`Erro ao localizar usuário [${err.code || 'desconhecido'}]: ${detalhe}`);
-        });
+            document.getElementById('admin-usuario-id').value = usuarioId;
+            document.getElementById('admin-usuario-nome').value = usuario.nome || '';
+            document.getElementById('admin-usuario-email').value = usuario.email || '';
+            document.getElementById('admin-usuario-telefone').value = usuario.telefone || '';
+            document.getElementById('admin-usuario-senha').value = '';
+            document.getElementById('admin-usuario-senha').required = false;
+            document.getElementById('admin-usuario-senha').placeholder = 'Deixe vazio para manter a senha';
+            document.getElementById('admin-usuario-tipo').value = usuario.tipo || '';
+            renderizarAbasPermitidas(Array.isArray(usuario.abasPermitidas) ? usuario.abasPermitidas : (PERMISSOES_POR_PERFIL[usuario.tipo] || []));
+            document.querySelector('#adminUsuarioForm button[type="submit"]').textContent = 'Salvar alterações';
+            document.querySelector('[data-tab="usuarios"]').click();
+        }).catch(err => alert(`Erro ao localizar usuário [${err.code || 'desconhecido'}]: ${err.message || err}`));
     }
 
     function excluirUsuario(usuarioId) {
@@ -2650,21 +3110,45 @@
         const telefone = document.getElementById('admin-usuario-telefone').value.trim();
         const senha = document.getElementById('admin-usuario-senha').value;
         const tipo = document.getElementById('admin-usuario-tipo').value;
+        const usuarioId = document.getElementById('admin-usuario-id').value;
+        const abasPermitidas = obterAbasPermitidas();
         const erroDiv = document.getElementById('admin-usuario-erro');
 
-        if (!nome || !email || !telefone || !senha || !tipo) {
+        if (!nome || !email || !telefone || (!usuarioId && !senha) || !tipo || !abasPermitidas.length) {
             erroDiv.textContent = 'Preencha todos os campos obrigatórios.';
             erroDiv.style.display = 'block';
             return;
         }
 
-        if (senha.length < 6) {
+        if (!usuarioId && senha.length < 6) {
             erroDiv.textContent = 'A senha deve ter pelo menos 6 caracteres.';
             erroDiv.style.display = 'block';
             return;
         }
 
         erroDiv.style.display = 'none';
+
+        if (usuarioId) {
+            db.collection('usuarios').doc(usuarioId).update({
+                nome,
+                email: email.toLowerCase(),
+                telefone,
+                tipo,
+                abasPermitidas
+            }).then(() => {
+                alert('Usuário atualizado com sucesso.');
+                document.getElementById('adminUsuarioForm').reset();
+                document.getElementById('admin-usuario-id').value = '';
+                document.getElementById('admin-usuario-senha').required = true;
+                document.getElementById('admin-usuario-senha').placeholder = '';
+                atualizarAbasDoPerfil();
+                renderizarUsuarios();
+            }).catch(error => {
+                erroDiv.textContent = 'Erro ao atualizar usuário: ' + error.message;
+                erroDiv.style.display = 'block';
+            });
+            return;
+        }
 
         auth.createUserWithEmailAndPassword(email, senha)
             .then((userCredential) => {
@@ -2675,6 +3159,7 @@
                         email,
                         telefone,
                         tipo,
+                        abasPermitidas,
                         criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                     });
                 });
@@ -2682,6 +3167,7 @@
             .then(() => {
                 alert('Usuário criado com sucesso!');
                 document.getElementById('adminUsuarioForm').reset();
+                atualizarAbasDoPerfil();
                 renderizarUsuarios();
             })
             .catch((error) => {
@@ -3467,6 +3953,24 @@
         });
     }
 
+    function atualizarTabelaOSVisualizacao() {
+        const tbody = document.querySelector('#tabela-os-visualizacao tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        ordensServico.forEach(os => {
+            const solicitante = solicitantes.find(item => item.id === os.solicitanteId) || {};
+            const statusText = os.status === 'pendente' ? 'Pendente' : os.status === 'andamento' ? 'Em Andamento' : os.status === 'concluida' ? 'Concluída' : 'Cancelada';
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>#${os.numero || ''}</td><td>${solicitante.nome || '—'}</td><td>${os.setor || '—'}</td><td>${os.equipamento || '—'}</td><td>${formatarData(os.data || '')}</td><td>${statusText}</td><td><button class="btn-action btn-visualizar-os" data-id="${os.id}">Visualizar</button><button class="btn-action btn-imprimir-os" data-id="${os.id}">Imprimir</button></td>`;
+            tbody.appendChild(tr);
+        });
+        tbody.querySelectorAll('.btn-visualizar-os').forEach(btn => btn.addEventListener('click', () => visualizarOS(btn.dataset.id, false)));
+        tbody.querySelectorAll('.btn-imprimir-os').forEach(btn => btn.addEventListener('click', () => {
+            visualizarOS(btn.dataset.id, false);
+            setTimeout(imprimirOS, 100);
+        }));
+    }
+
     // ============================================
     // FUNÇÕES DE EDIÇÃO
     // ============================================
@@ -3509,7 +4013,7 @@
     // FUNÇÕES DE VISUALIZAÇÃO DE OS
     // ============================================
     
-    function visualizarOS(osId) {
+    function visualizarOS(osId, permitirSolicitacao = true) {
         const os = ordensServico.find(o => o.id === osId);
         if (!os) return;
         const solicitante = solicitantes.find(s => s.id === os.solicitanteId) || {};
@@ -3523,15 +4027,14 @@
             const [ano, mes, dia] = dataString.split('-');
             return `${dia}/${mes}/${ano}`;
         }
-        
         const html = `
             <style>
                 body { font-family: Arial, sans-serif; background: #fff; margin: 0; padding: 0; }
                 .os-container { max-width: 600px; margin: 16px auto; background: #fff; border-radius: 8px; box-shadow: 0 1px 6px #0001; padding: 18px 22px 12px 22px; font-size: 13px; }
                 .os-header { text-align: center; margin-bottom: 12px; }
-                .empresa-marca { display: inline-flex; align-items: center; color: #050505; font-family: Arial, sans-serif; font-weight: 800; font-size: 2.5em; line-height: 0.9; margin-bottom: 10px; }
-                .empresa-simbolo { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 0.42em; height: 0.42em; margin-left: 0.12em; border: 1.5px solid #050505; border-radius: 3px; transform: rotate(45deg); font-size: 0.42em; font-weight: 800; flex: 0 0 auto; }
-                .empresa-simbolo span { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-45deg); line-height: 1; }
+                .empresa-marca { display: inline-flex; align-items: center; color: #050505; font-family: Arial, sans-serif; font-weight: 800; font-size: 2.5em; line-height: 0.9; margin-bottom: 10px; position: relative; padding-right: 0.58em; }
+                .empresa-marca:before { content: ""; position: absolute; right: 0; top: 50%; width: 0.42em; height: 0.42em; border: 1.5px solid #050505; border-radius: 3px; transform: translateY(-50%) rotate(45deg); }
+                .empresa-marca:after { content: "a"; position: absolute; right: 0; top: 50%; width: 1em; text-align: center; transform: translateY(calc(-50% - 2px)); font-size: 0.42em; font-weight: 800; line-height: 1; color: #050505; }
                 .os-header h1 { color: #00843d; margin-bottom: 2px; font-size: 1.2em; }
                 .os-header .subtitle { color: #666; font-size: 1em; }
                 .os-info { display: flex; gap: 10px; margin-bottom: 10px; }
@@ -3547,8 +4050,9 @@
             </style>
             <div class="os-container">
                 <div class="os-header">
-                    <div class="empresa-marca">ambipar<span class="empresa-simbolo"><span>a</span></span></div>
-                    <h1>ORDEM DE SERVIÇO #${os.numero}</h1>
+                    <div class="empresa-marca">ambipar</div>
+                    <h1>ORDEM DE SERVIÇO</h1>
+                    <div style="font-weight:800;font-size:1em;margin-bottom:4px;">Número da ordem: ${os.numero}</div>
                     <div class="subtitle">${statusText} - ${formatarDataInput(os.data)}</div>
                 </div>
                 <div class="os-info">
@@ -3588,7 +4092,7 @@
                         <p>Assinatura do Técnico</p>
                     </div>
                 </div>
-                <button class="btn-action" type="button" onclick="abrirSolicitacaoCompra('${os.id}')" style="margin-top:12px;">Solicitar Peça/Serviço</button>
+                ${permitirSolicitacao ? `<button class="btn-action" type="button" onclick="abrirSolicitacaoCompra('${os.id}')" style="margin-top:12px;">Solicitar Peça/Serviço</button>` : ''}
             </div>
         `;
         
@@ -3790,8 +4294,18 @@
         if (!janela) return;
         janela.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Preventiva #${item.numeroPreventiva || ''} - ${item.titulo}</title><style>body{font-family:Arial;margin:30px;color:#222}.cabecalho-empresa{text-align:center;border-bottom:2px solid #00843d;padding-bottom:10px;margin-bottom:14px}.marca{display:inline-flex;flex-direction:column;align-items:flex-start;color:#00843d;font-weight:bold;font-size:3em;line-height:.9}.marca small{color:#666;font-size:.42em;font-weight:normal;letter-spacing:.08em;margin-left:2px}h1{color:#00843d;font-size:1.5em;margin:8px 0 0}.bloco{border:1px solid #ddd;padding:12px;margin:12px 0}li{margin:12px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd;padding-bottom:8px}.marcacao{display:flex;gap:18px}.marcacao input{width:18px;height:18px;vertical-align:middle}.data-execucao{border:1px solid #222;padding:12px;margin-top:24px}.campo-data{display:inline-block;border-bottom:1px solid #222;min-width:180px;margin-left:8px;height:20px}.assinatura{margin-top:70px;display:flex;gap:80px}.linha{border-top:1px solid #222;text-align:center;padding-top:8px;width:260px}</style></head><body><div class="cabecalho-empresa"><div class="marca">ambipar<small>environment</small></div><h1>Ordem de Preventiva #${item.numeroPreventiva || '—'}</h1></div><div class="bloco"><strong>Maquina:</strong> ${maquina.nome || item.maquinaNome || ''}<br><strong>Preventiva:</strong> ${item.titulo}<br><strong>Periodicidade:</strong> ${item.periodicidade || ''}<br><strong>Data da preventiva:</strong> ${formatarData(item.dataPreventiva || item.proximaData || '')}<br><strong>Próxima execução:</strong> ${formatarData(item.proximaData || '')} às ${item.proximaHorario || '07:00'}</div><div class="bloco"><strong>Descricao:</strong><p>${item.descricao || 'Nao informada'}</p><strong>Itens a realizar:</strong><ul>${itens || '<li>Nenhum item informado</li>'}</ul></div><div class="data-execucao"><strong>Data de execucao:</strong><span class="campo-data"></span></div><div class="assinatura"><div class="linha">Responsavel</div><div class="linha">Tecnico</div></div></body></html>`);
         janela.document.write('<style>.marca{display:inline-flex!important;flex-direction:row!important;align-items:center!important;color:#050505!important;font-family:Arial,sans-serif!important;font-weight:800!important;position:relative!important;padding-right:.58em}.marca small{display:none!important}.marca:before{content:"";position:absolute;right:0;top:50%;width:.42em;height:.42em;border:1.5px solid #050505;border-radius:3px;transform:translateY(-50%) rotate(45deg)}.marca:after{content:"a";position:absolute;right:.16em;top:50%;transform:translateY(-50%);font-size:.42em;font-weight:800;line-height:1;color:#050505}</style>');
+        janela.document.write('<style>.marca:after{right:0;width:1em;text-align:center}</style>');
         janela.document.close();
-        janela.onload = () => { janela.focus(); janela.print(); };
+        janela.onload = () => {
+            const titulo = janela.document.querySelector('h1');
+            if (titulo) {
+                titulo.textContent = 'ORDEM DE PREVENTIVA';
+                titulo.insertAdjacentHTML('afterend', `<div style="font-weight:800;font-size:1em;margin-top:4px;">Número da preventiva: ${item.numeroPreventiva || '—'}</div>`);
+            }
+            janela.document.title = `Preventiva - ${item.numeroPreventiva || ''} - ${item.titulo}`;
+            janela.focus();
+            janela.print();
+        };
     }
 
     function renderPreventivas() {
@@ -4318,11 +4832,41 @@
 
     function imprimirRelatorio() {
         if (!relatorioAtual) return;
-        const originalContents = document.body.innerHTML;
-        const printContents = document.getElementById('relatorios').innerHTML;
-        document.body.innerHTML = `<h1>Relatório de OS</h1>${printContents}<p>Gerado em: ${new Date().toLocaleDateString('pt-BR')}</p>`;
-        window.print();
-        document.body.innerHTML = originalContents;
+        const relatorioAtualElement = document.getElementById('relatorios').cloneNode(true);
+        const imagensGraficos = new Map();
+        document.getElementById('relatorios').querySelectorAll('canvas').forEach(canvas => {
+            imagensGraficos.set(canvas.id, canvas.toDataURL('image/png'));
+        });
+        relatorioAtualElement.querySelectorAll('canvas').forEach(canvas => {
+            const imagem = document.createElement('img');
+            imagem.src = imagensGraficos.get(canvas.id) || '';
+            imagem.alt = canvas.parentElement.querySelector('h3')?.textContent || 'Gráfico do relatório';
+            imagem.style.cssText = 'display:block;width:100%;height:160px;object-fit:contain;';
+            canvas.replaceWith(imagem);
+        });
+        relatorioAtualElement.querySelectorAll('button').forEach(botao => botao.remove());
+        const janela = window.open('', '_blank');
+        if (!janela) return;
+        janela.document.write(`<html><head><meta charset="utf-8"><title>Relatório de OS</title><style>body{font-family:Arial,sans-serif;margin:20px;color:#222}.relatorio{max-width:1100px;margin:0 auto}.relatorio h1{color:#00843d}.relatorio table{width:100%;border-collapse:collapse}.relatorio th,.relatorio td{border:1px solid #ddd;padding:6px;text-align:left}.relatorio th{background:#f2f2f2}.relatorio .chart-card{page-break-inside:avoid}@media print{body{margin:10mm}}</style></head><body><div class="relatorio"><h1>Relatório de OS</h1>${relatorioAtualElement.innerHTML}<p>Gerado em: ${new Date().toLocaleDateString('pt-BR')}</p></div></body></html>`);
+        janela.document.close();
+        janela.focus();
+        const imagens = Array.from(janela.document.images);
+        const imprimirQuandoPronto = () => janela.setTimeout(() => janela.print(), 150);
+        if (!imagens.length || imagens.every(imagem => imagem.complete)) {
+            imprimirQuandoPronto();
+        } else {
+            let imagensCarregadas = 0;
+            imagens.forEach(imagem => {
+                imagem.addEventListener('load', () => {
+                    imagensCarregadas += 1;
+                    if (imagensCarregadas === imagens.length) imprimirQuandoPronto();
+                });
+                imagem.addEventListener('error', () => {
+                    imagensCarregadas += 1;
+                    if (imagensCarregadas === imagens.length) imprimirQuandoPronto();
+                });
+            });
+        }
     }
 
     function abrirRelatorioNovaJanela() {
