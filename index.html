@@ -513,6 +513,218 @@
             .mini-chart-card { width: 100%; }
         }
 
+        /* Identidade visual futurista da empresa */
+        :root {
+            --verde-neon: #39ff14;
+            --verde-institucional: #00843d;
+            --grafite-profundo: #081012;
+            --grafite-painel: #101b1e;
+            --linha-tecnica: rgba(57, 255, 20, 0.16);
+            --texto-claro: #e8f5ed;
+        }
+        * {
+            scrollbar-color: var(--verde-institucional) var(--grafite-profundo);
+            scrollbar-width: thin;
+        }
+        body {
+            font-family: "Bahnschrift", "Arial Narrow", sans-serif;
+            color: #17251f;
+            background-color: var(--grafite-profundo);
+            background-image: linear-gradient(rgba(57,255,20,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(57,255,20,.045) 1px, transparent 1px), radial-gradient(circle at 80% 0%, rgba(0,132,61,.26), transparent 34%);
+            background-size: 34px 34px, 34px 34px, 100% 100%;
+        }
+        .main-layout {
+            position: relative;
+        }
+        .sidebar {
+            width: 248px;
+            background: linear-gradient(180deg, #111b1e 0%, #070c0e 100%);
+            border-right: 1px solid rgba(57,255,20,.28);
+            box-shadow: 8px 0 30px rgba(0,0,0,.28), inset -1px 0 rgba(57,255,20,.08);
+        }
+        .sidebar-header {
+            background: var(--verde-neon);
+            color: #07110b;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 0 18px rgba(57,255,20,.55), 0 8px 24px rgba(0,0,0,.3);
+            font-family: "Bahnschrift", "Arial Narrow", sans-serif;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .sidebar-header .subtitle {
+            color: #075d32;
+            letter-spacing: 1px;
+            text-transform: none;
+        }
+        .sidebar-header .empresa-marca {
+            display: inline-flex;
+            align-items: center;
+            color: #050505;
+            font-family: Arial, sans-serif;
+            font-size: 1.25em;
+            font-weight: 800;
+            line-height: .9;
+            text-transform: none;
+            margin-bottom: 10px;
+            position: relative;
+            padding-right: .58em;
+        }
+        .sidebar-header .empresa-marca::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: .42em;
+            height: .42em;
+            border: 1.5px solid #050505;
+            border-radius: 3px;
+            transform: translateY(-50%) rotate(45deg);
+        }
+        .sidebar-header .empresa-marca::after {
+            content: "a";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 1em;
+            text-align: center;
+            transform: translateY(calc(-50% - 2px));
+            font-size: .42em;
+            font-weight: 800;
+            line-height: 1;
+            color: #050505;
+        }
+        .sidebar-menu {
+            padding: 0 10px;
+            gap: 5px;
+        }
+        .sidebar-btn {
+            position: relative;
+            border-left: 2px solid transparent;
+            color: #b8cbc0;
+            letter-spacing: .2px;
+            transition: background .2s, color .2s, border-color .2s, transform .2s;
+        }
+        .sidebar-btn.active, .sidebar-btn:hover {
+            background: linear-gradient(90deg, rgba(57,255,20,.2), rgba(57,255,20,.04));
+            border-left-color: var(--verde-neon);
+            color: var(--verde-neon);
+            transform: translateX(3px);
+        }
+        .container {
+            max-width: 1240px;
+            padding: 36px 40px 48px;
+        }
+        .tabcontent {
+            animation: fadeEffect .35s ease-out;
+        }
+        .os-card {
+            max-width: 1080px;
+            background: rgba(248,252,249,.97);
+            border: 1px solid rgba(0,132,61,.2);
+            border-radius: 4px;
+            box-shadow: 0 18px 45px rgba(0,0,0,.24), 0 0 0 1px rgba(57,255,20,.06);
+            position: relative;
+            overflow: hidden;
+        }
+        .os-card::before {
+            content: "";
+            display: block;
+            height: 3px;
+            position: absolute;
+            inset: 0 0 auto;
+            background: linear-gradient(90deg, var(--verde-neon), var(--verde-institucional), transparent 80%);
+        }
+        .os-card h2 {
+            color: var(--verde-institucional);
+            letter-spacing: .7px;
+            text-transform: uppercase;
+        }
+        label {
+            color: #264238;
+            letter-spacing: .2px;
+        }
+        input[type="text"], input[type="date"], input[type="tel"], input[type="email"], input[type="password"], input[type="search"], input[type="number"], select, textarea {
+            border-color: #b6c9bd;
+            border-radius: 3px;
+            background: #f3f8f4;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.04);
+        }
+        input[type="text"]:focus, input[type="date"]:focus, input[type="tel"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+            border-color: var(--verde-institucional);
+            box-shadow: 0 0 0 3px rgba(57,255,20,.16), 0 0 12px rgba(57,255,20,.2);
+        }
+        button, .btn-action {
+            font-family: inherit;
+            border-radius: 3px;
+            letter-spacing: .25px;
+            transition: transform .18s, filter .18s, box-shadow .18s;
+        }
+        button:hover, .btn-action:hover {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+        button[type="submit"] {
+            background: linear-gradient(100deg, var(--verde-neon), var(--verde-institucional));
+            border-radius: 3px;
+            box-shadow: 0 5px 18px rgba(0,132,61,.2), 0 0 12px rgba(57,255,20,.16);
+        }
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border: 1px solid #c5d6ca;
+            border-radius: 3px;
+        }
+        th {
+            background: #10251d;
+            color: #d9f9e4;
+            border-color: #244c38;
+            text-transform: uppercase;
+            font-size: .78em;
+            letter-spacing: .6px;
+        }
+        th, td {
+            border-width: 0 1px 1px 0;
+        }
+        tr:nth-child(even) {
+            background: #edf6ef;
+        }
+        tr:hover {
+            background: rgba(57,255,20,.1);
+        }
+        .chart-card, .relatorio-grafico, .mini-chart-card {
+            border: 1px solid rgba(0,132,61,.24);
+            border-radius: 4px;
+            box-shadow: 0 8px 20px rgba(0,0,0,.08), inset 0 0 24px rgba(57,255,20,.025);
+        }
+        .chart-card h3, .relatorio-grafico h3 {
+            letter-spacing: .35px;
+        }
+        .notification-button {
+            border: 1px solid rgba(57,255,20,.4);
+            box-shadow: 0 0 10px rgba(57,255,20,.12);
+        }
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 100vw;
+                border-right: 0;
+                border-bottom: 1px solid rgba(57,255,20,.28);
+            }
+            .sidebar-menu {
+                padding: 0;
+            }
+            .sidebar-btn.active, .sidebar-btn:hover {
+                transform: none;
+                border-left-color: transparent;
+                border-bottom: 2px solid var(--verde-neon);
+            }
+        }
+        @media (max-width: 700px) {
+            .container {
+                padding: 24px 10px 34px;
+            }
+        }
+
         /* Loading */
         .loading {
             display: inline-block;
@@ -592,7 +804,8 @@
     <div class="main-layout" style="display:none;" id="app-main-layout">
         <nav class="sidebar">
             <div class="sidebar-header">
-                ambipar <span class="subtitle">environment</span>
+                <div class="empresa-marca">ambipar</div>
+                <span class="subtitle">environment</span>
             </div>
             <div class="sidebar-menu">
                 <button class="sidebar-btn active" data-tab="dashboard">
@@ -812,7 +1025,10 @@
 
             <div id="relatorio-compras" class="tabcontent">
                 <div class="os-card">
-                    <h2>Relatório de compras</h2>
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+                        <h2 style="margin-bottom:0;">Relatório de compras</h2>
+                        <button type="button" id="btn-imprimir-relatorio-compras" class="btn-action btn-print">Imprimir relatório</button>
+                    </div>
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
                         <div class="relatorio-grafico"><h3>Status das solicitações</h3><canvas id="grafico-compras-status"></canvas></div>
                         <div class="relatorio-grafico"><h3>Urgência das solicitações</h3><canvas id="grafico-compras-urgencia"></canvas></div>
@@ -1246,6 +1462,12 @@
                     <form id="apontamentoForm">
                         <div class="form-group"><label for="apontamento-tipo">Tipo:</label><select id="apontamento-tipo" required><option value="os">Ordem de servico</option><option value="preventiva">Preventiva</option></select></div>
                         <div class="form-group" id="apontamento-os-grupo"><label for="apontamento-os-numero">Numero da OS:</label><input id="apontamento-os-numero" type="number" min="1" placeholder="Ex.: 125"></div>
+                        <div class="form-group" id="apontamento-pecas-grupo" style="display:none;flex-basis:100%;">
+                            <label>Peças utilizadas nesta OS:</label>
+                            <div id="apontamento-pecas-lista" style="display:grid;gap:8px;"></div>
+                            <button type="button" id="btn-apontamento-adicionar-peca" class="btn-action" style="margin-top:8px;background:#00843d;color:#fff;">+ Adicionar peça utilizada</button>
+                            <small>Informe somente as peças realmente utilizadas. O estoque será atualizado ao registrar a baixa.</small>
+                        </div>
                         <div class="form-group" id="apontamento-preventiva-grupo" style="display:none;"><label for="apontamento-preventiva">Preventiva:</label><select id="apontamento-preventiva"></select></div>
                         <div class="form-group"><label for="apontamento-data">Data de execucao:</label><input id="apontamento-data" type="date" required></div>
                         <div class="form-group"><label for="apontamento-codigo">Codigo do executor:</label><input id="apontamento-codigo" required placeholder="Codigo do eletricista ou mecanico"></div>
@@ -2002,7 +2224,98 @@
     function atualizarCamposApontamento() {
         const tipo = document.getElementById('apontamento-tipo').value;
         document.getElementById('apontamento-os-grupo').style.display = tipo === 'os' ? 'block' : 'none';
+        document.getElementById('apontamento-pecas-grupo').style.display = tipo === 'os' ? 'block' : 'none';
         document.getElementById('apontamento-preventiva-grupo').style.display = tipo === 'preventiva' ? 'block' : 'none';
+        if (tipo === 'os') atualizarPecasApontamento();
+    }
+
+    function atualizarPecasApontamento() {
+        const numero = Number(document.getElementById('apontamento-os-numero').value);
+        const container = document.getElementById('apontamento-pecas-lista');
+        if (!container) return;
+        const os = ordensServico.find(item => Number(item.numero) === numero);
+        const maquina = os && maquinas.find(item => item.id === os.maquinaId);
+        const lista = maquina && Array.isArray(maquina.pecas) ? maquina.pecas : [];
+        container.innerHTML = '';
+        if (!lista.length) {
+            container.innerHTML = '<span style="color:#777;">Nenhuma peça cadastrada para a máquina desta OS.</span>';
+            return;
+        }
+        adicionarLinhaPecaApontamento(lista);
+    }
+
+    function adicionarLinhaPecaApontamento(lista) {
+        const container = document.getElementById('apontamento-pecas-lista');
+        const linha = document.createElement('div');
+        linha.className = 'apontamento-peca-linha';
+        linha.style.cssText = 'display:flex;align-items:center;gap:8px;border:1px solid #ddd;padding:8px;border-radius:5px;background:#fafafa;';
+        linha.innerHTML = `<select class="apontamento-peca-select" required style="flex:1;">
+            <option value="">Selecione a peça</option>
+            ${lista.map((item, index) => {
+                const peca = typeof item === 'string' ? { nome: item } : item;
+                return `<option value="${index}">${peca.nome || ''} (Estoque: ${Number(peca.quantidadeEstoque || 0)})</option>`;
+            }).join('')}
+        </select>
+        <input type="number" class="apontamento-peca-quantidade" min="1" value="1" required style="width:70px;">
+        <button type="button" class="btn-action btn-remover-peca-apontamento" style="background:#d00;color:#fff;">Remover</button>`;
+        linha.querySelector('.btn-remover-peca-apontamento').addEventListener('click', () => linha.remove());
+        container.appendChild(linha);
+    }
+
+    function obterPecasApontamento(os) {
+        const maquina = maquinas.find(item => item.id === os.maquinaId);
+        const selecionadas = [];
+        document.querySelectorAll('.apontamento-peca-linha').forEach(linha => {
+            const index = Number(linha.querySelector('.apontamento-peca-select').value);
+            const item = maquina && maquina.pecas ? maquina.pecas[index] : null;
+            if (!item || typeof item === 'string') return;
+            const quantidade = Number(linha.querySelector('.apontamento-peca-quantidade').value || 0);
+            if (quantidade > 0) selecionadas.push({ pecaId: item.id, nome: item.nome, quantidade });
+        });
+        return selecionadas;
+    }
+
+    async function debitarPecasECriarSolicitacoes(os, pecasConsumidas) {
+        if (!pecasConsumidas.length || os.pecasBaixadas) return [];
+        const solicitacoes = [];
+        await db.runTransaction(async transaction => {
+            const maquinaRef = db.collection('maquinas').doc(os.maquinaId);
+            const osRef = db.collection('ordensServico').doc(os.id);
+            const maquinaSnapshot = await transaction.get(maquinaRef);
+            const maquina = maquinaSnapshot.data();
+            const lista = Array.isArray(maquina.pecas) ? maquina.pecas.map(item => typeof item === 'string' ? { nome: item, quantidadeEstoque: 0 } : { ...item }) : [];
+            pecasConsumidas.forEach(consumo => {
+                const index = lista.findIndex(item => item.id === consumo.pecaId);
+                if (index < 0) throw new Error(`Peça não encontrada: ${consumo.nome}`);
+                const estoqueAtual = Number(lista[index].quantidadeEstoque || 0);
+                if (consumo.quantidade > estoqueAtual) throw new Error(`Estoque insuficiente para ${consumo.nome}. Disponível: ${estoqueAtual}.`);
+                lista[index].quantidadeEstoque = estoqueAtual - consumo.quantidade;
+                lista[index].status = Number(lista[index].estoqueMinimo || 0) > 0 && lista[index].quantidadeEstoque <= lista[index].estoqueMinimo ? 'baixo' : 'ok';
+                if (Number(lista[index].estoqueMinimo || 0) > 0 && lista[index].quantidadeEstoque <= lista[index].estoqueMinimo) solicitacoes.push({ peca: lista[index], quantidade: Number(lista[index].quantidadeUsada || 1) });
+            });
+            transaction.update(maquinaRef, { pecas: lista });
+            transaction.update(osRef, { pecasConsumidas, pecasBaixadas: true });
+        });
+        return solicitacoes;
+    }
+
+    async function criarSolicitacoesAutomaticas(os, itens) {
+        for (const item of itens) {
+            const existente = await db.collection('solicitacoesCompras').where('pecaId', '==', item.peca.id).get();
+            const ativa = existente.docs.some(doc => !['recebido', 'rejeitado'].includes(doc.data().status));
+            if (ativa) continue;
+            const dados = {
+                osId: os.id, osNumero: os.numero, tecnicoId: os.tecnicoId, tecnicoNome: os.tecnicoNome || '',
+                tipo: 'peca', item: item.peca.nome, pecaId: item.peca.id, quantidade: item.quantidade,
+                quantidadePadrao: item.quantidade, urgencia: 'media', prazo: new Date().toISOString().split('T')[0],
+                descricao: `Solicitação automática: estoque da peça atingiu o mínimo (${item.peca.estoqueMinimo}).`,
+                automatica: true, origem: 'estoque-minimo', status: 'pendente', data: new Date().toISOString().split('T')[0],
+                criadoPor: currentUser.uid, criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
+                historico: [{ status: 'pendente', usuario: usuarioLogado.nome, observacao: 'Solicitação automática por estoque mínimo', data: new Date().toISOString() }]
+            };
+            dados.codigo = gerarCodigoSolicitacao();
+            await db.collection('solicitacoesCompras').add(dados);
+        }
     }
 
     function registrarApontamento(event) {
@@ -2024,7 +2337,10 @@
             const os = ordensServico.find(item => Number(item.numero) === numero);
             if (!os) { alert('OS não encontrada.'); return; }
             dados.osId = os.id; dados.osNumero = os.numero;
-            atualizacao = db.collection('ordensServico').doc(os.id).update({ status: 'concluida', dataConclusao: dataExecucao, executadoPorId: executor.id, executadoPorNome: executor.nome, executadoPorCodigo: executor.codigo });
+            dados.pecasConsumidas = obterPecasApontamento(os);
+            atualizacao = debitarPecasECriarSolicitacoes(os, dados.pecasConsumidas).then(itens => {
+                return db.collection('ordensServico').doc(os.id).update({ status: 'concluida', dataConclusao: dataExecucao, executadoPorId: executor.id, executadoPorNome: executor.nome, executadoPorCodigo: executor.codigo }).then(() => criarSolicitacoesAutomaticas(os, itens));
+            });
         } else {
             const preventiva = preventivas.find(item => item.id === document.getElementById('apontamento-preventiva').value);
             if (!preventiva) { alert('Selecione uma preventiva.'); return; }
@@ -2032,7 +2348,7 @@
             const proximaData = calcularProximaPreventiva(dataExecucao, preventiva.periodicidade);
             atualizacao = db.collection('preventivas').doc(preventiva.id).update({ status: 'pendente', resultado: 'ok', ultimaExecucao: dataExecucao, dataPreventiva: dataExecucao, proximaData, proximaHorario: '07:00', executadoPorId: executor.id, executadoPorNome: executor.nome, executadoPorCodigo: executor.codigo });
         }
-        atualizacao.then(() => db.collection('apontamentos').add(dados)).then(() => { alert('Baixa registrada com sucesso.'); document.getElementById('apontamentoForm').reset(); document.getElementById('apontamento-data').valueAsDate = new Date(); atualizarCamposApontamento(); carregarApontamentos(); carregarOrdensServico(); carregarPreventivas(); }).catch(error => alert('Erro ao registrar baixa: ' + error.message));
+        atualizacao.then(() => db.collection('apontamentos').add(dados)).then(() => { alert('Baixa registrada com sucesso.'); document.getElementById('apontamentoForm').reset(); document.getElementById('apontamento-data').valueAsDate = new Date(); atualizarCamposApontamento(); carregarApontamentos(); carregarOrdensServico(); carregarPreventivas(); carregarMaquinas(); carregarSolicitacoesCompras(); }).catch(error => alert('Erro ao registrar baixa: ' + error.message));
     }
 
     function carregarOrdensServico() {
@@ -2231,7 +2547,7 @@
             const os = ordensServico.find(o => o.id === s.osId) || {};
             const urgente = ['alta', 'critica'].includes(s.urgencia);
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td><strong>${s.codigo || '—'}</strong></td><td>#${os.numero || s.osNumero || ''}</td><td>${s.item}</td><td>${s.tipo === 'peca' ? 'Peça' : 'Serviço'}</td><td class="${urgente ? 'purchase-urgent' : ''}">${s.urgencia}</td><td class="purchase-status">${textoStatusCompra(s.status)}</td><td>${tecnico.nome || s.tecnicoNome || ''}</td><td>${formatarData(s.data || '')}</td><td><button class="btn-action btn-compra-detalhe" data-id="${s.id}">Gerenciar</button><button class="btn-action btn-imprimir-compra" data-id="${s.id}">Imprimir</button>${usuarioMestreSistema() ? `<button class="btn-action btn-delete btn-excluir-compra" data-id="${s.id}">Apagar</button>` : ''}</td>`;
+            tr.innerHTML = `<td><strong>${s.codigo || '—'}</strong>${s.automatica ? '<br><small style="color:#d00;font-weight:bold;">AUTOMÁTICA</small>' : ''}</td><td>#${os.numero || s.osNumero || ''}</td><td>${s.item}</td><td>${s.tipo === 'peca' ? 'Peça' : 'Serviço'}</td><td class="${urgente ? 'purchase-urgent' : ''}">${s.urgencia}</td><td class="purchase-status">${textoStatusCompra(s.status)}</td><td>${tecnico.nome || s.tecnicoNome || ''}</td><td>${formatarData(s.data || '')}</td><td><button class="btn-action btn-compra-detalhe" data-id="${s.id}">Gerenciar</button><button class="btn-action btn-imprimir-compra" data-id="${s.id}">Imprimir</button>${usuarioMestreSistema() ? `<button class="btn-action btn-delete btn-excluir-compra" data-id="${s.id}">Apagar</button>` : ''}</td>`;
             tbody.appendChild(tr);
         });
         tbody.querySelectorAll('.btn-compra-detalhe').forEach(btn => btn.addEventListener('click', () => gerenciarSolicitacao(btn.dataset.id)));
@@ -2458,6 +2774,44 @@
         janela.document.write(`<html><head><title>Relatório de Compras</title><style>body{font-family:Arial;margin:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:6px;text-align:left}</style></head><body><h1>Relatório de Compras</h1>${conteudo}</body></html>`); janela.document.close(); janela.focus(); janela.print();
     }
 
+    function imprimirRelatorioCompras() {
+        const imagensGraficos = new Map();
+        document.getElementById('relatorio-compras').querySelectorAll('canvas').forEach(canvas => {
+            imagensGraficos.set(canvas.id, canvas.toDataURL('image/png'));
+        });
+        const relatorio = document.getElementById('relatorio-compras').querySelector('.os-card').cloneNode(true);
+        relatorio.querySelector('#btn-imprimir-relatorio-compras')?.remove();
+        relatorio.querySelectorAll('canvas').forEach(canvas => {
+            const imagem = document.createElement('img');
+            imagem.src = imagensGraficos.get(canvas.id) || '';
+            imagem.alt = canvas.parentElement.querySelector('h3')?.textContent || 'Gráfico do relatório';
+            imagem.style.cssText = 'display:block;width:100%;height:220px;object-fit:contain;';
+            canvas.replaceWith(imagem);
+        });
+        const janela = window.open('', '_blank');
+        if (!janela) return;
+        janela.document.write(`<html><head><title>Relatório de compras</title><style>body{font-family:Arial,sans-serif;margin:20px;color:#222}.relatorio{max-width:1000px;margin:0 auto}.relatorio h2{text-align:center;color:#00843d}.graficos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.relatorio-grafico{height:280px;padding:12px;border:1px solid #ddd;border-radius:6px;box-sizing:border-box;page-break-inside:avoid}.relatorio-grafico h3{margin:0 0 8px;color:#00843d;font-size:1em}@media print{body{margin:10mm}.graficos{grid-template-columns:repeat(2,minmax(0,1fr))}}</style></head><body><div class="relatorio">${relatorio.innerHTML}</div></body></html>`);
+        janela.document.close();
+        janela.focus();
+        const imagens = Array.from(janela.document.images);
+        const imprimirQuandoPronto = () => janela.setTimeout(() => janela.print(), 150);
+        if (!imagens.length || imagens.every(imagem => imagem.complete)) {
+            imprimirQuandoPronto();
+        } else {
+            let imagensCarregadas = 0;
+            imagens.forEach(imagem => {
+                imagem.addEventListener('load', () => {
+                    imagensCarregadas += 1;
+                    if (imagensCarregadas === imagens.length) imprimirQuandoPronto();
+                });
+                imagem.addEventListener('error', () => {
+                    imagensCarregadas += 1;
+                    if (imagensCarregadas === imagens.length) imprimirQuandoPronto();
+                });
+            });
+        }
+    }
+
     // ============================================
     // EVENTOS DE LOGIN/REGISTRO
     // ============================================
@@ -2618,6 +2972,7 @@
         document.getElementById('btn-notificacoes').addEventListener('click', () => { document.getElementById('notification-dropdown').classList.toggle('open'); marcarNotificacoesLidas(); });
         document.getElementById('btn-exportar-compras').addEventListener('click', exportarComprasCSV);
         document.getElementById('btn-imprimir-compras').addEventListener('click', imprimirCompras);
+        document.getElementById('btn-imprimir-relatorio-compras').addEventListener('click', imprimirRelatorioCompras);
         ['compras-filtro-status', 'compras-filtro-urgencia', 'compras-filtro-tipo', 'compras-filtro-tecnico'].forEach(id => document.getElementById(id).addEventListener('change', renderizarCompras));
         document.getElementById('compras-filtro-codigo').addEventListener('input', renderizarCompras);
         document.getElementById('fechar-modal-compra').addEventListener('click', () => document.getElementById('modal-solicitacao-compra').style.display = 'none');
@@ -2637,6 +2992,18 @@
         document.getElementById('preventiva-proxima-data').value = calcularProximaPreventiva(new Date().toISOString().split('T')[0], document.getElementById('preventiva-periodicidade').value);
         document.getElementById('apontamentoForm').addEventListener('submit', registrarApontamento);
         document.getElementById('apontamento-tipo').addEventListener('change', atualizarCamposApontamento);
+        document.getElementById('apontamento-os-numero').addEventListener('input', atualizarPecasApontamento);
+        document.getElementById('btn-apontamento-adicionar-peca').addEventListener('click', function() {
+            const numero = Number(document.getElementById('apontamento-os-numero').value);
+            const os = ordensServico.find(item => Number(item.numero) === numero);
+            const maquina = os && maquinas.find(item => item.id === os.maquinaId);
+            const lista = maquina && Array.isArray(maquina.pecas) ? maquina.pecas : [];
+            if (!lista.length) {
+                alert('Cadastre as peças da máquina antes de registrar o consumo.');
+                return;
+            }
+            adicionarLinhaPecaApontamento(lista);
+        });
         document.getElementById('apontamento-data').valueAsDate = new Date();
         atualizarCamposApontamento();
     });
@@ -3667,7 +4034,7 @@
                 .os-header { text-align: center; margin-bottom: 12px; }
                 .empresa-marca { display: inline-flex; align-items: center; color: #050505; font-family: Arial, sans-serif; font-weight: 800; font-size: 2.5em; line-height: 0.9; margin-bottom: 10px; position: relative; padding-right: 0.58em; }
                 .empresa-marca:before { content: ""; position: absolute; right: 0; top: 50%; width: 0.42em; height: 0.42em; border: 1.5px solid #050505; border-radius: 3px; transform: translateY(-50%) rotate(45deg); }
-                .empresa-marca:after { content: "a"; position: absolute; right: 0; top: 50%; width: 1em; text-align: center; transform: translateY(-50%); font-size: 0.42em; font-weight: 800; line-height: 1; color: #050505; }
+                .empresa-marca:after { content: "a"; position: absolute; right: 0; top: 50%; width: 1em; text-align: center; transform: translateY(calc(-50% - 2px)); font-size: 0.42em; font-weight: 800; line-height: 1; color: #050505; }
                 .os-header h1 { color: #00843d; margin-bottom: 2px; font-size: 1.2em; }
                 .os-header .subtitle { color: #666; font-size: 1em; }
                 .os-info { display: flex; gap: 10px; margin-bottom: 10px; }
@@ -4465,11 +4832,41 @@
 
     function imprimirRelatorio() {
         if (!relatorioAtual) return;
-        const originalContents = document.body.innerHTML;
-        const printContents = document.getElementById('relatorios').innerHTML;
-        document.body.innerHTML = `<h1>Relatório de OS</h1>${printContents}<p>Gerado em: ${new Date().toLocaleDateString('pt-BR')}</p>`;
-        window.print();
-        document.body.innerHTML = originalContents;
+        const relatorioAtualElement = document.getElementById('relatorios').cloneNode(true);
+        const imagensGraficos = new Map();
+        document.getElementById('relatorios').querySelectorAll('canvas').forEach(canvas => {
+            imagensGraficos.set(canvas.id, canvas.toDataURL('image/png'));
+        });
+        relatorioAtualElement.querySelectorAll('canvas').forEach(canvas => {
+            const imagem = document.createElement('img');
+            imagem.src = imagensGraficos.get(canvas.id) || '';
+            imagem.alt = canvas.parentElement.querySelector('h3')?.textContent || 'Gráfico do relatório';
+            imagem.style.cssText = 'display:block;width:100%;height:160px;object-fit:contain;';
+            canvas.replaceWith(imagem);
+        });
+        relatorioAtualElement.querySelectorAll('button').forEach(botao => botao.remove());
+        const janela = window.open('', '_blank');
+        if (!janela) return;
+        janela.document.write(`<html><head><meta charset="utf-8"><title>Relatório de OS</title><style>body{font-family:Arial,sans-serif;margin:20px;color:#222}.relatorio{max-width:1100px;margin:0 auto}.relatorio h1{color:#00843d}.relatorio table{width:100%;border-collapse:collapse}.relatorio th,.relatorio td{border:1px solid #ddd;padding:6px;text-align:left}.relatorio th{background:#f2f2f2}.relatorio .chart-card{page-break-inside:avoid}@media print{body{margin:10mm}}</style></head><body><div class="relatorio"><h1>Relatório de OS</h1>${relatorioAtualElement.innerHTML}<p>Gerado em: ${new Date().toLocaleDateString('pt-BR')}</p></div></body></html>`);
+        janela.document.close();
+        janela.focus();
+        const imagens = Array.from(janela.document.images);
+        const imprimirQuandoPronto = () => janela.setTimeout(() => janela.print(), 150);
+        if (!imagens.length || imagens.every(imagem => imagem.complete)) {
+            imprimirQuandoPronto();
+        } else {
+            let imagensCarregadas = 0;
+            imagens.forEach(imagem => {
+                imagem.addEventListener('load', () => {
+                    imagensCarregadas += 1;
+                    if (imagensCarregadas === imagens.length) imprimirQuandoPronto();
+                });
+                imagem.addEventListener('error', () => {
+                    imagensCarregadas += 1;
+                    if (imagensCarregadas === imagens.length) imprimirQuandoPronto();
+                });
+            });
+        }
     }
 
     function abrirRelatorioNovaJanela() {
