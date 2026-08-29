@@ -58,23 +58,258 @@
             margin: 10px 12px 14px;
         }
         .user-actions {
-            align-self: flex-end;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
-            margin: 8px 12px 10px;
+            gap: 8px;
+            margin: 10px 0 0;
+            padding: 0 0 12px;
         }
-        .user-actions #user-info {
-            position: static !important;
-            margin: 0 0 4px;
-            text-align: right;
+        .top-user-badge {
+            position: fixed;
+            top: 18px;
+            right: 220px;
+            z-index: 120;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(15, 23, 42, 0.72);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 999px;
+            color: #fff;
             font-size: 0.8em;
+            font-weight: 700;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
         }
-        .notification-wrapper { position: relative; margin-bottom: 8px; }
-        .notification-button { background: #00843d; color: #fff; border: 0; border-radius: 6px; padding: 6px 10px; cursor: pointer; }
-        .notification-count { background: #d00; border-radius: 10px; padding: 1px 5px; font-size: 0.75em; }
-        .notification-dropdown { display: none; position: absolute; right: 0; bottom: 36px; width: 280px; max-height: 240px; overflow: auto; background: #fff; color: #222; border: 1px solid #ddd; border-radius: 6px; box-shadow: 0 2px 10px #0003; padding: 8px; z-index: 50; text-align: left; font-size: 0.8em; }
+        .top-user-badge .user-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #39ff14;
+            box-shadow: 0 0 10px rgba(57,255,20,0.9);
+        }
+        .notification-wrapper {
+            position: fixed;
+            top: 18px;
+            right: 22px;
+            z-index: 100;
+        }
+        .notification-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 150px;
+            height: 42px;
+            padding: 0 18px;
+            background: rgba(15, 23, 42, 0.72);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.82em;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .notification-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+        }
+        .notification-button .notification-label {
+            font-size: 0.75em;
+            opacity: 0.9;
+        }
+        .notification-count {
+            min-width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff5a5f, #ff7b54);
+            border-radius: 999px;
+            padding: 0 7px;
+            font-size: 0.72em;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(255, 90, 95, 0.5);
+        }
+        .notification-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            width: min(360px, 82vw);
+            max-height: 320px;
+            overflow: auto;
+            background: rgba(255, 255, 255, 0.9);
+            color: #1e293b;
+            border: 1px solid rgba(148, 163, 184, 0.38);
+            border-radius: 22px;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+            padding: 10px;
+            z-index: 50;
+            text-align: left;
+            font-size: 0.82em;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+        .notification-dropdown::before {
+            content: "";
+            position: absolute;
+            top: -7px;
+            right: 22px;
+            width: 14px;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.9);
+            transform: rotate(45deg);
+            border-left: 1px solid rgba(148, 163, 184, 0.38);
+            border-top: 1px solid rgba(148, 163, 184, 0.38);
+        }
         .notification-dropdown.open { display: block; }
+        .mensagens-panel {
+            display: grid;
+            grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+            gap: 20px;
+            min-height: 640px;
+            background: linear-gradient(180deg, rgba(11, 20, 28, 0.02), rgba(11, 20, 28, 0.04));
+            padding: 12px;
+        }
+        .mensagem-box {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            overflow: hidden;
+        }
+        .mensagem-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .mensagem-form textarea {
+            min-height: 120px;
+            resize: vertical;
+            border: 1px solid #dfe6ee;
+            border-radius: 12px;
+            padding: 12px 14px;
+        }
+        .mensagem-lista {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 12px;
+            max-height: 480px;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #f0f4f8 0%, #edf7f0 100%);
+            border-radius: 16px;
+            padding: 18px;
+            border: 1px solid #dfe6ee;
+            min-height: 420px;
+        }
+        .mensagem-item {
+            max-width: min(75%, 420px);
+            width: fit-content;
+            align-self: flex-start;
+            background: #fff;
+            border: 1px solid #dfe6ee;
+            border-radius: 16px 16px 16px 4px;
+            padding: 12px 14px 10px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .mensagem-item.mine {
+            margin-left: auto;
+            align-self: flex-end;
+            background: #d9fdd3;
+            border-color: rgba(34, 197, 94, 0.2);
+            border-radius: 16px 16px 4px 16px;
+        }
+        .mensagem-item strong {
+            display: block;
+            color: #0f172a;
+            font-size: 0.9rem;
+        }
+        .mensagem-item p {
+            margin: 0;
+            color: #334155;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+        .mensagem-item small {
+            display: block;
+            margin-top: 2px;
+            color: #64748b;
+            font-size: 0.72rem;
+            text-align: right;
+            align-self: flex-end;
+            opacity: 0.9;
+        }
+        .mensagem-vazia {
+            background: rgba(255,255,255,0.7);
+            border: 1px dashed #cbd5e1;
+            border-radius: 14px;
+            padding: 22px 18px;
+            text-align: center;
+            color: #475569;
+        }
+        .notification-item {
+            padding: 12px 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            background: rgba(248, 250, 252, 0.8);
+            margin-bottom: 8px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .notification-item.unread {
+            background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(59,130,246,0.06));
+            border-color: rgba(16,185,129,0.25);
+        }
+        .notification-item strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #0f172a;
+            font-size: 0.9em;
+        }
+        .notification-item p {
+            margin: 0;
+            color: #475569;
+            line-height: 1.4;
+        }
+        .notification-close {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            border: none;
+            background: rgba(148, 163, 184, 0.15);
+            color: #475569;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+        .notification-close:hover {
+            background: rgba(239, 68, 68, 0.12);
+            color: #b91c1c;
+        }
         .purchase-status { font-weight: bold; }
         .purchase-urgent { color: #d00; font-weight: bold; }
         #grafico-compras-status, #grafico-compras-urgencia, #grafico-compras-mes, #grafico-compras-valor, #grafico-compras-tipo, #grafico-compras-maquina { height: 220px !important; width: 100% !important; }
@@ -521,6 +756,7 @@
             --grafite-painel: #101b1e;
             --linha-tecnica: rgba(57, 255, 20, 0.16);
             --texto-claro: #e8f5ed;
+            --login-bg-image: url("https://images.unsplash.com/photo-1581092580497-e0d23a1d2f3d?auto=format&fit=crop&w=1600&q=80");
         }
         * {
             scrollbar-color: var(--verde-institucional) var(--grafite-profundo);
@@ -739,6 +975,28 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        #login-submit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+        }
+        #login-submit[disabled] {
+            opacity: 0.8;
+            cursor: wait;
+        }
+        .login-spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border-width: 2px;
+            border-top-color: #fff;
+            border-left-color: rgba(255,255,255,0.4);
+        }
+        .login-spinner.visible {
+            display: inline-block;
+        }
 
         /* Admin badge */
         .admin-badge {
@@ -749,12 +1007,78 @@
             font-size: 0.7em;
             margin-left: 8px;
         }
+        #startup-presentation {
+            position: fixed;
+            inset: 0;
+            z-index: 12000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #06130d 0%, #0b1f17 35%, #0a1a12 100%);
+            color: #eafdf1;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #startup-presentation.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .startup-card {
+            width: min(90vw, 520px);
+            padding: 30px 26px 22px;
+            border-radius: 18px;
+            background: rgba(10, 26, 18, 0.74);
+            border: 1px solid rgba(57,255,20,0.5);
+            box-shadow: 0 0 35px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.28);
+            text-align: center;
+        }
+        .startup-logo {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #39ff14;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .startup-subtitle {
+            color: #d7fce3;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .startup-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .startup-progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #39ff14, #7cff7a, #39ff14);
+            border-radius: inherit;
+            animation: startup-load 2.4s ease forwards;
+        }
+        @keyframes startup-load {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
     </style>
 </head>
 <body>
+    <div id="startup-presentation" aria-live="polite">
+        <div class="startup-card">
+            <div class="startup-logo">Ambipar</div>
+            <div class="startup-subtitle">Sistema interno de ordens e estoque</div>
+            <div class="startup-bar"><div class="startup-progress"></div></div>
+        </div>
+    </div>
+
     <!-- Login Container -->
-    <div id="login-container" style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:#222;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;">
-        <div style="background:#fff;padding:32px 28px 24px 28px;border-radius:12px;box-shadow:0 2px 16px #0003;min-width:320px;max-width:90vw;display:flex;flex-direction:column;gap:18px;">
+    <div id="login-container" style="display:flex;align-items:center;justify-content:center;min-height:100vh;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background-color:#0d1d17;background-image:linear-gradient(rgba(7,22,17,0.68), rgba(7,22,17,0.78)), var(--login-bg-image);background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;">
+        <div style="background:rgba(255,255,255,0.92);padding:32px 28px 24px 28px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.25);border:1px solid rgba(0,132,61,0.18);min-width:320px;max-width:90vw;display:flex;flex-direction:column;gap:18px;backdrop-filter: blur(2px);">
             <h2 style="color:#00843d;text-align:center;margin-bottom:8px;">Login</h2>
             
             <form id="loginEmailForm" style="display:flex;flex-direction:column;gap:18px;">
@@ -763,7 +1087,10 @@
                     <input type="password" id="login-password" placeholder="Senha" required style="padding:10px;font-size:1em;border-radius:5px;border:1px solid #ccc;flex:1;">
                     <button type="button" id="toggle-login-senha" tabindex="-1" style="background:none;border:none;cursor:pointer;font-size:1.2em;">👁️</button>
                 </div>
-                <button type="submit" style="background:#39ff14;color:#111;font-weight:bold;font-size:1.1em;padding:12px 0;border:none;border-radius:6px;cursor:pointer;">Entrar com Email</button>
+                <button id="login-submit" type="submit" style="background:#39ff14;color:#111;font-weight:bold;font-size:1.1em;padding:12px 0;border:none;border-radius:6px;cursor:pointer;">
+                    <span class="login-btn-label">Entrar com Email</span>
+                    <span class="loading login-spinner" aria-label="Carregando"></span>
+                </button>
                 <div id="login-erro" style="color:#d00;text-align:center;display:none;"></div>
                 <div style="text-align:center;color:#666;font-size:0.9em;">
                     <a href="#" id="link-registro" style="color:#00843d;text-decoration:none;">Criar nova conta</a>
@@ -802,6 +1129,10 @@
 
     <!-- App Principal -->
     <div class="main-layout" style="display:none;" id="app-main-layout">
+        <div id="top-user-badge" class="top-user-badge" aria-live="polite">
+            <span class="user-dot"></span>
+            <span id="top-user-name">Usuário</span>
+        </div>
         <nav class="sidebar">
             <div class="sidebar-header">
                 <div class="empresa-marca">ambipar</div>
@@ -811,6 +1142,10 @@
                 <button class="sidebar-btn active" data-tab="dashboard">
                     <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
                     Painel
+                </button>
+                <button class="sidebar-btn" data-tab="mensagens">
+                    <svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-2 10H6V10h12v2zm0-4H6V6h12v2z"/></svg>
+                    Mensagens
                 </button>
                 <button class="sidebar-btn" data-tab="solicitantes">
                     <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -844,6 +1179,10 @@
                     <svg viewBox="0 0 24 24"><path d="M3 13h8v-6H3v6zm0 8h8v-6H3v6zm10-8h8V5h-8v8zm0 8h8v-6h-8v6z"/></svg>
                     Peças
                 </button>
+                <button class="sidebar-btn" data-tab="estoque-insumos">
+                    <svg viewBox="0 0 24 24"><path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5v-9zm9 2.2L6.5 10.1v4.8L12 17l5.5-2.1v-4.8L12 9.7zm0 1.8l3.5-1.3-3.5-1.7-3.5 1.7L12 11.5z"/></svg>
+                    Estoque de insumos
+                </button>
                 <button class="sidebar-btn" data-tab="preventivas">
                     <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4l-1.5-1.5L12 11 10.5 9.5 9 11zM3 5h6v2H3V5zm0 4h4v2H3V9zM3 13h8v2H3v-2z"/></svg>
                     Preventivas
@@ -875,11 +1214,17 @@
             </div>
             <div class="user-actions">
                 <div class="notification-wrapper">
-                    <button id="btn-notificacoes" class="notification-button" type="button">🔔 <span id="notification-count" class="notification-count">0</span></button>
+                    <button id="btn-notificacoes" class="notification-button" type="button">
+                        <span aria-hidden="true">🔔</span>
+                        <span class="notification-label">Notificações</span>
+                        <span id="notification-count" class="notification-count">0</span>
+                    </button>
                     <div id="notification-dropdown" class="notification-dropdown"></div>
                 </div>
-                <div id="user-info" style="color:#00843d;font-weight:normal;"></div>
-                <button id="btn-logout" class="logout-button" style="background:#d00;color:#fff;border:none;border-radius:6px;padding:7px 18px;font-weight:bold;cursor:pointer;font-size:1em;z-index:20;">Sair</button>
+                <button id="btn-logout" class="sidebar-btn" type="button" style="display:flex; align-items:center; gap:14px; margin-top: 4px; background: rgba(220,38,38,0.12); color:#fff; border-top:1px solid rgba(255,255,255,0.08);">
+                    <svg viewBox="0 0 24 24"><path d="M10 17v-2h7V9h-7V7l-5 5 5 5zm-8-1V8h8V4H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8v-4H2z"/></svg>
+                    Sair
+                </button>
             </div>
         </nav>
         <div class="container">
@@ -930,6 +1275,24 @@
                 </div>
             </div>
 
+            <div id="mensagens" class="tabcontent">
+                <div class="os-card mensagens-panel">
+                    <h2>Mensagens internas</h2>
+                    <div class="mensagem-box">
+                        <div class="mensagem-lista" id="mensagens-lista"></div>
+                        <div class="mensagem-form">
+                            <label for="mensagem-destinatario">Enviar para:</label>
+                            <select id="mensagem-destinatario"></select>
+                            <label for="mensagem-texto">Mensagem:</label>
+                            <textarea id="mensagem-texto" rows="4" placeholder="Escreva a mensagem para o usuário..."></textarea>
+                            <button type="button" id="btn-enviar-mensagem">Enviar mensagem</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <datalist id="lista-itens-compra"></datalist>
+
             <!-- Usuários -->
             <div id="usuarios" class="tabcontent">
                 <div class="os-card">
@@ -949,7 +1312,10 @@
                         </div>
                         <div class="form-group">
                             <label for="admin-usuario-senha">Senha:</label>
-                            <input type="password" id="admin-usuario-senha" required minlength="6">
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <input type="password" id="admin-usuario-senha" required minlength="6" style="flex:1;">
+                                <button type="button" id="toggle-admin-senha" aria-label="Mostrar senha" style="padding:8px 10px;border-radius:6px;border:1px solid #ccc;background:#f5f5f5;cursor:pointer;">👁️</button>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="admin-usuario-tipo">Perfil:</label>
@@ -995,14 +1361,18 @@
                 <div class="os-card">
                     <h2>Criar ordem de compra</h2>
                     <form id="novaOrdemCompraForm">
-                        <div class="form-group"><label for="nova-compra-os">OS relacionada:</label><select id="nova-compra-os" required></select></div>
-                        <div class="form-group"><label for="nova-compra-tipo">Tipo:</label><select id="nova-compra-tipo" required><option value="peca">Peça</option><option value="servico">Serviço</option></select></div>
-                        <div class="form-group"><label for="nova-compra-item">Nome do item/serviço:</label><input id="nova-compra-item" required></div>
-                        <div class="form-group"><label for="nova-compra-quantidade">Quantidade:</label><input id="nova-compra-quantidade" type="number" min="1" value="1" required></div>
-                        <div class="form-group"><label for="nova-compra-urgencia">Urgência:</label><select id="nova-compra-urgencia" required><option value="baixa">Baixa</option><option value="media">Média</option><option value="alta">Alta</option><option value="critica">Crítica</option></select></div>
-                        <div class="form-group"><label for="nova-compra-prazo">Prazo necessário:</label><input id="nova-compra-prazo" type="date" required></div>
-                        <div class="form-group"><label for="nova-compra-descricao">Descrição / justificativa:</label><textarea id="nova-compra-descricao" rows="4" required></textarea></div>
-                        <button type="submit">Criar ordem de compra</button>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;align-items:end;">
+                            <div id="nova-compra-os-group" class="form-group"><label for="nova-compra-os">OS relacionada:</label><select id="nova-compra-os" required></select></div>
+                            <div class="form-group"><label for="nova-compra-tipo">Tipo:</label><select id="nova-compra-tipo" required><option value="peca">Peça</option><option value="insumo">Insumo</option><option value="servico">Serviço</option></select></div>
+                            <div class="form-group"><label for="nova-compra-item">Nome do item:</label><input id="nova-compra-item" list="lista-itens-compra" required style="min-height:44px; font-size:1rem; width:100%;"></div>
+                            <div class="form-group"><label for="nova-compra-quantidade">Quantidade:</label><input id="nova-compra-quantidade" type="number" min="1" value="1" required></div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:12px;align-items:end;">
+                            <div class="form-group"><label for="nova-compra-urgencia">Urgência:</label><select id="nova-compra-urgencia" required><option value="baixa">Baixa</option><option value="media">Média</option><option value="alta">Alta</option><option value="critica">Crítica</option></select></div>
+                            <div class="form-group"><label for="nova-compra-prazo">Prazo necessário:</label><input id="nova-compra-prazo" type="date" required></div>
+                        </div>
+                        <div class="form-group" style="margin-top:12px;"><label for="nova-compra-descricao">Descrição / justificativa:</label><textarea id="nova-compra-descricao" rows="4" required></textarea></div>
+                        <button type="submit" style="margin-top:12px;">Criar ordem de compra</button>
                     </form>
                 </div>
             </div>
@@ -1015,7 +1385,7 @@
                         <input id="compras-filtro-codigo" type="search" placeholder="Pesquisar número da SC" aria-label="Pesquisar número da SC">
                         <select id="compras-filtro-status"><option value="">Todos os status</option><option value="pendente">Pendente</option><option value="aprovada">Aprovada</option><option value="rejeitado">Rejeitado</option><option value="cotacao">Em Cotação</option><option value="solicitado">Solicitado</option><option value="recebido">Recebido</option></select>
                         <select id="compras-filtro-urgencia"><option value="">Todas as urgências</option><option value="baixa">Baixa</option><option value="media">Média</option><option value="alta">Alta</option><option value="critica">Crítica</option></select>
-                        <select id="compras-filtro-tipo"><option value="">Peça e serviço</option><option value="peca">Peça</option><option value="servico">Serviço</option></select>
+                        <select id="compras-filtro-tipo"><option value="">Peça, insumo e serviço</option><option value="peca">Peça</option><option value="insumo">Insumo</option><option value="servico">Serviço</option></select>
                         <select id="compras-filtro-tecnico"><option value="">Todos os técnicos</option></select>
                         <button type="button" id="btn-exportar-compras">Exportar CSV</button><button type="button" id="btn-imprimir-compras">Imprimir relatório</button>
                     </div>
@@ -1421,6 +1791,116 @@
                 </div>
             </div>
 
+            <!-- Estoque de insumos -->
+            <div id="estoque-insumos" class="tabcontent">
+                <div class="os-card">
+                    <h2>Estoque de insumos</h2>
+                    <form id="insumoForm" style="margin-bottom:18px;">
+                        <input type="hidden" id="insumo-id">
+                        <div class="form-group">
+                            <label for="insumo-nome">Nome do insumo:</label>
+                            <input type="text" id="insumo-nome" placeholder="Ex.: Papel A4, Luva nitrílica, Cola" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="insumo-categoria">Categoria:</label>
+                            <input type="text" id="insumo-categoria" placeholder="Ex.: Materiais, EPI, Químicos">
+                        </div>
+                        <div class="form-group">
+                            <label for="insumo-unidade">Unidade:</label>
+                            <select id="insumo-unidade">
+                                <option value="un">Unidade</option>
+                                <option value="cx">Caixa</option>
+                                <option value="pct">Pacote</option>
+                                <option value="kg">Kg</option>
+                                <option value="l">Litro</option>
+                                <option value="m">Metro</option>
+                                <option value="rolo">Rolo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="insumo-quantidade">Quantidade atual:</label>
+                            <input type="number" id="insumo-quantidade" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="insumo-minimo">Estoque mínimo:</label>
+                            <input type="number" id="insumo-minimo" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="insumo-local">Local/setor:</label>
+                            <input type="text" id="insumo-local" placeholder="Ex.: Almoxarifado, Produção">
+                        </div>
+                        <div class="form-group" style="flex-basis:100%;">
+                            <label for="insumo-observacao">Observação:</label>
+                            <textarea id="insumo-observacao" rows="3" placeholder="Detalhes do insumo, fornecedor ou observação interna"></textarea>
+                        </div>
+                        <button type="submit">Salvar insumo</button>
+                    </form>
+                </div>
+
+                <div class="os-card">
+                    <h2>Movimentação de estoque</h2>
+                    <form id="movimentoInsumoForm" style="margin-bottom:18px;">
+                        <div class="form-group">
+                            <label for="movimento-insumo">Insumo:</label>
+                            <select id="movimento-insumo" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="movimento-tipo">Tipo de movimento:</label>
+                            <select id="movimento-tipo" required>
+                                <option value="baixa">Baixa / uso</option>
+                                <option value="entrada">Reposição / entrada</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="movimento-quantidade">Quantidade:</label>
+                            <input type="number" id="movimento-quantidade" min="1" value="1" required>
+                        </div>
+                        <div class="form-group" style="flex-basis:100%;">
+                            <label for="movimento-motivo">Motivo / observação:</label>
+                            <input type="text" id="movimento-motivo" placeholder="Ex.: Uso na manutenção / Reposição pela SC 003" required>
+                        </div>
+                        <button type="submit">Registrar movimento</button>
+                    </form>
+                </div>
+
+                <div class="os-card">
+                    <h2>Relatório de movimentação</h2>
+                    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
+                        <button type="button" id="btn-gerar-relatorio-insumos" class="btn-action btn-primary">Gerar relatório</button>
+                    </div>
+                    <div id="relatorio-insumos" style="overflow-x:auto;"></div>
+                </div>
+
+                <div class="os-card">
+                    <h2>Resumo do estoque</h2>
+                    <div style="margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                        <label for="insumos-filtro-categoria">Categoria:</label>
+                        <select id="insumos-filtro-categoria">
+                            <option value="">Todas</option>
+                        </select>
+                        <label for="insumos-busca" style="margin-left:8px;">Buscar:</label>
+                        <input id="insumos-busca" placeholder="Nome do insumo" style="padding:6px;min-width:180px;">
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table id="tabela-insumos" style="min-width:900px;">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Categoria</th>
+                                    <th>Unidade</th>
+                                    <th>Estoque</th>
+                                    <th>Mínimo</th>
+                                    <th>Setor</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <!-- Preventivas -->
             <div id="preventivas" class="tabcontent">
                 <div class="os-card">
@@ -1586,13 +2066,21 @@
             <h2>Solicitar peça/serviço</h2>
             <form id="modalSolicitacaoCompraForm">
                 <input type="hidden" id="modal-compra-os">
-                <div class="form-group"><label for="modal-compra-tipo">Tipo:</label><select id="modal-compra-tipo" required><option value="peca">Peça</option><option value="servico">Serviço</option></select></div>
-                <div class="form-group"><label for="modal-compra-item">Nome:</label><input id="modal-compra-item" required></div>
-                <div class="form-group"><label for="modal-compra-quantidade">Quantidade:</label><input id="modal-compra-quantidade" type="number" min="1" value="1"></div>
-                <div class="form-group"><label for="modal-compra-urgencia">Urgência:</label><select id="modal-compra-urgencia" required><option value="baixa">Baixa</option><option value="media">Média</option><option value="alta">Alta</option><option value="critica">Crítica</option></select></div>
-                <div class="form-group"><label for="modal-compra-prazo">Prazo necessário:</label><input id="modal-compra-prazo" type="date" required></div>
-                <div class="form-group"><label for="modal-compra-descricao">Descrição:</label><textarea id="modal-compra-descricao" rows="3" required></textarea></div>
-                <button type="submit">Enviar solicitação</button><button type="button" id="fechar-modal-compra" style="margin-left:8px;background:#d00;color:#fff;">Cancelar</button>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;align-items:end;">
+                    <div id="modal-compra-os-group" class="form-group"><label for="modal-compra-os-select">OS relacionada:</label><select id="modal-compra-os-select"></select></div>
+                    <div class="form-group"><label for="modal-compra-tipo">Tipo:</label><select id="modal-compra-tipo" required><option value="peca">Peça</option><option value="insumo">Insumo</option><option value="servico">Serviço</option></select></div>
+                    <div class="form-group"><label for="modal-compra-item">Nome:</label><input id="modal-compra-item" list="lista-itens-compra" required style="min-height:44px; font-size:1rem; width:100%;"></div>
+                    <div class="form-group"><label for="modal-compra-quantidade">Quantidade:</label><input id="modal-compra-quantidade" type="number" min="1" value="1"></div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;align-items:end;margin-top:12px;">
+                    <div class="form-group"><label for="modal-compra-urgencia">Urgência:</label><select id="modal-compra-urgencia" required><option value="baixa">Baixa</option><option value="media">Média</option><option value="alta">Alta</option><option value="critica">Crítica</option></select></div>
+                    <div class="form-group"><label for="modal-compra-prazo">Prazo necessário:</label><input id="modal-compra-prazo" type="date" required></div>
+                </div>
+                <div class="form-group" style="margin-top:12px;"><label for="modal-compra-descricao">Descrição:</label><textarea id="modal-compra-descricao" rows="3" required></textarea></div>
+                <div style="margin-top:12px;display:flex;gap:8px;align-items:center;">
+                    <button type="submit">Enviar solicitação</button>
+                    <button type="button" id="fechar-modal-compra" style="background:#d00;color:#fff;">Cancelar</button>
+                </div>
             </form>
         </div>
     </div>
@@ -1706,16 +2194,19 @@
     let tecnicos = [];
     let maquinas = [];
     let pecas = [];
+    let insumos = [];
     let ordensServico = [];
     let ultimoNumeroOS = 0;
     let solicitacoesCompras = [];
     let notificacoes = [];
     let preventivas = [];
     let apontamentos = [];
+    let mensagensInternasListener = null;
     const graficosCompras = {};
     const EMAIL_MESTRE_SISTEMA = 'souza73e@gmail.com';
     const ABAS_DISPONIVEIS = [
         ['dashboard', 'Painel'],
+        ['mensagens', 'Mensagens'],
         ['usuarios', 'Usuários'],
         ['solicitantes', 'Solicitantes'],
         ['tecnicos', 'Técnicos'],
@@ -1725,6 +2216,7 @@
         ['historico-os', 'Histórico'],
         ['maquinas', 'Máquinas'],
         ['pecas', 'Peças'],
+        ['estoque-insumos', 'Estoque de insumos'],
         ['preventivas', 'Preventivas'],
         ['apontamentos', 'Apontamentos'],
         ['relatorios', 'Relatórios'],
@@ -1735,23 +2227,52 @@
 
     const PERMISSOES_POR_PERFIL = {
         admin: [
-            'dashboard','usuarios','solicitantes','tecnicos','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','preventivas','apontamentos','relatorios','nova-compra','compras','relatorio-compras'
+            'dashboard','mensagens','usuarios','solicitantes','tecnicos','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','estoque-insumos','preventivas','apontamentos','relatorios','nova-compra','compras','relatorio-compras'
         ],
         apontador: [
-            'dashboard','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','preventivas','apontamentos','relatorios','nova-compra'
+            'dashboard','mensagens','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','estoque-insumos','preventivas','apontamentos','relatorios','nova-compra'
         ],
         supervisor: [
-            'dashboard','historico-os','visualizar-os','nova-compra','compras','relatorio-compras','pecas'
+            'dashboard','mensagens','historico-os','visualizar-os','nova-compra','compras','relatorio-compras','pecas','estoque-insumos'
         ],
-        comprador: ['dashboard','nova-compra','compras','relatorio-compras','visualizar-os'],
-        manutencao: ['dashboard','nova-os','gerenciar-os','visualizar-os','historico-os','preventivas','apontamentos','relatorios'],
-        producao: ['dashboard','historico-os','visualizar-os'],
-        compras: ['dashboard','compras','relatorio-compras','visualizar-os']
+        comprador: ['dashboard','mensagens','nova-compra','compras','relatorio-compras','visualizar-os','estoque-insumos'],
+        manutencao: ['dashboard','mensagens','nova-os','gerenciar-os','visualizar-os','historico-os','preventivas','apontamentos','relatorios','estoque-insumos'],
+        producao: ['dashboard','mensagens','historico-os','visualizar-os'],
+        compras: ['dashboard','mensagens','compras','relatorio-compras','visualizar-os','estoque-insumos']
     };
 
+    function ehUsuarioMaster(usuario) {
+        if (!usuario) return false;
+        const email = (usuario.email ? String(usuario.email).trim().toLowerCase() : '') ||
+            (usuario.usuario && usuario.usuario.email ? String(usuario.usuario.email).trim().toLowerCase() : '') ||
+            (typeof usuario === 'string' ? String(usuario).trim().toLowerCase() : '');
+        return email === EMAIL_MESTRE_SISTEMA;
+    }
+
+    function getEmailUsuario(user) {
+        if (!user) return '';
+        const email = (user.email ? String(user.email).trim().toLowerCase() : '') ||
+            (user.usuario && user.usuario.email ? String(user.usuario.email).trim().toLowerCase() : '') ||
+            (user.usuarioEmail ? String(user.usuarioEmail).trim().toLowerCase() : '');
+        return email;
+    }
+
+    function getTipoUsuario(user) {
+        if (!user) return '';
+        const tipo = user.tipo || user.perfil || user.nivel || '';
+        return String(tipo).trim().toLowerCase();
+    }
+
+    function usuarioEhAdministrador(user) {
+        if (!user) return false;
+        const email = getEmailUsuario(user);
+        const tipo = getTipoUsuario(user);
+        return ehUsuarioMaster(user) || email === 'admin@ordensdeservicosede.com' || tipo === 'admin' || tipo === 'administrador';
+    }
+
     function getPerfilUsuario(user) {
-        const tipo = (user && user.tipo ? String(user.tipo).trim().toLowerCase() : '');
-        if (isAdmin || tipo === 'admin' || tipo === 'administrador') return 'admin';
+        const tipo = getTipoUsuario(user);
+        if (usuarioEhAdministrador(user) || tipo === 'admin' || tipo === 'administrador') return 'admin';
         if (tipo === 'apontador') return 'apontador';
         if (tipo === 'supervisor') return 'supervisor';
         if (tipo === 'comprador' || tipo === 'compras') return 'comprador';
@@ -1761,7 +2282,7 @@
     }
 
     function usuarioTemAcesso(tabId) {
-        if (isAdmin) return true;
+        if (usuarioEhAdministrador(usuarioLogado) || usuarioEhAdministrador(currentUser)) return true;
         if (usuarioLogado && Array.isArray(usuarioLogado.abasPermitidas)) return usuarioLogado.abasPermitidas.includes(tabId);
         const perfil = getPerfilUsuario(usuarioLogado);
         const permissoes = PERMISSOES_POR_PERFIL[perfil] || PERMISSOES_POR_PERFIL.apontador;
@@ -1769,7 +2290,15 @@
     }
 
     function usuarioPodeGerenciarUsuarios() {
-        return isAdmin || checkIsAdmin(currentUser);
+        const usuarioAtual = usuarioLogado || currentUser || auth.currentUser || null;
+        return Boolean(
+            usuarioEhAdministrador(usuarioAtual) ||
+            usuarioEhAdministrador(usuarioLogado) ||
+            usuarioEhAdministrador(currentUser) ||
+            usuarioEhAdministrador(auth.currentUser) ||
+            checkIsAdmin(currentUser) ||
+            checkIsAdmin(auth.currentUser)
+        );
     }
 
     function usuarioPodeGerenciarOS() {
@@ -1789,7 +2318,7 @@
 
     function usuarioPodeGerenciarCompras() {
         const perfil = getPerfilUsuario(usuarioLogado);
-        return isAdmin || perfil === 'supervisor' || perfil === 'comprador' || (usuarioLogado && (['souza73e@gmail.com'].includes((usuarioLogado.email || '').toLowerCase()) || ['comprador', 'compras'].includes((usuarioLogado.tipo || '').toLowerCase())));
+        return isAdmin || ehUsuarioMaster(usuarioLogado) || ehUsuarioMaster(currentUser) || perfil === 'supervisor' || perfil === 'comprador' || (usuarioLogado && (['souza73e@gmail.com'].includes((usuarioLogado.email || '').toLowerCase()) || ['comprador', 'compras'].includes((usuarioLogado.tipo || '').toLowerCase())));
     }
 
     function aplicarRestricoesDePerfil() {
@@ -1818,9 +2347,7 @@
     
     // Verificar se o usuário é administrador
     function checkIsAdmin(user) {
-        // Admin é identificado pelo email
-        const email = user && user.email ? user.email.toLowerCase().trim() : '';
-        return ['admin@ordensdeservicosede.com', EMAIL_MESTRE_SISTEMA].includes(email);
+        return usuarioEhAdministrador(user);
     }
 
     // Registrar acesso do usuário
@@ -1835,10 +2362,62 @@
         }).catch(err => console.warn('Erro ao registrar acesso:', err));
     }
 
+    function setLoginLoading(isLoading) {
+        const button = document.getElementById('login-submit');
+        const label = button?.querySelector('.login-btn-label');
+        const spinner = button?.querySelector('.login-spinner');
+        if (!button) return;
+
+        button.disabled = isLoading;
+        if (label) label.textContent = isLoading ? 'Entrando...' : 'Entrar com Email';
+        if (spinner) spinner.classList.toggle('visible', isLoading);
+    }
+
+    function atualizarDadosUsuarioLogado(dadosUsuario) {
+        const dadosCombinados = { ...(currentUser || {}), ...(dadosUsuario || {}) };
+        isAdmin = checkIsAdmin(dadosCombinados);
+
+        const nomeReal = (dadosCombinados && (dadosCombinados.nome || dadosCombinados.displayName || dadosCombinados.name)) || (currentUser && currentUser.displayName) || 'Usuário';
+        usuarioLogado = {
+            ...(usuarioLogado || {}),
+            uid: currentUser ? currentUser.uid : (dadosCombinados && dadosCombinados.uid) || '',
+            nome: nomeReal,
+            email: (dadosCombinados && dadosCombinados.email) || (currentUser && currentUser.email) || '',
+            tipo: (dadosCombinados && dadosCombinados.tipo) || '',
+            admin: isAdmin,
+            abasPermitidas: (dadosCombinados && dadosCombinados.abasPermitidas) || []
+        };
+
+        const userInfo = document.getElementById('user-info');
+        if (userInfo) {
+            const nomeParaExibir = usuarioLogado.nome || (currentUser && currentUser.displayName) || 'Usuário';
+            userInfo.innerHTML = `${nomeParaExibir}${isAdmin ? ' <span class="admin-badge">Admin</span>' : ''}`;
+        }
+
+        const topUserName = document.getElementById('top-user-name');
+        if (topUserName) {
+            const nomeTop = usuarioLogado && usuarioLogado.nome ? usuarioLogado.nome : ((currentUser && currentUser.displayName) || 'Usuário');
+            topUserName.textContent = nomeTop;
+        }
+    }
+
+    function atualizarNomeUsuarioSidebar() {
+        const userInfo = document.getElementById('user-info');
+        if (!userInfo) return;
+        const nome = (usuarioLogado && usuarioLogado.nome) || (currentUser && currentUser.displayName) || 'Usuário';
+        userInfo.innerHTML = `${nome}${isAdmin ? ' <span class="admin-badge">Admin</span>' : ''}`;
+
+        const topUserName = document.getElementById('top-user-name');
+        if (topUserName) {
+            topUserName.textContent = nome;
+        }
+    }
+
     // Login com Email/Senha
     function loginWithEmail(email, password) {
         const erroDiv = document.getElementById('login-erro');
         erroDiv.style.display = 'none';
+        setLoginLoading(true);
 
         auth.signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
@@ -1846,10 +2425,24 @@
                 isAdmin = checkIsAdmin(currentUser);
                 usuarioLogado = {
                     uid: currentUser.uid,
-                    nome: currentUser.displayName || 'UsuÃ¡rio',
+                    nome: currentUser.displayName || 'Usuário',
                     email: currentUser.email,
                     admin: isAdmin
                 };
+                return db.collection('usuarios').doc(currentUser.uid).get().then(doc => {
+                    if (doc.exists) {
+                        atualizarDadosUsuarioLogado(doc.data());
+                    } else {
+                        atualizarDadosUsuarioLogado({
+                            nome: currentUser.displayName || 'Usuário',
+                            email: currentUser.email,
+                            tipo: '',
+                            abasPermitidas: []
+                        });
+                    }
+                });
+            })
+            .then(() => {
                 registrarAcesso(usuarioLogado);
                 mostrarApp();
             })
@@ -1857,6 +2450,9 @@
                 erroDiv.textContent = 'Erro no login: ' + error.message;
                 erroDiv.style.display = 'block';
                 console.error('Erro no login:', error);
+            })
+            .finally(() => {
+                setLoginLoading(false);
             });
     }
 
@@ -1927,19 +2523,29 @@
             };
             db.collection('usuarios').doc(user.uid).get().then(doc => {
                 if (doc.exists) {
-                    usuarioLogado.tipo = doc.data().tipo || '';
-                    usuarioLogado.abasPermitidas = doc.data().abasPermitidas;
+                    atualizarDadosUsuarioLogado(doc.data());
+                } else {
+                    atualizarDadosUsuarioLogado({
+                        nome: user.displayName || 'Usuário',
+                        email: user.email,
+                        tipo: '',
+                        abasPermitidas: []
+                    });
                 }
                 mostrarBotoesAdmin(isAdmin);
                 aplicarRestricoesDePerfil();
-            }).catch(() => {});
+            }).catch(() => {
+                atualizarDadosUsuarioLogado({
+                    nome: user.displayName || 'Usuário',
+                    email: user.email,
+                    tipo: '',
+                    abasPermitidas: []
+                });
+                mostrarBotoesAdmin(isAdmin);
+                aplicarRestricoesDePerfil();
+            });
             registrarAcesso(usuarioLogado);
             mostrarApp();
-            // Atualiza informações do usuário na sidebar
-            const userInfo = document.getElementById('user-info');
-            if (userInfo) {
-                userInfo.innerHTML = `${usuarioLogado.nome}${isAdmin ? ' <span class="admin-badge">Admin</span>' : ''}`;
-            }
         } else {
             if (document.getElementById('app-main-layout').style.display !== 'none') {
                 esconderApp();
@@ -1954,16 +2560,11 @@
     function mostrarApp() {
         document.getElementById('login-container').style.display = 'none';
         document.getElementById('app-main-layout').style.display = 'flex';
-        // Atualiza informações do usuário
-        const userInfo = document.getElementById('user-info');
-        if (userInfo && usuarioLogado) {
-            userInfo.innerHTML = `${usuarioLogado.nome}${isAdmin ? ' <span class="admin-badge">Admin</span>' : ''}`;
-        }
-        // Mostra/oculta botões de admin
+        atualizarNomeUsuarioSidebar();
         mostrarBotoesAdmin(isAdmin);
         aplicarRestricoesDePerfil();
-        // Carrega dados
         carregarDadosIniciais();
+        carregarMensagensInternasEmTempoReal();
     }
 
     function esconderApp() {
@@ -1981,7 +2582,7 @@
         const btnLimparOS = document.getElementById('btn-limpar-os');
         const btnCompras = document.getElementById('btn-compras');
         const perfil = getPerfilUsuario(usuarioLogado);
-        const podeCadastrarUsuario = admin || (usuarioLogado && usuarioLogado.email && usuarioLogado.email.toLowerCase() === 'souza73e@gmail.com');
+        const podeCadastrarUsuario = usuarioEhAdministrador(usuarioLogado) || usuarioEhAdministrador(currentUser) || admin;
         if (btnCadastrarUsuario) btnCadastrarUsuario.style.display = podeCadastrarUsuario ? 'flex' : 'none';
         if (btnListarUsuarios) btnListarUsuarios.style.display = admin ? 'flex' : 'none';
         if (btnLimparOS) btnLimparOS.style.display = admin ? 'inline-block' : 'none';
@@ -2012,6 +2613,7 @@
         carregarSolicitantes();
         carregarTecnicos();
         carregarMaquinas();
+        carregarInsumos();
         carregarPreventivas();
         carregarApontamentos();
         carregarOrdensServico();
@@ -2186,6 +2788,639 @@
         }
 
         return db.collection('maquinas').doc(maquinaId).update({ pecas: listaAtual });
+    }
+
+    function normalizarInsumo(item) {
+        if (!item || typeof item !== 'object') return null;
+        const quantidade = Number(item.quantidade ?? item.quantidadeAtual ?? 0);
+        const minimo = Number(item.estoqueMinimo ?? item.minimo ?? 0);
+        return {
+            id: item.id || item._id || '',
+            nome: item.nome || 'Insumo sem nome',
+            categoria: item.categoria || 'Geral',
+            unidade: item.unidade || 'un',
+            quantidade,
+            estoqueMinimo: minimo,
+            local: item.local || item.setor || 'Almoxarifado',
+            observacao: item.observacao || '',
+            historico: Array.isArray(item.historico) ? item.historico : [],
+            status: item.status || (minimo > 0 && quantidade <= minimo ? 'baixo' : 'ok')
+        };
+    }
+
+    function lerInsumosLocais() {
+        try {
+            const dados = localStorage.getItem('insumos');
+            return dados ? JSON.parse(dados) : [];
+        } catch (error) {
+            console.warn('Erro ao ler insumos do armazenamento local:', error);
+            return [];
+        }
+    }
+
+    function salvarInsumosLocais(lista) {
+        try {
+            localStorage.setItem('insumos', JSON.stringify(lista));
+            return true;
+        } catch (error) {
+            console.warn('Erro ao salvar insumos no armazenamento local:', error);
+            return false;
+        }
+    }
+
+    function erroPermissaoFirestore(error) {
+        return !!error && ((error.code === 'permission-denied') || /permission|permiss/i.test((error.message || '')));
+    }
+
+    function carregarInsumos() {
+        const localData = lerInsumosLocais();
+        if (localData.length) {
+            insumos = localData.map(normalizarInsumo).filter(Boolean).sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
+            atualizarSelectInsumos();
+            atualizarFiltroCategoriaInsumos();
+            renderizarTabelaInsumos();
+        }
+
+        db.collection('insumos').get().then(snapshot => {
+            insumos = snapshot.docs.map(doc => normalizarInsumo({ id: doc.id, ...doc.data() })).filter(Boolean);
+            insumos.sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
+            salvarInsumosLocais(insumos);
+            atualizarSelectInsumos();
+            atualizarFiltroCategoriaInsumos();
+            renderizarTabelaInsumos();
+        }).catch(err => {
+            console.warn('Erro ao carregar insumos:', err);
+            if (erroPermissaoFirestore(err) && localData.length) {
+                alert('Acesso ao banco bloqueado; as alterações estão sendo exibidas localmente.');
+            }
+            insumos = localData.map(normalizarInsumo).filter(Boolean);
+            atualizarSelectInsumos();
+            atualizarFiltroCategoriaInsumos();
+            renderizarTabelaInsumos();
+        });
+    }
+
+    function atualizarSelectInsumos() {
+        const select = document.getElementById('movimento-insumo');
+        if (!select) return;
+        const opcoes = insumos.length ? insumos.map(item => `<option value="${item.id}">${item.nome} (${item.quantidade || 0})</option>`).join('') : '<option value="">Nenhum insumo cadastrado</option>';
+        select.innerHTML = opcoes;
+    }
+
+    function atualizarFiltroCategoriaInsumos() {
+        const select = document.getElementById('insumos-filtro-categoria');
+        if (!select) return;
+        const categorias = [...new Set(insumos.map(item => item.categoria).filter(Boolean))].sort();
+        select.innerHTML = '<option value="">Todas</option>' + categorias.map(categoria => `<option value="${categoria}">${categoria}</option>`).join('');
+    }
+
+    function obterListaItensCompra(tipo, osId) {
+        const itens = [];
+
+        if (tipo === 'insumo') {
+            insumos.forEach(item => {
+                if (item && item.nome) itens.push(item.nome);
+            });
+            return [...new Set(itens)].sort((a, b) => a.localeCompare(b));
+        }
+
+        if (tipo === 'peca') {
+            if (osId) {
+                const os = ordensServico.find(item => item.id === osId);
+                if (os) {
+                    const maquina = maquinas.find(item => item.id === os.maquinaId);
+                    if (maquina && Array.isArray(maquina.pecas)) {
+                        maquina.pecas.forEach(item => {
+                            const nome = typeof item === 'string' ? item : (item && item.nome ? item.nome : '');
+                            if (nome) itens.push(nome);
+                        });
+                    }
+                }
+            }
+            if (!itens.length) {
+                pecas.forEach(item => {
+                    if (item && item.nome) itens.push(item.nome);
+                });
+            }
+            return [...new Set(itens)].sort((a, b) => a.localeCompare(b));
+        }
+
+        return [];
+    }
+
+    function atualizarDatalistInsumosCompra(tipo, inputId, osId) {
+        const datalist = document.getElementById('lista-itens-compra');
+        const input = document.getElementById(inputId);
+        if (!datalist || !input) return;
+
+        if (tipo === 'servico') {
+            input.removeAttribute('list');
+            input.placeholder = 'Descreva o serviço que será solicitado';
+            datalist.innerHTML = '';
+            return;
+        }
+
+        const itens = obterListaItensCompra(tipo, osId);
+        input.setAttribute('list', 'lista-itens-compra');
+        datalist.innerHTML = itens.map(item => `<option value="${item}"></option>`).join('');
+        input.placeholder = tipo === 'insumo' ? 'Selecione ou digite o insumo' : 'Selecione ou digite a peça';
+    }
+
+    function configurarTipoCompraItem(tipo, inputId, osId) {
+        const input = document.getElementById(inputId);
+        const osSelect = document.getElementById(osId);
+        if (!input) return;
+
+        const osGroup = document.getElementById(osId ? osId.replace('-os', '-os-group') : '');
+        if (osGroup) {
+            osGroup.style.display = tipo === 'insumo' ? 'none' : '';
+        }
+
+        if (tipo === 'insumo') {
+            if (osSelect) {
+                osSelect.disabled = true;
+                osSelect.required = false;
+                osSelect.value = '';
+            }
+            atualizarDatalistInsumosCompra('insumo', inputId, '');
+            return;
+        }
+
+        if (tipo === 'peca') {
+            if (osSelect) {
+                osSelect.disabled = false;
+                osSelect.required = true;
+            }
+            atualizarDatalistInsumosCompra('peca', inputId, osSelect ? osSelect.value : '');
+            return;
+        }
+
+        if (osSelect) {
+            osSelect.disabled = false;
+            osSelect.required = true;
+        }
+        atualizarDatalistInsumosCompra('servico', inputId, '');
+    }
+
+    function statusInsumo(item) {
+        const minimo = Number(item.estoqueMinimo || 0);
+        const quantidade = Number(item.quantidade || 0);
+        if (minimo > 0 && quantidade <= minimo) return 'Abaixo do mínimo';
+        return 'Em estoque';
+    }
+
+    function renderizarTabelaInsumos() {
+        const tbody = document.querySelector('#tabela-insumos tbody');
+        if (!tbody) return;
+
+        const busca = (document.getElementById('insumos-busca')?.value || '').trim().toLowerCase();
+        const categoriaFiltro = document.getElementById('insumos-filtro-categoria')?.value || '';
+        const lista = insumos.filter(item => {
+            const nome = (item.nome || '').toLowerCase();
+            const categoria = (item.categoria || '').toLowerCase();
+            const passaBusca = !busca || nome.includes(busca) || categoria.includes(busca);
+            const passaCategoria = !categoriaFiltro || categoria === categoriaFiltro.toLowerCase();
+            return passaBusca && passaCategoria;
+        });
+
+        tbody.innerHTML = lista.length ? lista.map(item => `
+            <tr>
+                <td>${item.nome}</td>
+                <td>${item.categoria || 'Geral'}</td>
+                <td>${item.unidade || 'un'}</td>
+                <td>${Number(item.quantidade || 0)}</td>
+                <td>${Number(item.estoqueMinimo || 0)}</td>
+                <td>${item.local || 'Almoxarifado'}</td>
+                <td>${statusInsumo(item)}</td>
+                <td>
+                    <button type="button" class="btn-action btn-edit-insumo" data-id="${item.id}">Editar</button>
+                    <button type="button" class="btn-action btn-delete btn-delete-insumo" data-id="${item.id}">Excluir</button>
+                </td>
+            </tr>
+        `).join('') : '<tr><td colspan="8">Nenhum insumo encontrado.</td></tr>';
+
+        tbody.querySelectorAll('.btn-edit-insumo').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = insumos.find(i => i.id === btn.dataset.id);
+                if (!item) return;
+                document.getElementById('insumo-id').value = item.id;
+                document.getElementById('insumo-nome').value = item.nome || '';
+                document.getElementById('insumo-categoria').value = item.categoria || '';
+                document.getElementById('insumo-unidade').value = item.unidade || 'un';
+                document.getElementById('insumo-quantidade').value = Number(item.quantidade || 0);
+                document.getElementById('insumo-minimo').value = Number(item.estoqueMinimo || 0);
+                document.getElementById('insumo-local').value = item.local || '';
+                document.getElementById('insumo-observacao').value = item.observacao || '';
+                document.getElementById('insumo-nome').focus();
+                window.location.hash = '#estoque-insumos';
+            });
+        });
+
+        tbody.querySelectorAll('.btn-delete-insumo').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!confirm('Deseja excluir este insumo do estoque?')) return;
+                db.collection('insumos').doc(btn.dataset.id).delete().then(() => {
+                    alert('Insumo removido com sucesso.');
+                    carregarInsumos();
+                }).catch(err => alert('Erro ao excluir insumo: ' + err.message));
+            });
+        });
+    }
+
+    function calcularRelatorioInsumos(item) {
+        const historico = Array.isArray(item.historico) ? item.historico : [];
+        const entradas = historico.filter(m => String(m.tipo || '').toLowerCase() === 'entrada').reduce((total, m) => total + Number(m.quantidade || 0), 0);
+        const saidas = historico.filter(m => String(m.tipo || '').toLowerCase() === 'baixa').reduce((total, m) => total + Number(m.quantidade || 0), 0);
+        const datas = historico.filter(m => String(m.tipo || '').toLowerCase() === 'baixa' && m.data).map(m => m.data.split('T')[0]).filter(Boolean);
+        const dias = datas.length ? new Set(datas).size : 1;
+        const mediaUsoDia = (saidas / dias) || 0;
+        return { entradas, saidas, mediaUsoDia };
+    }
+
+    function formatarDataHoraInsumo(data) {
+        if (!data) return '—';
+        const valor = data.toDate ? data.toDate() : new Date(data);
+        if (Number.isNaN(valor.getTime())) return '—';
+        return valor.toLocaleString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    function formatarDiaSemanaInsumo(data) {
+        if (!data) return '—';
+        const valor = data.toDate ? data.toDate() : new Date(data);
+        if (Number.isNaN(valor.getTime())) return '—';
+        return valor.toLocaleDateString('pt-BR', {
+            weekday: 'long',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    }
+
+    function renderizarRelatorioInsumos() {
+        const container = document.getElementById('relatorio-insumos');
+        if (!container) return;
+
+        const linhas = insumos.map(item => {
+            const rel = calcularRelatorioInsumos(item);
+            const historico = Array.isArray(item.historico) ? item.historico : [];
+            const baixas = historico.filter(m => String(m.tipo || '').toLowerCase() === 'baixa');
+            const ultimaBaixa = baixas.sort((a, b) => new Date(b.data || 0) - new Date(a.data || 0))[0] || null;
+            const quemDeuBaixa = ultimaBaixa ? (ultimaBaixa.usuario || 'Sistema') : '—';
+            const dataHoraBaixa = ultimaBaixa ? formatarDataHoraInsumo(ultimaBaixa.data) : '—';
+            const diaBaixa = ultimaBaixa ? formatarDiaSemanaInsumo(ultimaBaixa.data) : '—';
+            return `
+                <tr>
+                    <td>${item.nome}</td>
+                    <td>${rel.entradas}</td>
+                    <td>${rel.saidas}</td>
+                    <td>${Number(rel.mediaUsoDia).toFixed(2)}</td>
+                    <td>${Number(item.quantidade || 0)}</td>
+                    <td>${item.local || 'Almoxarifado'}</td>
+                    <td>${quemDeuBaixa}</td>
+                    <td>${dataHoraBaixa}</td>
+                    <td>${diaBaixa}</td>
+                </tr>
+            `;
+        }).join('');
+
+        container.innerHTML = `
+            <table style="min-width:1100px; width:100%;">
+                <thead>
+                    <tr>
+                        <th>Insumo</th>
+                        <th>Entradas</th>
+                        <th>Saídas</th>
+                        <th>Média/dia</th>
+                        <th>Saldo atual</th>
+                        <th>Setor</th>
+                        <th>Quem deu baixa</th>
+                        <th>Data e hora</th>
+                        <th>Dia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${linhas || '<tr><td colspan="9">Nenhum movimento registrado.</td></tr>'}
+                </tbody>
+            </table>
+        `;
+    }
+
+    async function criarSolicitacaoAutomaticaInsumo(insumo) {
+        if (!insumo || !insumo.nome) return false;
+        const nome = String(insumo.nome).trim();
+        const quantidadeAtual = Number(insumo.quantidade || 0);
+        const minimo = Number(insumo.estoqueMinimo || 0);
+
+        if (!nome || minimo <= 0 || quantidadeAtual > minimo) return false;
+
+        try {
+            const existente = await db.collection('solicitacoesCompras')
+                .where('tipo', '==', 'insumo')
+                .where('item', '==', nome)
+                .where('status', 'in', ['pendente', 'aprovada', 'cotacao', 'solicitado'])
+                .get();
+
+            if (!existente.empty) return false;
+
+            const dados = {
+                tipo: 'insumo',
+                item: nome,
+                osId: '',
+                osNumero: '',
+                tecnicoId: currentUser ? currentUser.uid : '',
+                tecnicoNome: usuarioLogado ? usuarioLogado.nome : 'Sistema',
+                quantidade: Math.max(1, minimo || 1),
+                urgencia: 'alta',
+                prazo: new Date().toISOString().split('T')[0],
+                descricao: `Reposição automática por estoque mínimo do insumo ${nome}.`,
+                status: 'pendente',
+                data: new Date().toISOString().split('T')[0],
+                automatica: true,
+                origem: 'estoque-minimo',
+                criadoPor: currentUser ? currentUser.uid : 'sistema',
+                historico: [{ status: 'pendente', usuario: usuarioLogado ? usuarioLogado.nome : 'Sistema', observacao: 'Solicitação automática por estoque mínimo', data: new Date().toISOString() }],
+                criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            dados.codigo = gerarCodigoSolicitacao();
+            const ref = await db.collection('solicitacoesCompras').add(dados);
+            await notificarCompradores('Reposição automática de insumo', `O insumo ${nome} chegou ao mínimo (${quantidadeAtual}/${minimo}). Solicitação ${dados.codigo} foi criada automaticamente.`, ref.id).catch(() => {});
+            return true;
+        } catch (error) {
+            console.warn('Erro ao criar solicitação automática de insumo:', error);
+            return false;
+        }
+    }
+
+    function salvarInsumo(event) {
+        event.preventDefault();
+        const id = document.getElementById('insumo-id').value;
+        const nome = document.getElementById('insumo-nome').value.trim();
+        const categoria = document.getElementById('insumo-categoria').value.trim() || 'Geral';
+        const unidade = document.getElementById('insumo-unidade').value;
+        const quantidade = Number(document.getElementById('insumo-quantidade').value || 0);
+        const estoqueMinimo = Number(document.getElementById('insumo-minimo').value || 0);
+        const local = document.getElementById('insumo-local').value.trim() || 'Almoxarifado';
+        const observacao = document.getElementById('insumo-observacao').value.trim();
+
+        if (!nome) {
+            alert('Informe o nome do insumo.');
+            return;
+        }
+
+        const dados = {
+            nome,
+            categoria,
+            unidade,
+            quantidade,
+            estoqueMinimo,
+            local,
+            observacao,
+            status: estoqueMinimo > 0 && quantidade <= estoqueMinimo ? 'baixo' : 'ok',
+            atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        const operacao = id ? db.collection('insumos').doc(id).set(dados, { merge: true }) : db.collection('insumos').add(dados);
+
+        operacao.then(async () => {
+            alert('Insumo salvo com sucesso.');
+            document.getElementById('insumoForm').reset();
+            document.getElementById('insumo-id').value = '';
+            document.getElementById('insumo-unidade').value = 'un';
+            await criarSolicitacaoAutomaticaInsumo({ ...dados, nome, quantidade, estoqueMinimo });
+            carregarInsumos();
+        }).catch(err => {
+            if (erroPermissaoFirestore(err)) {
+                const lista = lerInsumosLocais();
+                const novoItem = { id: id || `insumo-local-${Date.now()}`, ...dados };
+                const atualizada = id ? lista.map(item => (item.id === id ? { ...item, ...dados } : item)) : [...lista, novoItem];
+                salvarInsumosLocais(atualizada);
+                insumos = atualizada.map(normalizarInsumo).filter(Boolean);
+                atualizarSelectInsumos();
+                atualizarFiltroCategoriaInsumos();
+                renderizarTabelaInsumos();
+                renderizarRelatorioInsumos();
+                alert('Permissão do banco bloqueada. O insumo foi salvo localmente e continuará disponível no estoque.');
+                document.getElementById('insumoForm').reset();
+                document.getElementById('insumo-id').value = '';
+                document.getElementById('insumo-unidade').value = 'un';
+                return;
+            }
+            alert('Erro ao salvar insumo: ' + err.message);
+        });
+    }
+
+    async function registrarMovimentoInsumo(event) {
+        event.preventDefault();
+        const insumoId = document.getElementById('movimento-insumo').value;
+        const tipo = document.getElementById('movimento-tipo').value;
+        const quantidade = Number(document.getElementById('movimento-quantidade').value || 0);
+        const motivo = document.getElementById('movimento-motivo').value.trim();
+
+        if (!insumoId || !quantidade || !motivo) {
+            alert('Selecione um insumo, informe a quantidade e o motivo do movimento.');
+            return;
+        }
+
+        const insumo = insumos.find(item => item.id === insumoId);
+        if (!insumo) {
+            alert('Insumo não encontrado.');
+            return;
+        }
+
+        const estoqueAtual = Number(insumo.quantidade || 0);
+        let novoEstoque = estoqueAtual;
+
+        if (tipo === 'baixa') {
+            if (estoqueAtual < quantidade) {
+                alert(`Estoque insuficiente para ${insumo.nome}. Disponível: ${estoqueAtual}.`);
+                return;
+            }
+            novoEstoque = estoqueAtual - quantidade;
+        } else {
+            novoEstoque = estoqueAtual + quantidade;
+        }
+
+        const historico = Array.isArray(insumo.historico) ? [...insumo.historico] : [];
+        historico.push({
+            tipo,
+            quantidade,
+            motivo,
+            data: new Date().toISOString(),
+            usuario: usuarioLogado ? usuarioLogado.nome : 'Sistema'
+        });
+
+        const dadosAtualizados = {
+            quantidade: novoEstoque,
+            status: Number(insumo.estoqueMinimo || 0) > 0 && novoEstoque <= Number(insumo.estoqueMinimo || 0) ? 'baixo' : 'ok',
+            historico,
+            atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        renderizarRelatorioInsumos();
+
+        db.collection('insumos').doc(insumoId).update(dadosAtualizados).then(async () => {
+            if (tipo === 'baixa' && Number(insumo.estoqueMinimo || 0) > 0 && novoEstoque <= Number(insumo.estoqueMinimo || 0)) {
+                await criarSolicitacaoAutomaticaInsumo({ ...insumo, nome: insumo.nome, quantidade: novoEstoque, estoqueMinimo: insumo.estoqueMinimo });
+            }
+            alert('Movimento registrado com sucesso.');
+            document.getElementById('movimentoInsumoForm').reset();
+            document.getElementById('movimento-quantidade').value = 1;
+            carregarInsumos();
+        }).catch(err => {
+            if (erroPermissaoFirestore(err)) {
+                const lista = lerInsumosLocais();
+                const atualizada = lista.map(item => item.id === insumoId ? { ...item, ...dadosAtualizados, quantidade: novoEstoque, status: dadosAtualizados.status, historico } : item);
+                salvarInsumosLocais(atualizada);
+                insumos = atualizada.map(normalizarInsumo).filter(Boolean);
+                atualizarSelectInsumos();
+                atualizarFiltroCategoriaInsumos();
+                renderizarTabelaInsumos();
+                renderizarRelatorioInsumos();
+                if (tipo === 'baixa' && Number(insumo.estoqueMinimo || 0) > 0 && novoEstoque <= Number(insumo.estoqueMinimo || 0)) {
+                    criarSolicitacaoAutomaticaInsumo({ ...insumo, nome: insumo.nome, quantidade: novoEstoque, estoqueMinimo: insumo.estoqueMinimo });
+                }
+                alert('Permissão do banco bloqueada. O movimento foi registrado localmente no estoque.');
+                document.getElementById('movimentoInsumoForm').reset();
+                document.getElementById('movimento-quantidade').value = 1;
+                return;
+            }
+            alert('Erro ao registrar movimento: ' + err.message);
+        });
+    }
+
+    async function receberInsumoDaCompra(solicitacao) {
+        if (!solicitacao || (solicitacao.tipo || '').toLowerCase() !== 'insumo') return;
+
+        const nome = (solicitacao.item || '').trim();
+        const quantidade = Number(solicitacao.quantidade || 0) || 1;
+        if (!nome || quantidade <= 0) return;
+
+        let insumo = insumos.find(item => item.id === solicitacao.insumoId || (item.nome || '').toLowerCase() === nome.toLowerCase());
+
+        if (!insumo) {
+            const dados = {
+                nome,
+                categoria: 'Compra',
+                unidade: 'un',
+                quantidade,
+                estoqueMinimo: 0,
+                local: 'Almoxarifado',
+                observacao: `Cadastrado automaticamente pela SC ${solicitacao.codigo || ''}`,
+                status: 'ok',
+                historico: [{
+                    tipo: 'entrada',
+                    quantidade,
+                    motivo: `Recebimento da SC ${solicitacao.codigo || ''}`,
+                    data: new Date().toISOString(),
+                    usuario: usuarioLogado ? usuarioLogado.nome : 'Sistema'
+                }],
+                atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            try {
+                const ref = await db.collection('insumos').add(dados);
+                insumos.push(normalizarInsumo({ id: ref.id, ...dados }));
+            } catch (err) {
+                if (!erroPermissaoFirestore(err)) throw err;
+                const lista = lerInsumosLocais();
+                const novoItem = { id: `insumo-local-${Date.now()}`, ...dados };
+                salvarInsumosLocais([...lista, novoItem]);
+                insumos = [...lista, novoItem].map(normalizarInsumo).filter(Boolean);
+            }
+            return;
+        }
+
+        const historico = Array.isArray(insumo.historico) ? [...insumo.historico] : [];
+        const novoEstoque = Number(insumo.quantidade || 0) + quantidade;
+        historico.push({
+            tipo: 'entrada',
+            quantidade,
+            motivo: `Recebimento da SC ${solicitacao.codigo || ''}`,
+            data: new Date().toISOString(),
+            usuario: usuarioLogado ? usuarioLogado.nome : 'Sistema'
+        });
+
+        try {
+            await db.collection('insumos').doc(insumo.id).update({
+                quantidade: novoEstoque,
+                status: Number(insumo.estoqueMinimo || 0) > 0 && novoEstoque <= Number(insumo.estoqueMinimo || 0) ? 'baixo' : 'ok',
+                historico,
+                atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        } catch (err) {
+            if (!erroPermissaoFirestore(err)) throw err;
+            const lista = lerInsumosLocais();
+            const atualizada = lista.map(item => item.id === insumo.id ? { ...item, quantidade: novoEstoque, status: Number(insumo.estoqueMinimo || 0) > 0 && novoEstoque <= Number(insumo.estoqueMinimo || 0) ? 'baixo' : 'ok', historico } : item);
+            salvarInsumosLocais(atualizada);
+            insumos = atualizada.map(normalizarInsumo).filter(Boolean);
+        }
+
+        carregarInsumos();
+    }
+
+    async function receberPecaDaCompra(solicitacao) {
+        if (!solicitacao || (solicitacao.tipo || '').toLowerCase() !== 'peca') return;
+
+        const nome = (solicitacao.item || '').trim();
+        const quantidade = Number(solicitacao.quantidade || 0) || 1;
+        if (!nome || quantidade <= 0) return;
+
+        const os = ordensServico.find(item => item.id === solicitacao.osId) || null;
+        const maquinaId = solicitacao.maquinaId || (os && os.maquinaId) || '';
+        const maquina = maquinas.find(item => item.id === maquinaId);
+
+        if (!maquina) {
+            console.warn('Recebimento de peça sem máquina associada:', solicitacao);
+            return;
+        }
+
+        const listaAtual = Array.isArray(maquina.pecas) ? maquina.pecas.map(item => typeof item === 'string' ? { nome: item, quantidadeEstoque: 0, estoqueMinimo: 0 } : { ...item }) : [];
+        const indice = listaAtual.findIndex(item => (item.id || '').toLowerCase() === (solicitacao.pecaId || '').toLowerCase() || (item.nome || '').toLowerCase() === nome.toLowerCase());
+
+        if (indice >= 0) {
+            const atual = listaAtual[indice];
+            const estoqueAtual = Number(atual.quantidadeEstoque || 0);
+            atual.quantidadeEstoque = estoqueAtual + quantidade;
+            atual.status = Number(atual.estoqueMinimo || 0) > 0 && atual.quantidadeEstoque <= Number(atual.estoqueMinimo || 0) ? 'baixo' : 'ok';
+            atual.nome = atual.nome || nome;
+            atual.maquinaId = atual.maquinaId || maquina.id;
+            atual.maquinaNome = atual.maquinaNome || maquina.nome;
+            atual.setor = atual.setor || maquina.setor || '';
+            listaAtual[indice] = atual;
+        } else {
+            listaAtual.push({
+                id: solicitacao.pecaId || `peca-${Date.now()}`,
+                maquinaId: maquina.id,
+                maquinaNome: maquina.nome,
+                setor: maquina.setor || '',
+                nome,
+                tipo: 'Compra',
+                especificacao: 'Recebido por compra',
+                quantidadeUsada: 1,
+                quantidadeEstoque: quantidade,
+                estoqueMinimo: 0,
+                status: 'ok'
+            });
+        }
+
+        try {
+            await db.collection('maquinas').doc(maquina.id).update({ pecas: listaAtual });
+        } catch (err) {
+            if (!erroPermissaoFirestore(err)) throw err;
+            const atualizadas = maquinas.map(item => item.id === maquina.id ? { ...item, pecas: listaAtual } : item);
+            maquinas = atualizadas;
+            localStorage.setItem('maquinas', JSON.stringify(maquinas));
+        }
+
+        precalcularPecas();
+        atualizarPainelEstoqueMinimo();
+        carregarMaquinas();
     }
 
     function carregarPreventivas() {
@@ -2388,17 +3623,116 @@
     }
 
     function carregarNotificacoes() {
-        if (!currentUser) return;
-        return db.collection('notificacoes').where('usuarioId', '==', currentUser.uid).limit(20).get().then(snapshot => {
+        const uidAtual = (currentUser && currentUser.uid) || (usuarioLogado && usuarioLogado.uid) || '';
+        if (!uidAtual) return Promise.resolve([]);
+        return db.collection('notificacoes').where('usuarioId', '==', uidAtual).limit(20).get().then(snapshot => {
             notificacoes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             notificacoes.sort((a, b) => (b.criadoEm && b.criadoEm.seconds || 0) - (a.criadoEm && a.criadoEm.seconds || 0));
             renderizarNotificacoes();
+            return notificacoes;
         }).catch(err => console.warn('Erro ao carregar notificações:', err));
     }
 
-    function notificar(usuarioId, titulo, mensagem, solicitacaoId) {
-        if (!usuarioId) return Promise.resolve();
-        return db.collection('notificacoes').add({ usuarioId, titulo, mensagem, solicitacaoId: solicitacaoId || null, lida: false, criadoEm: firebase.firestore.FieldValue.serverTimestamp() });
+    function tocarNotificacao() {
+        try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            const audioCtx = new AudioCtx();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.type = 'triangle';
+            oscillator.frequency.value = 880;
+            gainNode.gain.value = 0.04;
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.18);
+        } catch (error) {
+            console.warn('Não foi possível tocar o som de notificação:', error);
+        }
+    }
+
+    function notificar(usuarioId, titulo, mensagem, solicitacaoId, extras = {}) {
+        const uidDestino = String(usuarioId || '').trim();
+        if (!uidDestino) return Promise.resolve();
+        return db.collection('notificacoes').add({
+            usuarioId: uidDestino,
+            titulo,
+            mensagem,
+            solicitacaoId: solicitacaoId || null,
+            lida: false,
+            tipo: extras.tipo || 'geral',
+            remetenteEmail: extras.remetenteEmail || '',
+            destinatarioEmail: extras.destinatarioEmail || '',
+            remetenteNome: extras.remetenteNome || '',
+            criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    }
+
+    function notificarMensagemInterna(destinatarioEmail, remetenteNome, texto) {
+        const emailDestino = String(destinatarioEmail || '').trim().toLowerCase();
+        const textoResumo = String(texto || '').trim();
+        if (!emailDestino || !textoResumo) return Promise.resolve();
+
+        return db.collection('usuarios').where('email', '==', emailDestino).limit(1).get().then(snapshot => {
+            if (!snapshot || snapshot.empty) return null;
+            const destinatario = snapshot.docs[0];
+            const destinatarioUid = destinatario.id;
+            const titulo = 'Nova mensagem interna';
+            const mensagem = `${remetenteNome || 'Usuário'}: ${textoResumo.length > 80 ? textoResumo.slice(0, 77) + '...' : textoResumo}`;
+
+            return notificar(destinatarioUid, titulo, mensagem, null, {
+                tipo: 'mensagem',
+                remetenteEmail: ((usuarioLogado && usuarioLogado.email) || (currentUser && currentUser.email) || '').toLowerCase(),
+                destinatarioEmail: emailDestino,
+                remetenteNome: remetenteNome || 'Usuário'
+            }).then(() => {
+                if ((currentUser && (currentUser.email || '').toLowerCase()) === emailDestino) {
+                    tocarNotificacao();
+                    if (document.getElementById('notification-dropdown')) {
+                        document.getElementById('notification-dropdown').classList.add('open');
+                    }
+                    carregarNotificacoes();
+                }
+                return true;
+            });
+        }).catch(error => {
+            console.warn('Erro ao notificar destinatário da mensagem:', error);
+            return null;
+        });
+    }
+
+    function carregarMensagensInternasEmTempoReal() {
+        const uidAtual = (currentUser && currentUser.uid) || (usuarioLogado && usuarioLogado.uid) || '';
+        if (!uidAtual) return;
+
+        if (mensagensInternasListener) {
+            mensagensInternasListener();
+            mensagensInternasListener = null;
+        }
+
+        const ref = db.collection('mensagensInternas').where('participantes', 'array-contains', uidAtual);
+        mensagensInternasListener = ref.onSnapshot(snapshot => {
+            const mensagens = snapshot.docs
+                .map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
+                .filter(msg => {
+                    const remetente = String(msg.remetenteUid || '');
+                    const destinatario = String(msg.destinatarioUid || '');
+                    return remetente === uidAtual || destinatario === uidAtual;
+                })
+                .sort((a, b) => {
+                    const aTime = a.data && a.data.toDate ? a.data.toDate().getTime() : new Date(a.data || 0).getTime();
+                    const bTime = b.data && b.data.toDate ? b.data.toDate().getTime() : new Date(b.data || 0).getTime();
+                    return aTime - bTime;
+                });
+
+            const storageKey = `mensagensInternas_${uidAtual}`;
+            localStorage.setItem(storageKey, JSON.stringify(mensagens));
+            renderizarMensagens();
+        }, error => {
+            console.warn('Erro ao carregar mensagens em tempo real:', error);
+            renderizarMensagens();
+        });
     }
 
     function tecnicosOptions(selectId, textoInicial) {
@@ -2442,14 +3776,15 @@
     }
 
     function dadosSolicitacao(prefixo, osId) {
-        const os = ordensServico.find(item => item.id === osId);
+        const tipo = document.getElementById(`${prefixo}-tipo`).value;
+        const os = osId ? ordensServico.find(item => item.id === osId) : null;
         const tecnico = tecnicos.find(item => item.id === (os && os.tecnicoId)) || {};
         return {
-            osId,
+            osId: osId || '',
             osNumero: os ? os.numero : '',
             tecnicoId: os ? os.tecnicoId : currentUser.uid,
             tecnicoNome: tecnico.nome || usuarioLogado.nome,
-            tipo: document.getElementById(`${prefixo}-tipo`).value,
+            tipo,
             item: document.getElementById(`${prefixo}-item`).value.trim(),
             quantidade: Number(document.getElementById(`${prefixo}-quantidade`).value || 1),
             urgencia: document.getElementById(`${prefixo}-urgencia`).value,
@@ -2496,17 +3831,27 @@
     function enviarSolicitacaoCompra(event) {
         event.preventDefault();
         const osId = document.getElementById('compra-os').value;
+        const tipo = document.getElementById('compra-tipo').value;
         const dados = dadosSolicitacao('compra', osId);
         if (!dados.item || !dados.prazo || !dados.descricao) { alert('Preencha todos os campos da solicitação.'); return; }
+        if (tipo !== 'insumo' && !osId) {
+            alert('Selecione a OS para itens que não sejam insumos.');
+            return;
+        }
         salvarSolicitacao(dados, () => document.getElementById('solicitacaoCompraForm').reset());
     }
 
     function enviarNovaOrdemCompra(event) {
         event.preventDefault();
         const osId = document.getElementById('nova-compra-os').value;
+        const tipo = document.getElementById('nova-compra-tipo').value;
         const dados = dadosSolicitacao('nova-compra', osId);
-        if (!osId || !dados.item || !dados.prazo || !dados.descricao) {
-            alert('Selecione a OS e preencha todos os campos da ordem de compra.');
+        if (!dados.item || !dados.prazo || !dados.descricao) {
+            alert('Preencha todos os campos da ordem de compra.');
+            return;
+        }
+        if (tipo !== 'insumo' && !osId) {
+            alert('Selecione a OS para peças e serviços.');
             return;
         }
         salvarSolicitacao(dados, () => {
@@ -2518,9 +3863,14 @@
     function enviarSolicitacaoCompraModal(event) {
         event.preventDefault();
         const osId = document.getElementById('modal-compra-os').value;
+        const tipo = document.getElementById('modal-compra-tipo').value;
         const dados = dadosSolicitacao('modal-compra', osId);
         dados.tecnicoUsuarioId = currentUser.uid;
         if (!dados.item || !dados.prazo || !dados.descricao) { alert('Preencha todos os campos da solicitação.'); return; }
+        if (tipo !== 'insumo' && !osId) {
+            alert('Selecione a OS para peças e serviços.');
+            return;
+        }
         salvarSolicitacao(dados, () => {
             document.getElementById('modalSolicitacaoCompraForm').reset();
             document.getElementById('modal-solicitacao-compra').style.display = 'none';
@@ -2547,7 +3897,7 @@
             const os = ordensServico.find(o => o.id === s.osId) || {};
             const urgente = ['alta', 'critica'].includes(s.urgencia);
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td><strong>${s.codigo || '—'}</strong>${s.automatica ? '<br><small style="color:#d00;font-weight:bold;">AUTOMÁTICA</small>' : ''}</td><td>#${os.numero || s.osNumero || ''}</td><td>${s.item}</td><td>${s.tipo === 'peca' ? 'Peça' : 'Serviço'}</td><td class="${urgente ? 'purchase-urgent' : ''}">${s.urgencia}</td><td class="purchase-status">${textoStatusCompra(s.status)}</td><td>${tecnico.nome || s.tecnicoNome || ''}</td><td>${formatarData(s.data || '')}</td><td><button class="btn-action btn-compra-detalhe" data-id="${s.id}">Gerenciar</button><button class="btn-action btn-imprimir-compra" data-id="${s.id}">Imprimir</button>${usuarioMestreSistema() ? `<button class="btn-action btn-delete btn-excluir-compra" data-id="${s.id}">Apagar</button>` : ''}</td>`;
+            tr.innerHTML = `<td><strong>${s.codigo || '—'}</strong>${s.automatica ? '<br><small style="color:#d00;font-weight:bold;">AUTOMÁTICA</small>' : ''}</td><td>#${os.numero || s.osNumero || ''}</td><td>${s.item}</td><td>${s.tipo === 'peca' ? 'Peça' : s.tipo === 'insumo' ? 'Insumo' : 'Serviço'}</td><td class="${urgente ? 'purchase-urgent' : ''}">${s.urgencia}</td><td class="purchase-status">${textoStatusCompra(s.status)}</td><td>${tecnico.nome || s.tecnicoNome || ''}</td><td>${formatarData(s.data || '')}</td><td><button class="btn-action btn-compra-detalhe" data-id="${s.id}">Gerenciar</button><button class="btn-action btn-imprimir-compra" data-id="${s.id}">Imprimir</button>${usuarioMestreSistema() ? `<button class="btn-action btn-delete btn-excluir-compra" data-id="${s.id}">Apagar</button>` : ''}</td>`;
             tbody.appendChild(tr);
         });
         tbody.querySelectorAll('.btn-compra-detalhe').forEach(btn => btn.addEventListener('click', () => gerenciarSolicitacao(btn.dataset.id)));
@@ -2581,8 +3931,8 @@
         const meses = [...new Set(lista.map(s => (s.data || '').slice(0, 7)).filter(Boolean))].sort();
         criarGraficoCompras('grafico-compras-mes', 'bar', meses, meses.map(mes => lista.filter(s => (s.data || '').slice(0, 7) === mes).length), 'Solicitações por mês');
         criarGraficoCompras('grafico-compras-valor', 'bar', meses, meses.map(mes => lista.filter(s => (s.data || '').slice(0, 7) === mes).reduce((total, s) => total + Number(s.valor || 0), 0)), 'Valor por mês', ['#00843d']);
-        const tipos = ['peca', 'servico'];
-        criarGraficoCompras('grafico-compras-tipo', 'bar', ['Peças', 'Serviços'], tipos.map(tipo => lista.filter(s => s.tipo === tipo).reduce((total, s) => total + Number(s.valor || 0), 0)), 'Gastos por tipo', ['#00843d', '#f90']);
+        const tipos = ['peca', 'insumo', 'servico'];
+        criarGraficoCompras('grafico-compras-tipo', 'bar', ['Peças', 'Insumos', 'Serviços'], tipos.map(tipo => lista.filter(s => s.tipo === tipo).reduce((total, s) => total + Number(s.valor || 0), 0)), 'Gastos por tipo', ['#00843d', '#39f', '#f90']);
         const gastosPorMaquina = {};
         lista.forEach(s => {
             const os = ordensServico.find(item => item.id === s.osId) || {};
@@ -2600,7 +3950,7 @@
         const os = ordensServico.find(item => item.id === s.osId) || {};
         document.getElementById('gerenciar-compra-id').value = id;
         document.getElementById('gerenciar-compra-titulo').textContent = `Gerenciar: ${s.item}`;
-        document.getElementById('gerenciar-compra-resumo').textContent = `OS #${os.numero || s.osNumero || ''} | ${s.tipo === 'peca' ? 'Peça' : 'Serviço'} | Urgência: ${s.urgencia || ''}`;
+        document.getElementById('gerenciar-compra-resumo').textContent = `OS #${os.numero || s.osNumero || ''} | ${s.tipo === 'peca' ? 'Peça' : s.tipo === 'insumo' ? 'Insumo' : 'Serviço'} | Urgência: ${s.urgencia || ''}`;
         document.getElementById('gerenciar-compra-status').value = s.status || 'pendente';
         document.getElementById('gerenciar-compra-fornecedor').value = s.fornecedor || '';
         document.getElementById('gerenciar-compra-orcamentos').value = s.orcamentos || '';
@@ -2637,7 +3987,7 @@
         const tecnico = tecnicos.find(item => item.id === solicitacao.tecnicoId) || {};
         const janela = window.open('', '_blank', 'width=850,height=700');
         if (!janela) return;
-        const tipo = solicitacao.tipo === 'peca' ? 'Peça' : 'Serviço';
+        const tipo = solicitacao.tipo === 'peca' ? 'Peça' : solicitacao.tipo === 'insumo' ? 'Insumo' : 'Serviço';
         janela.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Solicitação ${solicitacao.codigo || ''}</title><style>body{font-family:Arial,sans-serif;margin:30px;color:#222}.cabecalho{text-align:center;border-bottom:2px solid #00843d;padding-bottom:10px;margin-bottom:14px}.empresa{display:inline-flex;align-items:center;color:#050505;font-weight:800;font-size:2.5em;line-height:.9;position:relative;padding-right:.58em}.empresa:before{content:"";position:absolute;right:0;top:50%;width:.42em;height:.42em;border:1.5px solid #050505;border-radius:3px;transform:translateY(-50%) rotate(45deg)}.empresa:after{content:"a";position:absolute;right:0;top:50%;width:1em;text-align:center;transform:translateY(-50%);font-size:.42em;font-weight:800;line-height:1}.cabecalho h1{color:#00843d;font-size:1.4em;margin:10px 0 4px}.codigo{font-weight:800;font-size:1.05em}.bloco{border:1px solid #ddd;padding:12px;margin:12px 0}.bloco h2{color:#00843d;font-size:1em;border-bottom:1px solid #eee;padding-bottom:4px;margin:0 0 8px}.linha{margin:5px 0}.descricao{white-space:pre-line}.assinatura{margin-top:70px;display:flex;gap:80px}.linha-assinatura{border-top:1px solid #222;text-align:center;padding-top:8px;width:260px}@media print{button{display:none}}</style></head><body><div class="cabecalho"><div class="empresa">ambipar</div><h1>SOLICITAÇÃO DE COMPRA</h1><div class="codigo">Código: ${solicitacao.codigo || '—'}</div></div><div class="bloco"><h2>Identificação</h2><div class="linha"><strong>OS:</strong> ${os.numero || solicitacao.osNumero || 'Não informada'}</div><div class="linha"><strong>Item/serviço:</strong> ${solicitacao.item || 'Não informado'}</div><div class="linha"><strong>Tipo:</strong> ${tipo}</div><div class="linha"><strong>Quantidade:</strong> ${solicitacao.quantidade || 1}</div></div><div class="bloco"><h2>Acompanhamento</h2><div class="linha"><strong>Urgência:</strong> ${solicitacao.urgencia || 'Não informada'}</div><div class="linha"><strong>Status:</strong> ${textoStatusCompra(solicitacao.status)}</div><div class="linha"><strong>Técnico:</strong> ${tecnico.nome || solicitacao.tecnicoNome || 'Não informado'}</div><div class="linha"><strong>Data da solicitação:</strong> ${formatarData(solicitacao.data || '')}</div><div class="linha"><strong>Prazo necessário:</strong> ${formatarData(solicitacao.prazo || '')}</div></div><div class="bloco"><h2>Descrição / justificativa</h2><div class="descricao">${solicitacao.descricao || 'Não informada'}</div></div><div class="assinatura"><div class="linha-assinatura">Solicitante</div><div class="linha-assinatura">Responsável por Compras</div></div></body></html>`);
         janela.document.close();
         janela.onload = () => { janela.focus(); janela.print(); };
@@ -2686,6 +4036,13 @@
         if (novoStatus === 'recebido') dados.recebidoEm = firebase.firestore.FieldValue.serverTimestamp();
         db.collection('solicitacoesCompras').doc(id).update(dados).then(() => {
             document.getElementById('modal-gerenciar-compra').style.display = 'none';
+            if (novoStatus === 'recebido') {
+                const promessas = [];
+                if ((solicitacao.tipo || '').toLowerCase() === 'insumo') promessas.push(receberInsumoDaCompra(solicitacao));
+                if ((solicitacao.tipo || '').toLowerCase() === 'peca') promessas.push(receberPecaDaCompra(solicitacao));
+                if (!promessas.length) promessas.push(Promise.resolve());
+                return Promise.all(promessas).then(() => notificar(solicitacao.tecnicoUsuarioId || solicitacao.tecnicoId, `Compra ${textoStatusCompra(novoStatus)}`, `A solicitação ${solicitacao.item} foi recebida e entrou no estoque.`, id).catch(() => {}));
+            }
             return notificar(solicitacao.tecnicoUsuarioId || solicitacao.tecnicoId, `Compra ${textoStatusCompra(novoStatus)}`, `A solicitação ${solicitacao.item} foi atualizada.`, id).catch(() => {});
         }).then(() => carregarSolicitacoesCompras()).catch(error => alert('Erro ao salvar gerenciamento: ' + error.message));
     }
@@ -2736,19 +4093,137 @@
             solicitacoes.forEach(solicitacao => {
                 const tr = document.createElement('tr');
                 const urgente = ['alta', 'critica'].includes(solicitacao.urgencia);
-                tr.innerHTML = `<td>#${os.numero || solicitacao.osNumero || ''}</td><td>${os.equipamento || 'Não informado'}</td><td>${solicitacao.item || ''}</td><td>${solicitacao.tipo === 'peca' ? 'Peça' : 'Serviço'}</td><td class="${urgente ? 'purchase-urgent' : ''}">${solicitacao.urgencia || ''}</td><td class="purchase-status">${textoStatusCompra(solicitacao.status)}</td>`;
+                tr.innerHTML = `<td>#${os.numero || solicitacao.osNumero || ''}</td><td>${os.equipamento || 'Não informado'}</td><td>${solicitacao.item || ''}</td><td>${solicitacao.tipo === 'peca' ? 'Peça' : solicitacao.tipo === 'insumo' ? 'Insumo' : 'Serviço'}</td><td class="${urgente ? 'purchase-urgent' : ''}">${solicitacao.urgencia || ''}</td><td class="purchase-status">${textoStatusCompra(solicitacao.status)}</td>`;
                 tbody.appendChild(tr);
             });
         });
         container.appendChild(tabela);
     }
 
+    const NOTIFICACAO_FECHADA_TTL_MS = 10 * 60 * 1000;
+
+    function getNotificacoesFechadas() {
+        try {
+            const dados = JSON.parse(localStorage.getItem('notificacoesFechadas') || '{}');
+            return dados && typeof dados === 'object' ? dados : {};
+        } catch (error) {
+            console.warn('Erro ao ler notificações fechadas:', error);
+            return {};
+        }
+    }
+
+    function salvarNotificacoesFechadas(dados) {
+        localStorage.setItem('notificacoesFechadas', JSON.stringify(dados));
+    }
+
+    function limparNotificacoesFechadasExpiradas() {
+        const fechadas = getNotificacoesFechadas();
+        const agora = Date.now();
+        let mudou = false;
+
+        Object.keys(fechadas).forEach(id => {
+            const timestamp = Number(fechadas[id]);
+            if (!timestamp || (agora - timestamp) > NOTIFICACAO_FECHADA_TTL_MS) {
+                delete fechadas[id];
+                mudou = true;
+            }
+        });
+
+        if (mudou) salvarNotificacoesFechadas(fechadas);
+    }
+
+    function notificacaoEstaFechada(id) {
+        const fechadas = getNotificacoesFechadas();
+        const timestamp = Number(fechadas[id] || 0);
+
+        if (!timestamp) return false;
+
+        if ((Date.now() - timestamp) > NOTIFICACAO_FECHADA_TTL_MS) {
+            delete fechadas[id];
+            salvarNotificacoesFechadas(fechadas);
+            return false;
+        }
+
+        return true;
+    }
+
+    function fecharNotificacao(id) {
+        if (!id) return;
+        const fechadas = getNotificacoesFechadas();
+        fechadas[id] = Date.now();
+        salvarNotificacoesFechadas(fechadas);
+        renderizarNotificacoes();
+    }
+
+    function abrirNotificacao(notificacao) {
+        if (!notificacao) return;
+        const dropdown = document.getElementById('notification-dropdown');
+        if (dropdown) dropdown.classList.remove('open');
+
+        if (notificacao.solicitacaoId) {
+            const botaoCompras = document.querySelector('[data-tab="compras"]');
+            if (botaoCompras) botaoCompras.click();
+            setTimeout(() => {
+                const solicitacao = solicitacoesCompras.find(item => item.id === notificacao.solicitacaoId);
+                if (solicitacao) {
+                    gerenciarSolicitacao(notificacao.solicitacaoId);
+                    return;
+                }
+                carregarSolicitacoesCompras().then(() => {
+                    if (solicitacoesCompras.some(item => item.id === notificacao.solicitacaoId)) {
+                        gerenciarSolicitacao(notificacao.solicitacaoId);
+                    }
+                }).catch(() => {});
+            }, 200);
+        }
+
+        if (!notificacao.lida) {
+            marcarNotificacoesLidas();
+        }
+    }
+
     function renderizarNotificacoes() {
-        const count = notificacoes.filter(n => !n.lida).length;
+        limparNotificacoesFechadasExpiradas();
+        const visiveis = notificacoes.filter(n => !notificacaoEstaFechada(n.id));
+        const count = visiveis.filter(n => !n.lida).length;
         const counter = document.getElementById('notification-count');
         const dropdown = document.getElementById('notification-dropdown');
         if (counter) counter.textContent = count;
-        if (dropdown) dropdown.innerHTML = notificacoes.length ? notificacoes.map(n => `<div style="padding:6px;border-bottom:1px solid #eee;"><strong>${n.titulo}</strong><br>${n.mensagem}</div>`).join('') : '<div>Nenhuma notificação.</div>';
+        if (dropdown) {
+            dropdown.innerHTML = visiveis.length
+                ? visiveis.map(n => `
+                    <div class="notification-item ${n.lida ? '' : 'unread'}" data-id="${n.id}" data-solicitacao-id="${n.solicitacaoId || ''}" tabindex="0" role="button" style="cursor:pointer; padding-right: 34px;">
+                        <button type="button" class="notification-close" data-close-id="${n.id}" aria-label="Fechar notificação">×</button>
+                        <strong>${n.titulo || 'Notificação'}</strong>
+                        <p>${n.mensagem || 'Sem descrição'}</p>
+                    </div>
+                `).join('')
+                : '<div class="notification-item"><strong>Sem notificações</strong><p>Nenhuma mensagem nova no momento.</p></div>';
+
+            dropdown.querySelectorAll('.notification-item').forEach(item => {
+                const btnFechar = item.querySelector('.notification-close');
+                if (btnFechar) {
+                    btnFechar.addEventListener('click', event => {
+                        event.stopPropagation();
+                        fecharNotificacao(btnFechar.dataset.closeId);
+                    });
+                }
+
+                item.addEventListener('click', () => {
+                    const id = item.dataset.id;
+                    const selecionada = notificacoes.find(n => n.id === id);
+                    abrirNotificacao(selecionada);
+                });
+                item.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        const id = item.dataset.id;
+                        const selecionada = notificacoes.find(n => n.id === id);
+                        abrirNotificacao(selecionada);
+                    }
+                });
+            });
+        }
     }
 
     function marcarNotificacoesLidas() {
@@ -2816,7 +4291,17 @@
     // EVENTOS DE LOGIN/REGISTRO
     // ============================================
     
+    function mostrarApresentacaoInicial() {
+        const overlay = document.getElementById('startup-presentation');
+        if (!overlay) return;
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+        }, 2400);
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
+        mostrarApresentacaoInicial();
+
         // Login com Email
         document.getElementById('loginEmailForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -2836,6 +4321,13 @@
 
         document.getElementById('toggle-reg-senha').addEventListener('click', function() {
             const input = document.getElementById('reg-senha');
+            input.type = input.type === 'password' ? 'text' : 'password';
+            this.textContent = input.type === 'password' ? '👁️' : '🙈';
+        });
+
+        document.getElementById('toggle-admin-senha').addEventListener('click', function() {
+            const input = document.getElementById('admin-usuario-senha');
+            if (!input) return;
             input.type = input.type === 'password' ? 'text' : 'password';
             this.textContent = input.type === 'password' ? '👁️' : '🙈';
         });
@@ -2904,6 +4396,9 @@
                     case 'dashboard':
                         atualizarDashboard();
                         break;
+                    case 'mensagens':
+                        renderizarMensagens();
+                        break;
                     case 'usuarios':
                         renderizarUsuarios();
                         break;
@@ -2924,6 +4419,9 @@
                         break;
                     case 'pecas':
                         carregarMaquinas();
+                        break;
+                    case 'estoque-insumos':
+                        carregarInsumos();
                         break;
                     case 'preventivas':
                         carregarMaquinas();
@@ -2973,10 +4471,33 @@
         document.getElementById('btn-exportar-compras').addEventListener('click', exportarComprasCSV);
         document.getElementById('btn-imprimir-compras').addEventListener('click', imprimirCompras);
         document.getElementById('btn-imprimir-relatorio-compras').addEventListener('click', imprimirRelatorioCompras);
+        document.getElementById('btn-enviar-mensagem').addEventListener('click', enviarMensagemInterna);
+        const selectMensagem = document.getElementById('mensagem-destinatario');
+        if (selectMensagem) {
+            selectMensagem.addEventListener('change', renderizarMensagens);
+        }
         ['compras-filtro-status', 'compras-filtro-urgencia', 'compras-filtro-tipo', 'compras-filtro-tecnico'].forEach(id => document.getElementById(id).addEventListener('change', renderizarCompras));
         document.getElementById('compras-filtro-codigo').addEventListener('input', renderizarCompras);
         document.getElementById('fechar-modal-compra').addEventListener('click', () => document.getElementById('modal-solicitacao-compra').style.display = 'none');
         document.getElementById('modalSolicitacaoCompraForm').addEventListener('submit', enviarSolicitacaoCompraModal);
+        document.getElementById('nova-compra-tipo').addEventListener('change', function() {
+            configurarTipoCompraItem(this.value, 'nova-compra-item', 'nova-compra-os');
+        });
+        document.getElementById('nova-compra-os').addEventListener('change', function() {
+            if (document.getElementById('nova-compra-tipo').value === 'peca') {
+                atualizarDatalistInsumosCompra('peca', 'nova-compra-item', this.value);
+            }
+        });
+        document.getElementById('modal-compra-tipo').addEventListener('change', function() {
+            configurarTipoCompraItem(this.value, 'modal-compra-item', 'modal-compra-os-select');
+        });
+        document.getElementById('modal-compra-os-select').addEventListener('change', function() {
+            if (document.getElementById('modal-compra-tipo').value === 'peca') {
+                atualizarDatalistInsumosCompra('peca', 'modal-compra-item', this.value);
+            }
+        });
+        configurarTipoCompraItem(document.getElementById('nova-compra-tipo').value, 'nova-compra-item', 'nova-compra-os');
+        configurarTipoCompraItem(document.getElementById('modal-compra-tipo').value, 'modal-compra-item', 'modal-compra-os-select');
         document.getElementById('fechar-gerenciar-compra').addEventListener('click', () => document.getElementById('modal-gerenciar-compra').style.display = 'none');
         document.getElementById('gerenciarCompraForm').addEventListener('submit', salvarGerenciamentoCompra);
         document.getElementById('historico-setor').addEventListener('change', carregarOrdensServico);
@@ -2984,6 +4505,11 @@
         document.getElementById('adminUsuarioForm').addEventListener('submit', criarUsuarioAdmin);
         document.getElementById('admin-usuario-tipo').addEventListener('change', atualizarAbasDoPerfil);
         atualizarAbasDoPerfil();
+        document.getElementById('insumoForm').addEventListener('submit', salvarInsumo);
+        document.getElementById('movimentoInsumoForm').addEventListener('submit', registrarMovimentoInsumo);
+        document.getElementById('btn-gerar-relatorio-insumos').addEventListener('click', renderizarRelatorioInsumos);
+        document.getElementById('insumos-busca').addEventListener('input', renderizarTabelaInsumos);
+        document.getElementById('insumos-filtro-categoria').addEventListener('change', renderizarTabelaInsumos);
         document.getElementById('preventivaForm').addEventListener('submit', salvarPreventiva);
         document.getElementById('btn-cancelar-preventiva').addEventListener('click', limparFormularioPreventiva);
         document.getElementById('btn-add-item-preventiva').addEventListener('click', () => adicionarItemPreventivaNaLista());
@@ -3006,7 +4532,324 @@
         });
         document.getElementById('apontamento-data').valueAsDate = new Date();
         atualizarCamposApontamento();
+        carregarInsumos();
     });
+
+    function getMensagemStorageKey(email) {
+        const base = String(email || 'visitante').trim().toLowerCase();
+        const slug = base.replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '') || 'visitante';
+        return `mensagensInternas_${slug}`;
+    }
+
+    function getMensagensInternasUsuario(email) {
+        try {
+            const raw = localStorage.getItem(getMensagemStorageKey(email));
+            const lista = raw ? JSON.parse(raw) : [];
+            return Array.isArray(lista) ? lista : [];
+        } catch (error) {
+            console.warn('Erro ao ler mensagens locais:', error);
+            return [];
+        }
+    }
+
+    function salvarMensagensInternasUsuario(email, lista) {
+        try {
+            localStorage.setItem(getMensagemStorageKey(email), JSON.stringify(lista));
+        } catch (error) {
+            console.warn('Erro ao salvar mensagens locais:', error);
+        }
+    }
+
+    function normalizarTelefone(valor) {
+        return String(valor || '').replace(/\D/g, '');
+    }
+
+    function carregarUsuariosParaMensagens() {
+        const select = document.getElementById('mensagem-destinatario');
+        if (!select) return;
+
+        const emailAtual = ((usuarioLogado && usuarioLogado.email) || (currentUser && currentUser.email) || '').toLowerCase();
+        select.innerHTML = '<option value="">Selecione o destinatário</option>';
+
+        db.collection('usuarios').get().then(snapshot => {
+            const usuarios = snapshot.docs
+                .map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
+                .filter(usuario => (usuario.email || '').toLowerCase() !== emailAtual)
+                .sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
+
+            if (!usuarios.length) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'Nenhum usuário disponível';
+                option.disabled = true;
+                select.appendChild(option);
+                return;
+            }
+
+            usuarios.forEach(usuario => {
+                const option = document.createElement('option');
+                option.value = usuario.id || usuario.email || normalizarTelefone(usuario.telefone) || '';
+                option.dataset.uid = usuario.id || '';
+                option.dataset.email = String(usuario.email || '').toLowerCase();
+                option.dataset.telefone = normalizarTelefone(usuario.telefone);
+                option.dataset.nome = usuario.nome || 'Usuário';
+                option.textContent = `${usuario.nome || 'Usuário'}${usuario.telefone ? ` - ${usuario.telefone}` : ''}${usuario.email ? ` (${usuario.email})` : ''}`;
+                select.appendChild(option);
+            });
+        }).catch(() => {
+            const fallback = document.createElement('option');
+            fallback.value = '';
+            fallback.textContent = 'Não foi possível carregar usuários';
+            fallback.disabled = true;
+            select.appendChild(fallback);
+        });
+    }
+
+    function resolverDestinatarioMensagem(valorDestino) {
+        const entrada = String(valorDestino || '').trim();
+        if (!entrada) return Promise.resolve({ uid: '', email: '', nome: '', telefone: '' });
+
+        const emailNormalizado = entrada.toLowerCase();
+        const telefoneNormalizado = normalizarTelefone(entrada);
+
+        if (entrada.includes('@')) {
+            return db.collection('usuarios').where('email', '==', emailNormalizado).limit(1).get().then(snapshot => {
+                if (!snapshot || snapshot.empty) return { uid: '', email: emailNormalizado, nome: '', telefone: '' };
+                const dados = snapshot.docs[0].data() || {};
+                return {
+                    uid: snapshot.docs[0].id,
+                    email: String(dados.email || emailNormalizado).toLowerCase(),
+                    nome: String(dados.nome || 'Usuário'),
+                    telefone: normalizarTelefone(dados.telefone)
+                };
+            });
+        }
+
+        if (telefoneNormalizado) {
+            return db.collection('usuarios').get().then(snapshot => {
+                const usuario = snapshot.docs
+                    .map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
+                    .find(item => normalizarTelefone(item.telefone) === telefoneNormalizado || String(item.id) === String(entrada));
+
+                if (!usuario) {
+                    return { uid: entrada, email: emailNormalizado, nome: '', telefone: telefoneNormalizado };
+                }
+
+                return {
+                    uid: usuario.id,
+                    email: String(usuario.email || '').toLowerCase(),
+                    nome: String(usuario.nome || 'Usuário'),
+                    telefone: normalizarTelefone(usuario.telefone)
+                };
+            });
+        }
+
+        return db.collection('usuarios').doc(entrada).get().then(doc => {
+            if (!doc || !doc.exists) {
+                return db.collection('usuarios').get().then(snapshot => {
+                    const usuario = snapshot.docs
+                        .map(item => ({ id: item.id, ...(item.data() || {}) }))
+                        .find(item => (item.nome || '').toLowerCase() === entrada.toLowerCase());
+
+                    if (!usuario) {
+                        return { uid: entrada, email: emailNormalizado, nome: '', telefone: telefoneNormalizado };
+                    }
+
+                    return {
+                        uid: usuario.id,
+                        email: String(usuario.email || '').toLowerCase(),
+                        nome: String(usuario.nome || 'Usuário'),
+                        telefone: normalizarTelefone(usuario.telefone)
+                    };
+                });
+            }
+            const dados = doc.data() || {};
+            return {
+                uid: doc.id,
+                email: String(dados.email || '').toLowerCase(),
+                nome: String(dados.nome || 'Usuário'),
+                telefone: normalizarTelefone(dados.telefone)
+            };
+        }).catch(() => ({ uid: entrada, email: emailNormalizado, nome: '', telefone: telefoneNormalizado }));
+    }
+
+    async function renderizarMensagens() {
+        const lista = document.getElementById('mensagens-lista');
+        const select = document.getElementById('mensagem-destinatario');
+        const emailAtual = ((usuarioLogado && usuarioLogado.email) || (currentUser && currentUser.email) || '').toLowerCase();
+        const nomeAtual = (usuarioLogado && usuarioLogado.nome) || (currentUser && currentUser.displayName) || 'Você';
+        if (!lista) return;
+
+        if (!select || !select.innerHTML || !select.querySelector('option[value]')) {
+            carregarUsuariosParaMensagens();
+        }
+
+        const uidAtual = (currentUser && currentUser.uid) || (usuarioLogado && usuarioLogado.uid) || '';
+        const destinatarioSelecionado = select ? String(select.value || '').trim() : '';
+        const destinatarioUidSelecionado = select && select.selectedOptions && select.selectedOptions[0] ? String((select.selectedOptions[0].dataset && select.selectedOptions[0].dataset.uid) || '') : '';
+
+        let mensagens = [];
+
+        if (uidAtual) {
+            try {
+                const snapshot = await db.collection('mensagensInternas').where('participantes', 'array-contains', uidAtual).get();
+                mensagens = snapshot.docs
+                    .map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
+                    .filter(msg => {
+                        const remetenteUid = String(msg.remetenteUid || '');
+                        const destinatarioUid = String(msg.destinatarioUid || '');
+                        const remetenteEmail = String(msg.remetenteEmail || '').toLowerCase();
+                        const destinatarioEmail = String(msg.destinatarioEmail || '').toLowerCase();
+                        return remetenteUid === uidAtual || destinatarioUid === uidAtual || remetenteEmail === emailAtual || destinatarioEmail === emailAtual;
+                    });
+            } catch (error) {
+                console.warn('Erro ao carregar mensagens da conversa:', error);
+                mensagens = [];
+            }
+        }
+
+        if (!mensagens.length) {
+            try {
+                const raw = localStorage.getItem(`mensagensInternas_${uidAtual || emailAtual || 'visitante'}`);
+                const local = raw ? JSON.parse(raw) : [];
+                mensagens = Array.isArray(local) ? local : [];
+            } catch (error) {
+                mensagens = [];
+            }
+        }
+
+        if (!mensagens.length) {
+            mensagens = getMensagensInternasUsuario(emailAtual)
+                .filter(msg => {
+                    const remetente = (msg.remetenteEmail || '').toLowerCase();
+                    const destinatario = (msg.destinatarioEmail || '').toLowerCase();
+                    return remetente === emailAtual || destinatario === emailAtual;
+                });
+        }
+
+        if (destinatarioSelecionado) {
+            mensagens = mensagens.filter(msg => {
+                const remetenteUid = String(msg.remetenteUid || '');
+                const destinatarioUid = String(msg.destinatarioUid || '');
+                const remetenteEmail = String(msg.remetenteEmail || '').toLowerCase();
+                const destinatarioEmail = String(msg.destinatarioEmail || '').toLowerCase();
+                const valor = String(destinatarioSelecionado || '').toLowerCase();
+                const matchUid = destinatarioUidSelecionado ? (remetenteUid === destinatarioUidSelecionado || destinatarioUid === destinatarioUidSelecionado) : false;
+                const matchEmail = remetenteEmail === valor || destinatarioEmail === valor;
+                const matchDocumentValue = remetenteUid === destinatarioSelecionado || destinatarioUid === destinatarioSelecionado;
+                return matchUid || matchEmail || matchDocumentValue;
+            });
+        }
+
+        mensagens = mensagens
+            .map(msg => ({ ...msg, dataHora: msg.data || msg.criadoEm || msg.dataEnvio || new Date().toISOString() }))
+            .sort((a, b) => new Date(a.dataHora || 0) - new Date(b.dataHora || 0));
+
+        if (!mensagens.length) {
+            lista.innerHTML = '<div class="mensagem-vazia"><strong>Sem mensagens internas</strong><p>As mensagens enviadas ou recebidas aparecerão aqui em formato de conversa.</p></div>';
+            return;
+        }
+
+        const ultimaMensagem = mensagens[mensagens.length - 1];
+        const temMensagemNova = ultimaMensagem && new Date(ultimaMensagem.dataHora || 0).getTime() >= Date.now() - 10000;
+        if (temMensagemNova) {
+            setTimeout(() => {
+                lista.scrollTop = lista.scrollHeight;
+            }, 30);
+        }
+
+        lista.innerHTML = mensagens.map(msg => {
+            const remetenteEmail = String(msg.remetenteEmail || '').toLowerCase();
+            const ehMinha = remetenteEmail === emailAtual || String(msg.remetenteUid || '') === uidAtual;
+            const nome = ehMinha ? nomeAtual : (msg.remetente || msg.remetenteNome || 'Usuário');
+            const data = (msg.dataHora ? new Date(msg.dataHora).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : 'Agora');
+            const texto = String(msg.texto || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return `
+                <div class="mensagem-item ${ehMinha ? 'mine' : ''}">
+                    <strong>${ehMinha ? 'Você' : nome}</strong>
+                    <p>${texto}</p>
+                    <small>${data}</small>
+                </div>
+            `;
+        }).join('');
+
+        lista.scrollTop = lista.scrollHeight;
+    }
+
+    function enviarMensagemInterna() {
+        const select = document.getElementById('mensagem-destinatario');
+        const textarea = document.getElementById('mensagem-texto');
+        if (!select || !textarea) return;
+
+        const valorDestino = (select.value || '').trim();
+        const texto = (textarea.value || '').trim();
+        if (!valorDestino || !texto) {
+            alert('Selecione um destinatário e preencha a mensagem.');
+            return;
+        }
+
+        const emailAtual = ((usuarioLogado && usuarioLogado.email) || (currentUser && currentUser.email) || '').toLowerCase();
+        const nomeAtual = (usuarioLogado && usuarioLogado.nome) || (currentUser && currentUser.displayName) || 'Usuário';
+        const uidAtual = (currentUser && currentUser.uid) || (usuarioLogado && usuarioLogado.uid) || '';
+
+        resolverDestinatarioMensagem(valorDestino).then(({ uid, email, nome, telefone }) => {
+            const destinatarioUid = uid || valorDestino;
+            const destinatarioEmail = (email || valorDestino || '').toLowerCase();
+            const destinatarioNome = nome || (select.options[select.selectedIndex]?.dataset?.nome || 'Usuário');
+            const destinatarioTelefone = telefone || (select.options[select.selectedIndex]?.dataset?.telefone || '');
+            const mensagem = {
+                id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+                remetente: nomeAtual,
+                remetenteEmail: emailAtual,
+                destinatarioEmail: destinatarioEmail,
+                destinatarioUid,
+                destinatarioNome,
+                destinatarioTelefone,
+                texto,
+                data: new Date().toISOString(),
+                lida: false
+            };
+
+            const listaRemetente = getMensagensInternasUsuario(emailAtual);
+            const listaDestinatario = getMensagensInternasUsuario(destinatarioEmail || emailAtual);
+            salvarMensagensInternasUsuario(emailAtual, [...listaRemetente, mensagem]);
+            salvarMensagensInternasUsuario(destinatarioEmail || emailAtual, [...listaDestinatario, { ...mensagem, destinatarioEmail: emailAtual.toLowerCase(), remetente: nomeAtual, remetenteEmail: emailAtual.toLowerCase() }]);
+
+            const mensagemRealtime = {
+                remetenteUid: uidAtual,
+                destinatarioUid,
+                remetenteNome: nomeAtual,
+                remetenteEmail: emailAtual,
+                destinatarioEmail: destinatarioEmail,
+                destinatarioNome,
+                destinatarioTelefone,
+                texto,
+                data: firebase.firestore.FieldValue.serverTimestamp(),
+                lida: false,
+                participantes: [uidAtual, destinatarioUid].filter(Boolean).sort(),
+                tipo: 'mensagem'
+            };
+
+            return db.collection('mensagensInternas').add(mensagemRealtime).then(() => {
+                notificar(destinatarioUid, 'Nova mensagem interna', `${nomeAtual}: ${texto.length > 80 ? texto.slice(0, 77) + '...' : texto}`, null, {
+                    tipo: 'mensagem',
+                    remetenteEmail: emailAtual,
+                    destinatarioEmail: destinatarioEmail,
+                    destinatarioNome,
+                    remetenteNome: nomeAtual
+                }).catch(() => {});
+                tocarNotificacao();
+                if ((currentUser && (currentUser.email || '').toLowerCase()) === destinatarioEmail || (currentUser && currentUser.uid) === destinatarioUid) {
+                    carregarNotificacoes();
+                }
+            });
+        }).catch(error => {
+            console.warn('Erro ao enviar mensagem em tempo real:', error);
+        }).finally(() => {
+            textarea.value = '';
+            renderizarMensagens();
+        });
+    }
 
     function renderizarUsuarios() {
         const tbody = document.querySelector('#tabela-usuarios tbody');
@@ -3057,9 +4900,26 @@
         renderizarAbasPermitidas(permissoes);
     }
 
+    function usuarioPodeAlterarUsuario(usuarioAlvoId) {
+        if (!usuarioAlvoId) return false;
+        const usuarioAtual = usuarioLogado || currentUser || auth.currentUser || null;
+        if (!usuarioAtual) return false;
+
+        const uidAtual = usuarioAtual.uid || '';
+        const ehAdminAtual = usuarioEhAdministrador(usuarioAtual);
+        if (ehAdminAtual) return true;
+
+        return String(uidAtual) === String(usuarioAlvoId);
+    }
+
     function editarUsuario(usuarioId) {
+        const usuarioAtual = usuarioLogado || currentUser || auth.currentUser || null;
         if (!usuarioPodeGerenciarUsuarios()) {
             alert('Apenas o administrador pode gerenciar usuários.');
+            return;
+        }
+        if (!usuarioPodeAlterarUsuario(usuarioId) && !usuarioEhAdministrador(usuarioAtual)) {
+            alert('Você não tem permissão para alterar este usuário.');
             return;
         }
         db.collection('usuarios').doc(usuarioId).get().then(doc => {
@@ -3083,8 +4943,13 @@
     }
 
     function excluirUsuario(usuarioId) {
+        const usuarioAtual = usuarioLogado || currentUser || auth.currentUser || null;
         if (!usuarioPodeGerenciarUsuarios()) {
             alert('Apenas o administrador pode excluir usuários.');
+            return;
+        }
+        if (!usuarioPodeAlterarUsuario(usuarioId) && !usuarioEhAdministrador(usuarioAtual)) {
+            alert('Você não tem permissão para excluir este usuário.');
             return;
         }
 
@@ -3100,8 +4965,14 @@
 
     function criarUsuarioAdmin(event) {
         event.preventDefault();
+        const usuarioAtual = usuarioLogado || currentUser || auth.currentUser || null;
         if (!usuarioPodeGerenciarUsuarios()) {
             alert('Apenas o administrador pode criar usuários.');
+            return;
+        }
+        const usuarioId = document.getElementById('admin-usuario-id').value;
+        if (usuarioId && !usuarioPodeAlterarUsuario(usuarioId) && !usuarioEhAdministrador(usuarioAtual)) {
+            alert('Você não tem permissão para alterar este usuário.');
             return;
         }
 
@@ -3110,7 +4981,6 @@
         const telefone = document.getElementById('admin-usuario-telefone').value.trim();
         const senha = document.getElementById('admin-usuario-senha').value;
         const tipo = document.getElementById('admin-usuario-tipo').value;
-        const usuarioId = document.getElementById('admin-usuario-id').value;
         const abasPermitidas = obterAbasPermitidas();
         const erroDiv = document.getElementById('admin-usuario-erro');
 
