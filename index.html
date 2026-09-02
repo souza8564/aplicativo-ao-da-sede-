@@ -1183,6 +1183,10 @@
                     <svg viewBox="0 0 24 24"><path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5v-9zm9 2.2L6.5 10.1v4.8L12 17l5.5-2.1v-4.8L12 9.7zm0 1.8l3.5-1.3-3.5-1.7-3.5 1.7L12 11.5z"/></svg>
                     Estoque de insumos
                 </button>
+                <button class="sidebar-btn" data-tab="stores-fabrica">
+                    <svg viewBox="0 0 24 24"><path d="M3 21V7l9-4 9 4v14h-6v-7H9v7H3zm2-2h2v-7h10v7h2V8.6l-7-3.1-7 3.1V19zm4-9h2v2H9v-2zm4 0h2v2h-2v-2z"/></svg>
+                    Stores / locais da fábrica
+                </button>
                 <button class="sidebar-btn" data-tab="preventivas">
                     <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4l-1.5-1.5L12 11 10.5 9.5 9 11zM3 5h6v2H3V5zm0 4h4v2H3V9zM3 13h8v2H3v-2z"/></svg>
                     Preventivas
@@ -1423,12 +1427,6 @@
                             <label for="solicitante-setor">Setor:</label>
                             <select id="solicitante-setor" required>
                                 <option value="">Selecione um setor</option>
-                                <option value="Produção">Produção</option>
-                                <option value="Manutenção">Manutenção</option>
-                                <option value="Qualidade">Qualidade</option>
-                                <option value="Logística">Logística</option>
-                                <option value="Administrativo">Administrativo</option>
-                                <option value="Outros">Outros</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -1519,11 +1517,6 @@
                             <label for="os-setor">Setor:</label>
                             <select id="os-setor" required>
                                 <option value="">Selecione um setor</option>
-                                <option value="Manutenção">Manutenção</option>
-                                <option value="Dubom canos">Dubom canos</option>
-                                <option value="Braspol Grãos">Braspol Grãos</option>
-                                <option value="Braspol injeção">Braspol injeção</option>
-                                <option value="Adiministrativo">Adiministrativo</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -1633,12 +1626,6 @@
                         <label for="historico-setor">Filtrar por Setor:</label>
                         <select id="historico-setor">
                             <option value="">Todos</option>
-                            <option value="Produção">Produção</option>
-                            <option value="Manutenção">Manutenção</option>
-                            <option value="Qualidade">Qualidade</option>
-                            <option value="Logística">Logística</option>
-                            <option value="Administrativo">Administrativo</option>
-                            <option value="Outros">Outros</option>
                         </select>
                         <label for="historico-periodo" style="margin-left: 15px;">Período:</label>
                         <select id="historico-periodo">
@@ -1686,11 +1673,6 @@
                             <label for="maquina-setor">Setor:</label>
                             <select id="maquina-setor" required>
                                 <option value="">Selecione um setor</option>
-                                <option value="Manutenção">Manutenção</option>
-                                <option value="Dubom canos">Dubom canos</option>
-                                <option value="Braspol Grãos">Braspol Grãos</option>
-                                <option value="Braspol injeção">Braspol injeção</option>
-                                <option value="Adiministrativo">Adiministrativo</option>
                             </select>
                         </div>
 
@@ -1827,7 +1809,8 @@
                         </div>
                         <div class="form-group">
                             <label for="insumo-local">Local/setor:</label>
-                            <input type="text" id="insumo-local" placeholder="Ex.: Almoxarifado, Produção">
+                            <input type="text" id="insumo-local" list="lista-locais-fabrica" placeholder="Ex.: Almoxarifado, Produção, Loja 01">
+                            <datalist id="lista-locais-fabrica"></datalist>
                         </div>
                         <div class="form-group" style="flex-basis:100%;">
                             <label for="insumo-observacao">Observação:</label>
@@ -1892,6 +1875,59 @@
                                     <th>Mínimo</th>
                                     <th>Setor</th>
                                     <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stores / locais da fábrica -->
+            <div id="stores-fabrica" class="tabcontent">
+                <div class="os-card">
+                    <h2>Stores / locais da fábrica</h2>
+                    <form id="storeFabricaForm" style="margin-bottom:18px;">
+                        <input type="hidden" id="store-fabrica-id">
+                        <div class="form-group">
+                            <label for="store-fabrica-nome">Nome do store/local:</label>
+                            <input type="text" id="store-fabrica-nome" placeholder="Ex.: Store 01, Almoxarifado, Produção" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="store-fabrica-setor">Setor:</label>
+                            <input type="text" id="store-fabrica-setor" placeholder="Ex.: Produção, Manutenção, Escritório">
+                        </div>
+                        <div class="form-group">
+                            <label for="store-fabrica-responsavel">Responsável:</label>
+                            <input type="text" id="store-fabrica-responsavel" placeholder="Nome do responsável">
+                        </div>
+                        <div class="form-group">
+                            <label for="store-fabrica-status">Status:</label>
+                            <select id="store-fabrica-status">
+                                <option value="ativo">Ativo</option>
+                                <option value="inativo">Inativo</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex-basis:100%;">
+                            <label for="store-fabrica-observacao">Observação:</label>
+                            <textarea id="store-fabrica-observacao" rows="3" placeholder="Detalhes do local, capacidade, observações internas"></textarea>
+                        </div>
+                        <button type="submit">Salvar local</button>
+                    </form>
+                </div>
+
+                <div class="os-card">
+                    <h2>Lista de stores da fábrica</h2>
+                    <div style="overflow-x:auto;">
+                        <table id="tabela-stores-fabrica" style="min-width:800px;">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Setor</th>
+                                    <th>Responsável</th>
+                                    <th>Status</th>
+                                    <th>Observação</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -2109,6 +2145,20 @@
         </div>
     </div>
 
+    <div id="modal-visualizar-pendencia-compra" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1110;align-items:center;justify-content:center;">
+        <div style="background:#fff;padding:24px;border-radius:12px;max-width:760px;width:92%;max-height:88vh;overflow:auto;box-shadow:0 18px 40px rgba(15,23,42,0.3);">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+                <h2 id="visualizar-pendencia-titulo" style="margin:0; color:#00843d;">Pendência de compra</h2>
+                <button type="button" id="fechar-visualizar-pendencia" style="background:#d00;color:#fff;border:none;border-radius:6px;padding:10px 14px;cursor:pointer;">Fechar</button>
+            </div>
+            <p id="visualizar-pendencia-resumo" style="margin:12px 0 18px; color:#374151; font-weight:600;"></p>
+            <div id="visualizar-pendencia-detalhes" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;"></div>
+            <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+                <button type="button" id="btn-visualizar-pendencia-gerenciar" style="background:#39ff14;color:#111;border:none;border-radius:6px;padding:10px 14px;font-weight:700;cursor:pointer;">Abrir gerenciamento</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
@@ -2195,6 +2245,7 @@
     let maquinas = [];
     let pecas = [];
     let insumos = [];
+    let factoryStores = [];
     let ordensServico = [];
     let ultimoNumeroOS = 0;
     let solicitacoesCompras = [];
@@ -2217,6 +2268,7 @@
         ['maquinas', 'Máquinas'],
         ['pecas', 'Peças'],
         ['estoque-insumos', 'Estoque de insumos'],
+        ['stores-fabrica', 'Stores / locais da fábrica'],
         ['preventivas', 'Preventivas'],
         ['apontamentos', 'Apontamentos'],
         ['relatorios', 'Relatórios'],
@@ -2227,18 +2279,18 @@
 
     const PERMISSOES_POR_PERFIL = {
         admin: [
-            'dashboard','mensagens','usuarios','solicitantes','tecnicos','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','estoque-insumos','preventivas','apontamentos','relatorios','nova-compra','compras','relatorio-compras'
+            'dashboard','mensagens','usuarios','solicitantes','tecnicos','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','estoque-insumos','stores-fabrica','preventivas','apontamentos','relatorios','nova-compra','compras','relatorio-compras'
         ],
         apontador: [
-            'dashboard','mensagens','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','estoque-insumos','preventivas','apontamentos','relatorios','nova-compra'
+            'dashboard','mensagens','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','estoque-insumos','stores-fabrica','preventivas','apontamentos','relatorios','nova-compra'
         ],
         supervisor: [
-            'dashboard','mensagens','historico-os','visualizar-os','nova-compra','compras','relatorio-compras','pecas','estoque-insumos'
+            'dashboard','mensagens','historico-os','visualizar-os','nova-compra','compras','relatorio-compras','pecas','estoque-insumos','stores-fabrica'
         ],
-        comprador: ['dashboard','mensagens','nova-compra','compras','relatorio-compras','visualizar-os','estoque-insumos'],
-        manutencao: ['dashboard','mensagens','nova-os','gerenciar-os','visualizar-os','historico-os','preventivas','apontamentos','relatorios','estoque-insumos'],
+        comprador: ['dashboard','mensagens','nova-compra','compras','relatorio-compras','visualizar-os','estoque-insumos','stores-fabrica'],
+        manutencao: ['dashboard','mensagens','nova-os','gerenciar-os','visualizar-os','historico-os','preventivas','apontamentos','relatorios','estoque-insumos','stores-fabrica'],
         producao: ['dashboard','mensagens','historico-os','visualizar-os'],
-        compras: ['dashboard','mensagens','compras','relatorio-compras','visualizar-os','estoque-insumos']
+        compras: ['dashboard','mensagens','compras','relatorio-compras','visualizar-os','estoque-insumos','stores-fabrica']
     };
 
     function ehUsuarioMaster(usuario) {
@@ -2613,6 +2665,7 @@
         carregarSolicitantes();
         carregarTecnicos();
         carregarMaquinas();
+        carregarStoresFabrica();
         carregarInsumos();
         carregarPreventivas();
         carregarApontamentos();
@@ -2826,6 +2879,207 @@
             console.warn('Erro ao salvar insumos no armazenamento local:', error);
             return false;
         }
+    }
+
+    function normalizarStoreFabrica(item) {
+        if (!item || typeof item !== 'object') return null;
+        const nome = String(item.nome || '').trim();
+        return {
+            id: item.id || item._id || `store-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+            nome: nome || 'Store sem nome',
+            setor: String(item.setor || '').trim(),
+            responsavel: String(item.responsavel || '').trim(),
+            status: ['inativo', 'desativado'].includes(String(item.status || '').trim().toLowerCase()) ? 'inativo' : 'ativo',
+            observacao: String(item.observacao || '').trim(),
+            atualizadoEm: item.atualizadoEm || null
+        };
+    }
+
+    function lerStoresLocais() {
+        try {
+            const dados = localStorage.getItem('storesFabrica');
+            return dados ? JSON.parse(dados) : [];
+        } catch (error) {
+            console.warn('Erro ao ler stores locais:', error);
+            return [];
+        }
+    }
+
+    function salvarStoresLocais(lista) {
+        try {
+            localStorage.setItem('storesFabrica', JSON.stringify(lista));
+            return true;
+        } catch (error) {
+            console.warn('Erro ao salvar stores locais:', error);
+            return false;
+        }
+    }
+
+    function atualizarDatalistLocaisFabrica() {
+        const datalist = document.getElementById('lista-locais-fabrica');
+        if (!datalist) return;
+        const opcoes = [...new Set(['Almoxarifado', 'Produção', ...factoryStores.map(store => store.nome).filter(Boolean)])].map(nome => `<option value="${nome}"></option>`).join('');
+        datalist.innerHTML = opcoes || '<option value="Almoxarifado"></option>';
+    }
+
+    function obterSetoresDosStores() {
+        return [...new Set(factoryStores.map(store => String(store.setor || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    }
+
+    function atualizarSelectsDeSetor() {
+        const setores = obterSetoresDosStores();
+        const configuracoes = [
+            ['solicitante-setor', 'Selecione um setor'],
+            ['os-setor', 'Selecione um setor'],
+            ['maquina-setor', 'Selecione um setor'],
+            ['historico-setor', 'Todos'],
+            ['pecas-filtro-setor', 'Todos'],
+            ['preventivas-setor', 'Todos']
+        ];
+
+        configuracoes.forEach(([id, textoInicial]) => {
+            const select = document.getElementById(id);
+            if (!select) return;
+            const valorAtual = select.value;
+            select.innerHTML = `<option value="">${textoInicial}</option>` + setores.map(setor => `<option value="${setor}">${setor}</option>`).join('');
+            if (valorAtual && setores.includes(valorAtual)) select.value = valorAtual;
+        });
+    }
+
+    function renderizarTabelaStoresFabrica() {
+        const tbody = document.querySelector('#tabela-stores-fabrica tbody');
+        if (!tbody) return;
+
+        tbody.innerHTML = factoryStores.length ? factoryStores.map(item => `
+            <tr>
+                <td>${item.nome}</td>
+                <td>${item.setor || '—'}</td>
+                <td>${item.responsavel || '—'}</td>
+                <td>${item.status === 'inativo' ? 'Inativo' : 'Ativo'}</td>
+                <td>${item.observacao || '—'}</td>
+                <td>
+                    <button type="button" class="btn-action btn-edit-store" data-id="${item.id}">Editar</button>
+                    <button type="button" class="btn-action btn-delete btn-delete-store" data-id="${item.id}">Excluir</button>
+                </td>
+            </tr>
+        `).join('') : '<tr><td colspan="6">Nenhum store cadastrado.</td></tr>';
+
+        tbody.querySelectorAll('.btn-edit-store').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = factoryStores.find(store => store.id === btn.dataset.id);
+                if (!item) return;
+                document.getElementById('store-fabrica-id').value = item.id;
+                document.getElementById('store-fabrica-nome').value = item.nome || '';
+                document.getElementById('store-fabrica-setor').value = item.setor || '';
+                document.getElementById('store-fabrica-responsavel').value = item.responsavel || '';
+                document.getElementById('store-fabrica-status').value = item.status === 'inativo' ? 'inativo' : 'ativo';
+                document.getElementById('store-fabrica-observacao').value = item.observacao || '';
+                document.getElementById('store-fabrica-nome').focus();
+                window.location.hash = '#estoque-insumos';
+            });
+        });
+
+        tbody.querySelectorAll('.btn-delete-store').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!confirm('Deseja excluir este store/local da fábrica?')) return;
+                db.collection('storesFabrica').doc(btn.dataset.id).delete().then(() => {
+                    alert('Store removido com sucesso.');
+                    carregarStoresFabrica();
+                }).catch(err => {
+                    if (erroPermissaoFirestore(err)) {
+                        const lista = lerStoresLocais().filter(item => item.id !== btn.dataset.id);
+                        salvarStoresLocais(lista);
+                        factoryStores = lista.map(normalizarStoreFabrica).filter(Boolean);
+                        atualizarDatalistLocaisFabrica();
+                        atualizarSelectsDeSetor();
+                        renderizarTabelaStoresFabrica();
+                        alert('Permissão do banco bloqueada. O store foi removido localmente.');
+                        return;
+                    }
+                    alert('Erro ao excluir store: ' + err.message);
+                });
+            });
+        });
+    }
+
+    function carregarStoresFabrica() {
+        const localData = lerStoresLocais();
+        if (localData.length) {
+            factoryStores = localData.map(normalizarStoreFabrica).filter(Boolean).sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
+            atualizarDatalistLocaisFabrica();
+            atualizarSelectsDeSetor();
+            renderizarTabelaStoresFabrica();
+        }
+
+        db.collection('storesFabrica').get().then(snapshot => {
+            factoryStores = snapshot.docs.map(doc => normalizarStoreFabrica({ id: doc.id, ...doc.data() })).filter(Boolean);
+            factoryStores.sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
+            salvarStoresLocais(factoryStores);
+            atualizarDatalistLocaisFabrica();
+            atualizarSelectsDeSetor();
+            renderizarTabelaStoresFabrica();
+        }).catch(err => {
+            console.warn('Erro ao carregar stores da fábrica:', err);
+            if (erroPermissaoFirestore(err) && localData.length) {
+                alert('Acesso ao banco bloqueado; os stores da fábrica estão sendo exibidos localmente.');
+            }
+            factoryStores = localData.map(normalizarStoreFabrica).filter(Boolean);
+            atualizarDatalistLocaisFabrica();
+            atualizarSelectsDeSetor();
+            renderizarTabelaStoresFabrica();
+        });
+    }
+
+    function salvarStoreFabrica(event) {
+        event.preventDefault();
+        const id = document.getElementById('store-fabrica-id').value;
+        const nome = document.getElementById('store-fabrica-nome').value.trim();
+        const setor = document.getElementById('store-fabrica-setor').value.trim();
+        const responsavel = document.getElementById('store-fabrica-responsavel').value.trim();
+        const status = document.getElementById('store-fabrica-status').value;
+        const observacao = document.getElementById('store-fabrica-observacao').value.trim();
+
+        if (!nome) {
+            alert('Informe o nome do store/local.');
+            return;
+        }
+
+        const dados = {
+            nome,
+            setor,
+            responsavel,
+            status,
+            observacao,
+            atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        const operacao = id ? db.collection('storesFabrica').doc(id).set(dados, { merge: true }) : db.collection('storesFabrica').add(dados);
+
+        operacao.then(() => {
+            alert('Store salvo com sucesso.');
+            document.getElementById('storeFabricaForm').reset();
+            document.getElementById('store-fabrica-status').value = 'ativo';
+            document.getElementById('store-fabrica-id').value = '';
+            carregarStoresFabrica();
+            atualizarDatalistLocaisFabrica();
+        }).catch(err => {
+            if (erroPermissaoFirestore(err)) {
+                const lista = lerStoresLocais();
+                const novoItem = { id: id || `store-local-${Date.now()}`, ...dados };
+                const atualizada = id ? lista.map(item => (item.id === id ? { ...item, ...dados } : item)) : [...lista, novoItem];
+                salvarStoresLocais(atualizada);
+                factoryStores = atualizada.map(normalizarStoreFabrica).filter(Boolean);
+                atualizarDatalistLocaisFabrica();
+                atualizarSelectsDeSetor();
+                renderizarTabelaStoresFabrica();
+                alert('Permissão do banco bloqueada. O store foi salvo localmente.');
+                document.getElementById('storeFabricaForm').reset();
+                document.getElementById('store-fabrica-status').value = 'ativo';
+                document.getElementById('store-fabrica-id').value = '';
+                return;
+            }
+            alert('Erro ao salvar store: ' + err.message);
+        });
     }
 
     function erroPermissaoFirestore(error) {
@@ -4068,6 +4322,53 @@
         return nomes[status] || status || 'Pendente';
     }
 
+    function abrirVisualizacaoPendenciaCompra(id) {
+        const solicitacao = solicitacoesCompras.find(item => item.id === id);
+        if (!solicitacao) return;
+
+        const os = ordensServico.find(item => item.id === solicitacao.osId) || {};
+        const tipo = solicitacao.tipo === 'peca' ? 'Peça' : solicitacao.tipo === 'insumo' ? 'Insumo' : 'Serviço';
+        const tecnico = tecnicos.find(item => item.id === solicitacao.tecnicoId) || {};
+        const resumo = `OS #${os.numero || solicitacao.osNumero || '—'} | ${tipo} | ${solicitacao.urgencia || 'sem urgência'} | Status: ${textoStatusCompra(solicitacao.status)}`;
+
+        document.getElementById('visualizar-pendencia-titulo').textContent = `${solicitacao.codigo || 'SC'} - ${solicitacao.item || 'Solicitação'}`;
+        document.getElementById('visualizar-pendencia-resumo').textContent = resumo;
+
+        const historico = Array.isArray(solicitacao.historico) ? solicitacao.historico : [];
+        const detalhes = document.getElementById('visualizar-pendencia-detalhes');
+        detalhes.innerHTML = `
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
+                <div><strong>Item:</strong><br>${solicitacao.item || '—'}</div>
+                <div><strong>Tipo:</strong><br>${tipo}</div>
+                <div><strong>Quantidade:</strong><br>${solicitacao.quantidade || 1}</div>
+                <div><strong>Urgência:</strong><br>${solicitacao.urgencia || '—'}</div>
+                <div><strong>Prazo:</strong><br>${solicitacao.prazo || solicitacao.prazoEntrega || '—'}</div>
+                <div><strong>Técnico:</strong><br>${tecnico.nome || solicitacao.tecnicoNome || '—'}</div>
+                <div><strong>Fornecedor:</strong><br>${solicitacao.fornecedor || 'Ainda não informado'}</div>
+                <div><strong>Valor:</strong><br>${Number(solicitacao.valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
+            </div>
+            <div style="margin-top:16px; border-top:1px solid #dfe6ee; padding-top:16px;">
+                <strong>Descrição / justificativa:</strong>
+                <p style="margin:8px 0 0; white-space:pre-line; color:#334155;">${(solicitacao.descricao || solicitacao.justificativa || 'Sem descrição registrada.').replace(/</g, '&lt;')}</p>
+            </div>
+            <div style="margin-top:16px; border-top:1px solid #dfe6ee; padding-top:16px;">
+                <strong>Histórico:</strong>
+                <div style="margin-top:8px; display:grid; gap:8px;">
+                    ${historico.length ? historico.slice().reverse().map(item => `
+                        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;">
+                            <strong>${textoStatusCompra(item.status)}</strong> · ${item.usuario || 'Sistema'}<br>
+                            <small>${formatarDataHora(item.data)}</small>
+                            ${item.observacao ? `<div style="margin-top:4px; color:#475569; white-space:pre-line;">${item.observacao.replace(/</g, '&lt;')}</div>` : ''}
+                        </div>
+                    `).join('') : '<p style="margin:8px 0 0; color:#64748b;">Sem histórico.</p>'}
+                </div>
+            </div>
+        `;
+
+        document.getElementById('btn-visualizar-pendencia-gerenciar').dataset.id = id;
+        document.getElementById('modal-visualizar-pendencia-compra').style.display = 'flex';
+    }
+
     function atualizarPainelCompras() {
         const container = document.getElementById('os-pendencias-compras');
         if (!container) return;
@@ -4093,7 +4394,10 @@
             solicitacoes.forEach(solicitacao => {
                 const tr = document.createElement('tr');
                 const urgente = ['alta', 'critica'].includes(solicitacao.urgencia);
+                tr.style.cursor = 'pointer';
+                tr.dataset.id = solicitacao.id;
                 tr.innerHTML = `<td>#${os.numero || solicitacao.osNumero || ''}</td><td>${os.equipamento || 'Não informado'}</td><td>${solicitacao.item || ''}</td><td>${solicitacao.tipo === 'peca' ? 'Peça' : solicitacao.tipo === 'insumo' ? 'Insumo' : 'Serviço'}</td><td class="${urgente ? 'purchase-urgent' : ''}">${solicitacao.urgencia || ''}</td><td class="purchase-status">${textoStatusCompra(solicitacao.status)}</td>`;
+                tr.addEventListener('click', () => abrirVisualizacaoPendenciaCompra(solicitacao.id));
                 tbody.appendChild(tr);
             });
         });
@@ -4423,6 +4727,9 @@
                     case 'estoque-insumos':
                         carregarInsumos();
                         break;
+                    case 'stores-fabrica':
+                        carregarStoresFabrica();
+                        break;
                     case 'preventivas':
                         carregarMaquinas();
                         carregarPreventivas();
@@ -4500,12 +4807,19 @@
         configurarTipoCompraItem(document.getElementById('modal-compra-tipo').value, 'modal-compra-item', 'modal-compra-os-select');
         document.getElementById('fechar-gerenciar-compra').addEventListener('click', () => document.getElementById('modal-gerenciar-compra').style.display = 'none');
         document.getElementById('gerenciarCompraForm').addEventListener('submit', salvarGerenciamentoCompra);
+        document.getElementById('fechar-visualizar-pendencia').addEventListener('click', () => document.getElementById('modal-visualizar-pendencia-compra').style.display = 'none');
+        document.getElementById('btn-visualizar-pendencia-gerenciar').addEventListener('click', function() {
+            const id = this.dataset.id;
+            document.getElementById('modal-visualizar-pendencia-compra').style.display = 'none';
+            if (id) gerenciarSolicitacao(id);
+        });
         document.getElementById('historico-setor').addEventListener('change', carregarOrdensServico);
         document.getElementById('historico-periodo').addEventListener('change', carregarOrdensServico);
         document.getElementById('adminUsuarioForm').addEventListener('submit', criarUsuarioAdmin);
         document.getElementById('admin-usuario-tipo').addEventListener('change', atualizarAbasDoPerfil);
         atualizarAbasDoPerfil();
         document.getElementById('insumoForm').addEventListener('submit', salvarInsumo);
+        document.getElementById('storeFabricaForm').addEventListener('submit', salvarStoreFabrica);
         document.getElementById('movimentoInsumoForm').addEventListener('submit', registrarMovimentoInsumo);
         document.getElementById('btn-gerar-relatorio-insumos').addEventListener('click', renderizarRelatorioInsumos);
         document.getElementById('insumos-busca').addEventListener('input', renderizarTabelaInsumos);
@@ -5335,14 +5649,16 @@
     function atualizarSelectPreventivasSetor() {
         const select = document.getElementById('preventivas-setor');
         if (!select) return;
+        const valorAtual = select.value;
         select.innerHTML = '<option value="">Todos</option>';
-        const setores = [...new Set(maquinas.map(m => m.setor).filter(Boolean))].sort();
+        const setores = obterSetoresDosStores();
         setores.forEach(s => {
             const opt = document.createElement('option');
             opt.value = s;
             opt.textContent = s;
             select.appendChild(opt);
         });
+        if (valorAtual && setores.includes(valorAtual)) select.value = valorAtual;
     }
 
     function atualizarTabelaSolicitantes() {
