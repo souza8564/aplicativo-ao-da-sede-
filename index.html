@@ -1540,6 +1540,10 @@
                             <input type="date" id="os-data" required>
                         </div>
                         <div class="form-group">
+                            <label for="os-hora-abertura">Hora de Abertura:</label>
+                            <input type="time" id="os-hora-abertura" required>
+                        </div>
+                        <div class="form-group">
                             <label for="os-prazo">Prazo para Conclusão:</label>
                             <input type="date" id="os-prazo">
                         </div>
@@ -1948,7 +1952,7 @@
                         <div class="form-group"><label for="preventiva-descricao">Descrição:</label><textarea id="preventiva-descricao" rows="3"></textarea></div>
                         <div class="form-group"><label for="preventiva-item-input">Itens a realizar:</label><div style="display:flex;gap:8px;align-items:center;"><input id="preventiva-item-input" placeholder="Ex.: verificar lubrificacao"><button type="button" id="btn-add-item-preventiva" class="btn-action">Adicionar item</button></div><ul id="preventiva-itens-lista" style="margin:8px 0;padding-left:18px;"></ul></div>
                         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
-                            <div class="form-group"><label for="preventiva-periodicidade">Periodicidade:</label><select id="preventiva-periodicidade"><option value="diaria">Diária</option><option value="semanal">Semanal</option><option value="mensal" selected>Mensal</option><option value="trimestral">Trimestral</option><option value="semestral">Semestral</option><option value="anual">Anual</option></select></div>
+                            <div class="form-group"><label for="preventiva-periodicidade">Periodicidade:</label><select id="preventiva-periodicidade"><option value="diaria">Diária</option><option value="semanal">Semanal</option><option value="quinzenal">Quinzenal</option><option value="mensal" selected>Mensal</option><option value="trimestral">Trimestral</option><option value="semestral">Semestral</option><option value="anual">Anual</option></select></div>
                             <div class="form-group"><label for="preventiva-data">Data da preventiva:</label><input id="preventiva-data" type="date" required></div>
                             <div class="form-group"><label for="preventiva-proxima-data">Próxima data:</label><input id="preventiva-proxima-data" type="date" required></div>
                             <div class="form-group"><label for="preventiva-status">Status:</label><select id="preventiva-status"><option value="pendente">Pendente</option><option value="em_andamento">Em andamento</option><option value="concluida">Concluída</option></select></div>
@@ -1966,6 +1970,8 @@
                     <div id="preventivas-list"></div>
                     <h3 style="margin-top:24px;">Preventivas cadastradas</h3>
                     <div id="preventivas-gerenciamento"></div>
+                    <h3 style="margin-top:24px;">Preventivas concluídas</h3>
+                    <div id="preventivas-concluidas"></div>
                     <h3 style="margin-top:24px;">Preventivas pendentes no painel</h3>
                     <div id="preventivas-painel-lista"></div>
                 </div>
@@ -1986,6 +1992,8 @@
                         </div>
                         <div class="form-group" id="apontamento-preventiva-grupo" style="display:none;"><label for="apontamento-preventiva">Preventiva:</label><select id="apontamento-preventiva"></select></div>
                         <div class="form-group"><label for="apontamento-data">Data de execucao:</label><input id="apontamento-data" type="date" required></div>
+                        <div class="form-group"><label for="apontamento-hora-inicio">Hora inicial do trabalho:</label><input id="apontamento-hora-inicio" type="text" placeholder="___:___" inputmode="numeric" maxlength="5" pattern="([01][0-9]|2[0-3]):[0-5][0-9]" title="Digite a hora no formato HH:MM" required></div>
+                        <div class="form-group"><label for="apontamento-hora-fim">Hora final do serviço:</label><input id="apontamento-hora-fim" type="text" placeholder="___:___" inputmode="numeric" maxlength="5" pattern="([01][0-9]|2[0-3]):[0-5][0-9]" title="Digite a hora no formato HH:MM" required></div>
                         <div class="form-group"><label for="apontamento-codigo">Codigo do executor:</label><input id="apontamento-codigo" required placeholder="Codigo do eletricista ou mecanico"></div>
                         <div class="form-group"><label for="apontamento-observacao">Observacao:</label><textarea id="apontamento-observacao" rows="3"></textarea></div>
                         <button type="submit">Dar baixa</button>
@@ -1993,7 +2001,7 @@
                 </div>
                 <div class="os-card">
                     <h3>Ultimos apontamentos</h3>
-                    <table id="tabela-apontamentos"><thead><tr><th>Tipo</th><th>Ordem/preventiva</th><th>Data</th><th>Executor</th><th>Observacao</th></tr></thead><tbody></tbody></table>
+                    <table id="tabela-apontamentos"><thead><tr><th>Tipo</th><th>Ordem/preventiva</th><th>Data</th><th>Início</th><th>Fim</th><th>Executor</th><th>Observacao</th></tr></thead><tbody></tbody></table>
                 </div>
             </div>
 
@@ -2063,6 +2071,22 @@
 
                         <div style="margin-top: 12px; background:#fff; border-radius:10px; padding:12px; box-shadow: 0 1px 6px rgba(0,0,0,0.05);">
                             <div id="relatorio-summary"></div>
+                            <div id="relatorio-tempos"></div>
+                            <div id="relatorio-diagnosticos"></div>
+                            <div style="margin-top:20px;">
+                                <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+                                    <h3>Horas efetivas por mantenedor e dia</h3>
+                                    <button type="button" id="btn-exportar-horas-mantenedor" disabled>Exportar horas CSV</button>
+                                </div>
+                                <div id="relatorio-horas-mantenedor"></div>
+                            </div>
+                            <div style="margin-top:20px;">
+                                <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+                                    <h3>Parada de máquina por ordem de serviço</h3>
+                                    <button type="button" id="btn-exportar-paradas-maquinas" disabled>Exportar paradas CSV</button>
+                                </div>
+                                <div id="relatorio-paradas-maquinas"></div>
+                            </div>
                             <table id="tabela-relatorio">
                                 <thead>
                                     <tr>
@@ -2073,6 +2097,12 @@
                                         <th>Data</th>
                                         <th>Status</th>
                                         <th>Técnico</th>
+                                        <th>Diagnóstico</th>
+                                        <th>Abertura</th>
+                                        <th>Início</th>
+                                        <th>Fim</th>
+                                        <th>Espera</th>
+                                        <th>Duração</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -2091,6 +2121,7 @@
                 <!-- Conteúdo da OS será inserido aqui -->
             </div>
             <div style="text-align: center; margin-top: 30px;">
+                <button id="btn-salvar-horas-os" onclick="salvarHorasOSVisualizacao()" style="display:none;padding:10px 20px;background:#00843d;color:#fff;border:none;border-radius:5px;font-weight:bold;cursor:pointer;">Salvar horários</button>
                 <button onclick="imprimirOS()" style="padding: 10px 20px; background: #39ff14; color: #111; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Imprimir OS</button>
                 <button onclick="fecharModalOS()" style="padding: 10px 20px; background: #d00; color: white; border: none; border-radius: 5px; margin-left: 15px; font-weight: bold; cursor: pointer;">Fechar</button>
             </div>
@@ -3701,13 +3732,14 @@
     function preencherPreventivasApontamento() {
         const select = document.getElementById('apontamento-preventiva');
         if (!select) return;
-        select.innerHTML = '<option value="">Selecione a preventiva</option>' + preventivas.map(item => `<option value="${item.id}">${item.titulo} - ${item.maquinaNome || ''}</option>`).join('');
+        const ativas = preventivas.filter(item => item.status !== 'concluida');
+        select.innerHTML = '<option value="">Selecione a preventiva</option>' + ativas.map(item => `<option value="${item.id}">${item.titulo} - ${item.maquinaNome || ''}</option>`).join('');
     }
 
     function renderizarApontamentos() {
         const tbody = document.querySelector('#tabela-apontamentos tbody');
         if (!tbody) return;
-        tbody.innerHTML = apontamentos.slice(0, 50).map(item => `<tr><td>${item.tipo === 'os' ? 'OS' : 'Preventiva'}</td><td>${item.osNumero ? '#' + item.osNumero : item.preventivaTitulo || ''}</td><td>${formatarData(item.dataExecucao || '')}</td><td>${item.executorNome || ''} (${item.executorCodigo || ''})</td><td>${item.observacao || ''}</td></tr>`).join('');
+        tbody.innerHTML = apontamentos.slice(0, 50).map(item => `<tr><td>${item.tipo === 'os' ? 'OS' : 'Preventiva'}</td><td>${item.osNumero ? '#' + item.osNumero : item.preventivaTitulo || ''}</td><td>${formatarData(item.dataExecucao || '')}</td><td>${item.horaInicio || '—'}</td><td>${item.horaFim || '—'}</td><td>${item.executorNome || ''} (${item.executorCodigo || ''})</td><td>${item.observacao || ''}</td></tr>`).join('');
     }
 
     function atualizarCamposApontamento() {
@@ -3818,8 +3850,14 @@
         const executor = tecnicos.find(item => (item.codigo || '').toUpperCase() === codigo);
         if (!executor) { alert('Código do executor não encontrado. Cadastre o código no cadastro de técnicos.'); return; }
         const dataExecucao = document.getElementById('apontamento-data').value;
+        const horaInicio = document.getElementById('apontamento-hora-inicio').value;
+        const horaFim = document.getElementById('apontamento-hora-fim').value;
         const observacao = document.getElementById('apontamento-observacao').value.trim();
-        const dados = { tipo, dataExecucao, executorId: executor.id, executorNome: executor.nome, executorCodigo: executor.codigo, observacao, criadoPor: currentUser.uid, criadoEm: firebase.firestore.FieldValue.serverTimestamp() };
+        if (!dataExecucao || !horaInicio || !horaFim) {
+            alert('Informe a data, a hora inicial e a hora final do serviço.');
+            return;
+        }
+        const dados = { tipo, dataExecucao, horaInicio, horaFim, executorId: executor.id, executorNome: executor.nome, executorCodigo: executor.codigo, observacao, criadoPor: currentUser.uid, criadoEm: firebase.firestore.FieldValue.serverTimestamp() };
         let atualizacao;
         if (tipo === 'os') {
             const numero = Number(document.getElementById('apontamento-os-numero').value);
@@ -3828,14 +3866,14 @@
             dados.osId = os.id; dados.osNumero = os.numero;
             dados.pecasConsumidas = obterPecasApontamento(os);
             atualizacao = debitarPecasECriarSolicitacoes(os, dados.pecasConsumidas).then(itens => {
-                return db.collection('ordensServico').doc(os.id).update({ status: 'concluida', dataConclusao: dataExecucao, executadoPorId: executor.id, executadoPorNome: executor.nome, executadoPorCodigo: executor.codigo }).then(() => criarSolicitacoesAutomaticas(os, itens));
+                return db.collection('ordensServico').doc(os.id).update({ status: 'concluida', dataConclusao: dataExecucao, horaInicio, horaFim, executadoPorId: executor.id, executadoPorNome: executor.nome, executadoPorCodigo: executor.codigo }).then(() => criarSolicitacoesAutomaticas(os, itens));
             });
         } else {
             const preventiva = preventivas.find(item => item.id === document.getElementById('apontamento-preventiva').value);
             if (!preventiva) { alert('Selecione uma preventiva.'); return; }
             dados.preventivaId = preventiva.id; dados.preventivaTitulo = preventiva.titulo;
-            const proximaData = calcularProximaPreventiva(dataExecucao, preventiva.periodicidade);
-            atualizacao = db.collection('preventivas').doc(preventiva.id).update({ status: 'pendente', resultado: 'ok', ultimaExecucao: dataExecucao, dataPreventiva: dataExecucao, proximaData, proximaHorario: '07:00', executadoPorId: executor.id, executadoPorNome: executor.nome, executadoPorCodigo: executor.codigo });
+            dados.preventivaNumero = preventiva.numeroPreventiva || '';
+            atualizacao = concluirPreventiva(preventiva.id, dataExecucao, executor.id, executor.nome, executor.codigo, horaInicio, horaFim);
         }
         atualizacao.then(() => db.collection('apontamentos').add(dados)).then(() => { alert('Baixa registrada com sucesso.'); document.getElementById('apontamentoForm').reset(); document.getElementById('apontamento-data').valueAsDate = new Date(); atualizarCamposApontamento(); carregarApontamentos(); carregarOrdensServico(); carregarPreventivas(); carregarMaquinas(); carregarSolicitacoesCompras(); }).catch(error => alert('Erro ao registrar baixa: ' + error.message));
     }
@@ -4845,6 +4883,8 @@
             adicionarLinhaPecaApontamento(lista);
         });
         document.getElementById('apontamento-data').valueAsDate = new Date();
+        document.getElementById('os-data').valueAsDate = new Date();
+        document.getElementById('os-hora-abertura').value = horaLocalAtual();
         atualizarCamposApontamento();
         carregarInsumos();
     });
@@ -5535,13 +5575,14 @@
             const equipamento = maquinaObj ? maquinaObj.nome : '';
             const serial = maquinaObj ? (maquinaObj.patrimonio || '') : '';
             const data = document.getElementById('os-data').value;
+            const horaAbertura = document.getElementById('os-hora-abertura').value;
             const prazo = document.getElementById('os-prazo').value;
             const problema = document.getElementById('os-problema').value.trim();
             const diagnostico = document.getElementById('os-diagnostico').value.trim();
             const solucao = document.getElementById('os-solucao').value.trim();
             const status = document.getElementById('os-status').value;
 
-            if (!solicitanteId || !setor || !maquinaId || !tecnicoId || !data || !problema) {
+            if (!solicitanteId || !setor || !maquinaId || !tecnicoId || !data || !horaAbertura || !problema) {
                 alert('Preencha todos os campos obrigatórios.');
                 return;
             }
@@ -5564,6 +5605,7 @@
                         tecnicoId,
                         maquinaId,
                         data,
+                        horaAbertura,
                         prazo: prazo || null,
                         problema,
                         diagnostico: diagnostico || '',
@@ -5577,6 +5619,7 @@
                     alert('Ordem de Serviço cadastrada com sucesso!');
                     document.getElementById('osForm').reset();
                     document.getElementById('os-data').valueAsDate = new Date();
+                    document.getElementById('os-hora-abertura').value = horaLocalAtual();
                     carregarOrdensServico();
                     if (confirm('Deseja imprimir esta ordem de serviço?')) {
                         // A impressão será feita após carregar a nova OS
@@ -6182,6 +6225,7 @@
         }
         document.getElementById('os-tecnico').value = os.tecnicoId;
         document.getElementById('os-data').value = os.data;
+        document.getElementById('os-hora-abertura').value = os.horaAbertura || '';
         document.getElementById('os-prazo').value = os.prazo || '';
         document.getElementById('os-problema').value = os.problema;
         document.getElementById('os-diagnostico').value = os.diagnostico || '';
@@ -6229,6 +6273,9 @@
                 .os-details { margin-bottom: 8px; }
                 .os-details h3 { color: #00843d; font-size: 1em; margin: 0 0 2px 0; border-bottom: 1px solid #eee; padding-bottom: 2px; }
                 .os-details p { white-space: pre-line; margin: 0 0 2px 0; }
+                .os-writing-lines div { height: 22px; border-bottom: 1px solid #999; }
+                .os-time-input { width: 130px; padding: 2px 4px; border: 0; border-bottom: 1px solid #777; background: transparent; font: inherit; }
+                @media print { .os-time-input { appearance: none; border: 0; } }
                 .os-signatures { display: flex; gap: 20px; margin-top: 18px; }
                 .os-signature { border-top: 1px solid #000; padding-top: 6px; text-align: center; font-size: 0.95em; }
                 .print-button { display: block; margin: 16px auto 0 auto; padding: 8px 18px; background: #39ff14; color: #111; border: none; border-radius: 5px; font-weight: bold; font-size: 1em; cursor: pointer; }
@@ -6254,6 +6301,9 @@
                         <p><strong>Patrimônio:</strong> ${os.serial || 'Não informado'}</p>
                         <p><strong>Técnico:</strong> ${tecnico.nome || 'Não informado'} (${tecnico.especialidade || 'Não informado'})</p>
                         <p><strong>Prazo:</strong> ${os.prazo ? formatarDataInput(os.prazo) : 'Não definido'}</p>
+                        <p><strong>Hora de abertura:</strong> ${os.horaAbertura || 'Não informada'}</p>
+                        <p><strong>Início do trabalho:</strong> <input class="os-time-input" id="visualizar-os-hora-inicio" type="text" placeholder="___:___" inputmode="numeric" maxlength="5" pattern="([01][0-9]|2[0-3]):[0-5][0-9]" title="Digite a hora no formato HH:MM" value="${os.horaInicio || ''}" aria-label="Hora inicial do trabalho"></p>
+                        <p><strong>Fim do serviço:</strong> <input class="os-time-input" id="visualizar-os-hora-fim" type="text" placeholder="___:___" inputmode="numeric" maxlength="5" pattern="([01][0-9]|2[0-3]):[0-5][0-9]" title="Digite a hora no formato HH:MM" value="${os.horaFim || ''}" aria-label="Hora final do serviço"></p>
                     </div>
                 </div>
                 <div class="os-details">
@@ -6262,11 +6312,13 @@
                 </div>
                 <div class="os-details">
                     <h3>Diagnóstico Técnico</h3>
-                    <p>${os.diagnostico || '—'}</p>
+                    ${os.diagnostico ? `<p>${os.diagnostico}</p>` : ''}
+                    <div class="os-writing-lines"><div></div><div></div><div></div></div>
                 </div>
                 <div class="os-details">
                     <h3>Solução Aplicada</h3>
-                    <p>${os.solucao || '—'}</p>
+                    ${os.solucao ? `<p>${os.solucao}</p>` : ''}
+                    <div class="os-writing-lines"><div></div><div></div><div></div></div>
                 </div>
                 <div class="os-signatures">
                     <div class="os-signature">
@@ -6283,11 +6335,33 @@
         `;
         
         document.getElementById('os-print-content').innerHTML = html;
+        const botaoSalvarHoras = document.getElementById('btn-salvar-horas-os');
+        botaoSalvarHoras.dataset.osId = osId;
+        botaoSalvarHoras.style.display = usuarioPodeGerenciarOS() ? 'inline-block' : 'none';
         document.getElementById('modal-os').style.display = 'block';
+    }
+
+    function salvarHorasOSVisualizacao() {
+        const botao = document.getElementById('btn-salvar-horas-os');
+        const osId = botao?.dataset.osId;
+        if (!osId || !usuarioPodeGerenciarOS()) {
+            alert('Seu perfil não tem permissão para registrar horários desta OS.');
+            return;
+        }
+        const dados = {
+            horaInicio: document.getElementById('visualizar-os-hora-inicio').value,
+            horaFim: document.getElementById('visualizar-os-hora-fim').value
+        };
+        db.collection('ordensServico').doc(osId).update(dados).then(() => {
+            const os = ordensServico.find(item => item.id === osId);
+            if (os) Object.assign(os, dados);
+            alert('Horários da OS salvos com sucesso.');
+        }).catch(error => alert('Erro ao salvar horários: ' + error.message));
     }
 
     function fecharModalOS() {
         document.getElementById('modal-os').style.display = 'none';
+        document.getElementById('btn-salvar-horas-os').dataset.osId = '';
     }
 
     function imprimirOS() {
@@ -6324,10 +6398,32 @@
     }
 
     function calcularProximaPreventiva(dataBase, periodicidade) {
-        const data = dataBase ? new Date(`${dataBase}T12:00:00`) : new Date();
-        const dias = { diaria: 1, semanal: 7, mensal: 30, trimestral: 90, semestral: 180, anual: 365 };
-        data.setDate(data.getDate() + (dias[periodicidade] || 30));
-        return data.toISOString().split('T')[0];
+        const partes = (dataBase || new Date().toISOString().split('T')[0]).split('-').map(Number);
+        const data = new Date(partes[0], partes[1] - 1, partes[2], 12);
+        const dias = { diaria: 1, semanal: 7, quinzenal: 15 };
+
+        if (dias[periodicidade]) {
+            data.setDate(data.getDate() + dias[periodicidade]);
+        } else {
+            const meses = { mensal: 1, trimestral: 3, semestral: 6, anual: 12 };
+            const diaOriginal = data.getDate();
+            data.setDate(1);
+            data.setMonth(data.getMonth() + (meses[periodicidade] || 1));
+            const ultimoDia = new Date(data.getFullYear(), data.getMonth() + 1, 0).getDate();
+            data.setDate(Math.min(diaOriginal, ultimoDia));
+        }
+
+        const anoFinal = data.getFullYear();
+        const mesFinal = String(data.getMonth() + 1).padStart(2, '0');
+        const diaFinal = String(data.getDate()).padStart(2, '0');
+        return `${anoFinal}-${mesFinal}-${diaFinal}`;
+    }
+
+    function obterDataLocalAtual() {
+        const data = new Date();
+        const mes = String(data.getMonth() + 1).padStart(2, '0');
+        const dia = String(data.getDate()).padStart(2, '0');
+        return `${data.getFullYear()}-${mes}-${dia}`;
     }
 
     function proximaPreventivaAsSete(dataBase, periodicidade) {
@@ -6377,49 +6473,137 @@
         const container = document.getElementById('preventivas-gerenciamento');
         if (!container) return;
         preencherSelectPreventivaMaquina();
-        if (!preventivas.length) {
+        const ativas = preventivas.filter(preventiva => preventiva.status !== 'concluida');
+        if (!ativas.length) {
             container.innerHTML = '<p>Nenhuma preventiva cadastrada.</p>';
+        } else {
+            const tabela = document.createElement('table');
+            tabela.innerHTML = '<thead><tr><th>Número</th><th>Máquina</th><th>Preventiva</th><th>Periodicidade</th><th>Próxima data</th><th>Status</th><th>Ações</th></tr></thead><tbody></tbody>';
+            const tbody = tabela.querySelector('tbody');
+            ativas.forEach(preventiva => {
+                const maquina = maquinas.find(item => item.id === preventiva.maquinaId) || {};
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td><strong>#${preventiva.numeroPreventiva || '—'}</strong></td><td>${maquina.nome || preventiva.maquinaNome || 'Não informada'}</td><td>${preventiva.titulo}</td><td>${preventiva.periodicidade || ''}</td><td>${formatarData(preventiva.proximaData || '')}</td><td>${preventiva.status || 'pendente'}</td><td><button type="button" class="btn-action btn-editar-preventiva" data-id="${preventiva.id}">Editar</button><button type="button" class="btn-action btn-delete btn-excluir-preventiva" data-id="${preventiva.id}">Excluir</button></td>`;
+                const resultado = preventiva.resultado || '';
+                tr.cells[4].innerHTML = `<label style="margin-right:8px;color:#087f23;"><input type="checkbox" class="resultado-preventiva" data-resultado="ok" data-id="${preventiva.id}" ${resultado === 'ok' ? 'checked' : ''}> OK</label><label style="color:#c00;"><input type="checkbox" class="resultado-preventiva" data-resultado="nok" data-id="${preventiva.id}" ${resultado === 'nok' ? 'checked' : ''}> NOK</label>`;
+                tbody.appendChild(tr);
+            });
+            container.innerHTML = '';
+            container.appendChild(tabela);
+            container.querySelectorAll('.btn-editar-preventiva').forEach(btn => btn.addEventListener('click', () => editarPreventiva(btn.dataset.id)));
+            container.querySelectorAll('tbody tr').forEach(linha => {
+                const id = linha.querySelector('.btn-editar-preventiva').dataset.id;
+                const botao = document.createElement('button');
+                botao.type = 'button';
+                botao.className = 'btn-action';
+                botao.textContent = 'Imprimir';
+                botao.addEventListener('click', () => imprimirPreventiva(id));
+                linha.querySelector('td:last-child').appendChild(botao);
+            });
+            container.querySelectorAll('.btn-excluir-preventiva').forEach(btn => btn.addEventListener('click', () => excluirPreventiva(btn.dataset.id)));
+            container.querySelectorAll('.resultado-preventiva').forEach(checkbox => checkbox.addEventListener('change', () => {
+                if (!checkbox.checked) return;
+                const id = checkbox.dataset.id;
+                container.querySelectorAll(`.resultado-preventiva[data-id="${id}"]`).forEach(outro => { if (outro !== checkbox) outro.checked = false; });
+                registrarResultadoPreventiva(id, checkbox.dataset.resultado);
+            }));
+        }
+
+        renderizarPreventivasConcluidas();
+    }
+
+    function renderizarPreventivasConcluidas() {
+        const container = document.getElementById('preventivas-concluidas');
+        if (!container) return;
+        const concluidas = preventivas.filter(preventiva => preventiva.status === 'concluida')
+            .sort((a, b) => (b.ultimaExecucao || '').localeCompare(a.ultimaExecucao || ''));
+        if (!concluidas.length) {
+            container.innerHTML = '<p>Nenhuma preventiva concluída.</p>';
             return;
         }
         const tabela = document.createElement('table');
-        tabela.innerHTML = '<thead><tr><th>Número</th><th>Máquina</th><th>Preventiva</th><th>Periodicidade</th><th>Próxima data</th><th>Status</th><th>Ações</th></tr></thead><tbody></tbody>';
+        tabela.innerHTML = '<thead><tr><th>Número</th><th>Máquina</th><th>Preventiva</th><th>Periodicidade</th><th>Concluída em</th><th>Próxima ocorrência</th></tr></thead><tbody></tbody>';
         const tbody = tabela.querySelector('tbody');
-        preventivas.forEach(preventiva => {
+        concluidas.forEach(preventiva => {
             const maquina = maquinas.find(item => item.id === preventiva.maquinaId) || {};
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td><strong>#${preventiva.numeroPreventiva || '—'}</strong></td><td>${maquina.nome || preventiva.maquinaNome || 'Não informada'}</td><td>${preventiva.titulo}</td><td>${preventiva.periodicidade || ''}</td><td>${formatarData(preventiva.proximaData || '')}</td><td>${preventiva.status || 'pendente'}</td><td><button type="button" class="btn-action btn-editar-preventiva" data-id="${preventiva.id}">Editar</button><button type="button" class="btn-action btn-delete btn-excluir-preventiva" data-id="${preventiva.id}">Excluir</button></td>`;
-            const resultado = preventiva.resultado || '';
-            tr.cells[4].innerHTML = `<label style="margin-right:8px;color:#087f23;"><input type="checkbox" class="resultado-preventiva" data-resultado="ok" data-id="${preventiva.id}" ${resultado === 'ok' ? 'checked' : ''}> OK</label><label style="color:#c00;"><input type="checkbox" class="resultado-preventiva" data-resultado="nok" data-id="${preventiva.id}" ${resultado === 'nok' ? 'checked' : ''}> NOK</label>`;
+            tr.innerHTML = `<td><strong>#${preventiva.numeroPreventiva || '—'}</strong></td><td>${maquina.nome || preventiva.maquinaNome || 'Não informada'}</td><td>${preventiva.titulo || ''}</td><td>${preventiva.periodicidade || ''}</td><td>${formatarData(preventiva.ultimaExecucao || preventiva.dataConclusao || '')}</td><td>${formatarData(preventiva.proximaData || '')}</td>`;
             tbody.appendChild(tr);
         });
         container.innerHTML = '';
         container.appendChild(tabela);
-        container.querySelectorAll('.btn-editar-preventiva').forEach(btn => btn.addEventListener('click', () => editarPreventiva(btn.dataset.id)));
-        container.querySelectorAll('tbody tr').forEach(linha => {
-            const id = linha.querySelector('.btn-editar-preventiva').dataset.id;
-            const botao = document.createElement('button');
-            botao.type = 'button';
-            botao.className = 'btn-action';
-            botao.textContent = 'Imprimir';
-            botao.addEventListener('click', () => imprimirPreventiva(id));
-            linha.querySelector('td:last-child').appendChild(botao);
-        });
-        container.querySelectorAll('.btn-excluir-preventiva').forEach(btn => btn.addEventListener('click', () => excluirPreventiva(btn.dataset.id)));
-        container.querySelectorAll('.resultado-preventiva').forEach(checkbox => checkbox.addEventListener('change', () => {
-            if (!checkbox.checked) return;
-            const id = checkbox.dataset.id;
-            container.querySelectorAll(`.resultado-preventiva[data-id="${id}"]`).forEach(outro => { if (outro !== checkbox) outro.checked = false; });
-            registrarResultadoPreventiva(id, checkbox.dataset.resultado);
-        }));
     }
 
     function registrarResultadoPreventiva(id, resultado) {
-        const status = resultado === 'ok' ? 'concluida' : 'pendente';
-        db.collection('preventivas').doc(id).update({ resultado, status, resultadoEm: firebase.firestore.FieldValue.serverTimestamp(), resultadoPor: currentUser.uid }).then(() => {
-            const item = preventivas.find(preventiva => preventiva.id === id);
-            if (item) { item.resultado = resultado; item.status = status; }
-            atualizarPainelPreventivas();
-        }).catch(error => alert('Erro ao salvar resultado: ' + error.message));
+        if (resultado === 'ok') {
+            document.querySelectorAll(`.resultado-preventiva[data-id="${id}"]`).forEach(checkbox => { checkbox.checked = false; });
+            document.getElementById('apontamento-tipo').value = 'preventiva';
+            preencherPreventivasApontamento();
+            atualizarCamposApontamento();
+            document.getElementById('apontamento-preventiva').value = id;
+            document.getElementById('apontamento-hora-inicio').value = '';
+            document.getElementById('apontamento-hora-fim').value = '';
+            document.querySelector('[data-tab="apontamentos"]').click();
+            document.getElementById('apontamento-hora-inicio').focus();
+            alert('Preventiva selecionada. Informe a hora inicial e final e registre a baixa para concluir.');
+            return;
+        }
+        db.collection('preventivas').doc(id).update({ resultado, status: 'pendente', resultadoEm: firebase.firestore.FieldValue.serverTimestamp(), resultadoPor: currentUser.uid }).then(() => carregarPreventivas()).catch(error => alert('Erro ao salvar resultado: ' + error.message));
+    }
+
+    async function concluirPreventiva(id, dataExecucao, executorId, executorNome, executorCodigo = '', horaInicio = '', horaFim = '') {
+        const referencia = db.collection('preventivas').doc(id);
+        const referenciaProxima = db.collection('preventivas').doc();
+        const numeroProxima = String(Math.floor(100000 + Math.random() * 900000));
+
+        try {
+            await db.runTransaction(async transaction => {
+                const snapshot = await transaction.get(referencia);
+                if (!snapshot.exists) throw new Error('Preventiva não encontrada.');
+                const atual = snapshot.data();
+                if (atual.status === 'concluida' && atual.proximaOcorrenciaId) return;
+
+                const proximaData = calcularProximaPreventiva(dataExecucao, atual.periodicidade);
+                const proxima = {
+                    maquinaId: atual.maquinaId,
+                    maquinaNome: atual.maquinaNome || '',
+                    titulo: atual.titulo || '',
+                    descricao: atual.descricao || '',
+                    itens: (atual.itens || []).map(item => typeof item === 'string' ? { nome: item, concluido: false } : { ...item, concluido: false }),
+                    periodicidade: atual.periodicidade || 'mensal',
+                    dataPreventiva: proximaData,
+                    proximaData,
+                    proximaHorario: atual.proximaHorario || '07:00',
+                    status: 'pendente',
+                    numeroPreventiva: numeroProxima,
+                    recorrenciaOrigemId: id,
+                    criadoPor: executorId,
+                    criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
+                    atualizadoPor: executorId,
+                    atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                transaction.update(referencia, {
+                    status: 'concluida',
+                    resultado: 'ok',
+                    ultimaExecucao: dataExecucao,
+                    dataConclusao: dataExecucao,
+                    horaInicio,
+                    horaFim,
+                    resultadoEm: firebase.firestore.FieldValue.serverTimestamp(),
+                    resultadoPor: executorId,
+                    executadoPorId: executorId,
+                    executadoPorNome: executorNome,
+                    executadoPorCodigo: executorCodigo,
+                    proximaOcorrenciaId: referenciaProxima.id
+                });
+                transaction.set(referenciaProxima, proxima);
+            });
+            await carregarPreventivas();
+        } catch (error) {
+            alert('Erro ao concluir preventiva: ' + error.message);
+            throw error;
+        }
     }
 
     function salvarPreventiva(event) {
@@ -6459,16 +6643,16 @@
     function atualizarPainelPreventivas() {
         const container = document.getElementById('painel-preventivas-pendentes');
         if (!container) return;
-        const hoje = new Date().toISOString().split('T')[0];
-        const pendentes = preventivas.filter(item => item.status !== 'concluida' && item.proximaData && item.proximaData <= hoje).sort((a, b) => a.proximaData.localeCompare(b.proximaData));
+        const pendentes = preventivas.filter(item => !item.status || item.status === 'pendente')
+            .sort((a, b) => (a.proximaData || '').localeCompare(b.proximaData || ''));
         container.innerHTML = pendentes.length ? pendentes.map(item => {
             const maquina = maquinas.find(m => m.id === item.maquinaId) || {};
-            return `<button type="button" class="btn-pendente-preventiva" data-id="${item.id}" style="display:block;width:100%;text-align:left;background:#fff;border:1px solid #ddd;border-left:4px solid #d00;padding:10px;margin:6px 0;cursor:pointer;"><strong>#${item.numeroPreventiva || '—'} - ${item.titulo}</strong> - ${maquina.nome || item.maquinaNome || 'Maquina'}<br><small>Vencida em ${formatarData(item.proximaData)} | Status: ${item.status || 'pendente'}</small></button>`;
+            return `<button type="button" class="btn-pendente-preventiva" data-id="${item.id}" style="display:block;width:100%;text-align:left;background:#fff;border:1px solid #ddd;border-left:4px solid #d00;padding:10px;margin:6px 0;cursor:pointer;"><strong>#${item.numeroPreventiva || '—'} - ${item.titulo}</strong> - ${maquina.nome || item.maquinaNome || 'Máquina'}<br><small>Data prevista: ${formatarData(item.proximaData || item.dataPreventiva || '')} | Status: ${item.status || 'pendente'}</small></button>`;
         }).join('') : '<p>Nenhuma preventiva pendente.</p>';
-        container.querySelectorAll('.btn-pendente-preventiva').forEach(btn => btn.addEventListener('click', () => editarPreventiva(btn.dataset.id)));
+        container.querySelectorAll('.btn-pendente-preventiva').forEach(btn => btn.addEventListener('click', () => imprimirPreventiva(btn.dataset.id, false)));
     }
 
-    function imprimirPreventiva(id) {
+    function imprimirPreventiva(id, imprimirAutomaticamente = true) {
         const item = preventivas.find(preventiva => preventiva.id === id);
         if (!item) return;
         const maquina = maquinas.find(m => m.id === item.maquinaId) || {};
@@ -6490,7 +6674,7 @@
             }
             janela.document.title = `Preventiva - ${item.numeroPreventiva || ''} - ${item.titulo}`;
             janela.focus();
-            janela.print();
+            if (imprimirAutomaticamente) janela.print();
         };
     }
 
@@ -6664,6 +6848,223 @@
     // ============================================
     
     let relatorioAtual = [];
+    let relatorioHorasMantenedorAtual = [];
+    let relatorioParadasMaquinasAtual = [];
+
+    function horaLocalAtual() {
+        const agora = new Date();
+        return `${String(agora.getHours()).padStart(2, '0')}:${String(agora.getMinutes()).padStart(2, '0')}`;
+    }
+
+    function calcularMinutosEntre(dataInicio, horaInicio, dataFim, horaFim, permitirVirada = false) {
+        if (!dataInicio || !horaInicio || !dataFim || !horaFim) return null;
+        const inicio = new Date(`${dataInicio}T${horaInicio}:00`);
+        let fim = new Date(`${dataFim}T${horaFim}:00`);
+        if (Number.isNaN(inicio.getTime()) || Number.isNaN(fim.getTime())) return null;
+        if (permitirVirada && fim < inicio) fim = new Date(fim.getTime() + 24 * 60 * 60 * 1000);
+        const minutos = Math.round((fim - inicio) / 60000);
+        return minutos >= 0 ? minutos : null;
+    }
+
+    function formatarMinutosRelatorio(minutos) {
+        if (minutos === null || minutos === undefined) return 'Sem registro';
+        const horas = Math.floor(minutos / 60);
+        const restante = minutos % 60;
+        return horas ? `${horas} h ${restante} min` : `${restante} min`;
+    }
+
+    function obterApontamentoOS(os) {
+        return apontamentos.filter(item => item.tipo === 'os' && (item.osId === os.id || Number(item.osNumero) === Number(os.numero)))
+            .sort((a, b) => `${b.dataExecucao || ''}T${b.horaFim || ''}`.localeCompare(`${a.dataExecucao || ''}T${a.horaFim || ''}`))[0];
+    }
+
+    function calcularTemposRegistro(dataAbertura, horaAbertura, apontamento, dataPadraoFim = '') {
+        if (!apontamento) return { espera: null, execucao: null };
+        const dataInicio = apontamento.dataExecucao || dataPadraoFim;
+        const espera = calcularMinutosEntre(dataAbertura, horaAbertura, dataInicio, apontamento.horaInicio);
+        const execucao = calcularMinutosEntre(dataInicio, apontamento.horaInicio, dataInicio, apontamento.horaFim, true);
+        return { espera, execucao };
+    }
+
+    function calcularMediaMinutos(registros, chave) {
+        const valores = registros.map(registro => registro[chave]).filter(valor => valor !== null && valor !== undefined);
+        return valores.length ? Math.round(valores.reduce((total, valor) => total + valor, 0) / valores.length) : null;
+    }
+
+    function minutosParaHorasDecimais(minutos) {
+        return minutos === null || minutos === undefined ? '' : (minutos / 60).toFixed(2);
+    }
+
+    function obterRegistrosHorasMantenedor(inicio, fim) {
+        return apontamentos.filter(item => {
+            if (!item.dataExecucao || !item.horaInicio || !item.horaFim) return false;
+            const data = new Date(`${item.dataExecucao}T12:00:00`);
+            return data >= inicio && data <= fim;
+        }).map(item => {
+            const executor = tecnicos.find(tecnico => tecnico.id === item.executorId) || {};
+            const os = item.tipo === 'os'
+                ? ordensServico.find(ordem => ordem.id === item.osId || Number(ordem.numero) === Number(item.osNumero)) || {}
+                : {};
+            const preventiva = item.tipo === 'preventiva'
+                ? preventivas.find(registro => registro.id === item.preventivaId) || {}
+                : {};
+            return {
+                data: item.dataExecucao,
+                mantenedorId: item.executorId || executor.id || item.executorNome || 'sem-identificacao',
+                mantenedor: item.executorNome || executor.nome || 'Mantenedor não identificado',
+                tipo: item.tipo === 'preventiva' ? 'Preventiva' : 'OS',
+                referencia: item.tipo === 'preventiva'
+                    ? `Preventiva #${item.preventivaNumero || preventiva.numeroPreventiva || '—'}`
+                    : `OS #${item.osNumero || os.numero || '—'}`,
+                maquina: os.equipamento || preventiva.maquinaNome || 'Máquina não identificada',
+                horaInicio: item.horaInicio,
+                horaFim: item.horaFim,
+                minutos: calcularMinutosEntre(item.dataExecucao, item.horaInicio, item.dataExecucao, item.horaFim, true)
+            };
+        }).filter(item => item.minutos !== null);
+    }
+
+    function renderizarHorasMantenedorRelatorio(inicio, fim) {
+        const container = document.getElementById('relatorio-horas-mantenedor');
+        const registros = obterRegistrosHorasMantenedor(inicio, fim);
+        const porDiaMantenedor = new Map();
+        const porMantenedor = new Map();
+        registros.forEach(item => {
+            const chaveDia = `${item.data}|${item.mantenedorId}`;
+            const diaria = porDiaMantenedor.get(chaveDia) || { ...item, minutos: 0, quantidade: 0, os: 0, preventivas: 0 };
+            diaria.minutos += item.minutos;
+            diaria.quantidade += 1;
+            if (item.tipo === 'OS') diaria.os += 1;
+            else diaria.preventivas += 1;
+            porDiaMantenedor.set(chaveDia, diaria);
+
+            const chaveMantenedor = String(item.mantenedorId);
+            const total = porMantenedor.get(chaveMantenedor) || { mantenedor: item.mantenedor, minutos: 0, quantidade: 0 };
+            total.minutos += item.minutos;
+            total.quantidade += 1;
+            porMantenedor.set(chaveMantenedor, total);
+        });
+
+        relatorioHorasMantenedorAtual = [...porDiaMantenedor.values()].sort((a, b) => b.data.localeCompare(a.data) || a.mantenedor.localeCompare(b.mantenedor));
+        const totais = [...porMantenedor.values()].sort((a, b) => b.minutos - a.minutos);
+        document.getElementById('btn-exportar-horas-mantenedor').disabled = relatorioHorasMantenedorAtual.length === 0;
+        if (!relatorioHorasMantenedorAtual.length) {
+            container.innerHTML = '<p>Não há apontamentos com horas registradas neste período.</p>';
+            return;
+        }
+
+        container.innerHTML = `<h4>Total no período por mantenedor</h4><table><thead><tr><th>Mantenedor</th><th>Horas efetivas</th><th>Apontamentos</th></tr></thead><tbody>${totais.map(item => `<tr><td>${item.mantenedor}</td><td>${formatarMinutosRelatorio(item.minutos)}</td><td>${item.quantidade}</td></tr>`).join('')}</tbody></table><h4>Detalhamento diário</h4><table><thead><tr><th>Data</th><th>Mantenedor</th><th>Horas efetivas</th><th>Apontamentos</th><th>OS</th><th>Preventivas</th></tr></thead><tbody>${relatorioHorasMantenedorAtual.map(item => `<tr><td>${formatarData(item.data)}</td><td>${item.mantenedor}</td><td>${formatarMinutosRelatorio(item.minutos)}</td><td>${item.quantidade}</td><td>${item.os}</td><td>${item.preventivas}</td></tr>`).join('')}</tbody></table><h4>Apontamentos detalhados</h4><table><thead><tr><th>Data</th><th>Mantenedor</th><th>Tipo</th><th>OS/Preventiva</th><th>Máquina</th><th>Início</th><th>Fim</th><th>Duração</th></tr></thead><tbody>${registros.sort((a, b) => b.data.localeCompare(a.data) || a.mantenedor.localeCompare(b.mantenedor)).map(item => `<tr><td>${formatarData(item.data)}</td><td>${item.mantenedor}</td><td>${item.tipo}</td><td>${item.referencia}</td><td>${item.maquina}</td><td>${item.horaInicio}</td><td>${item.horaFim}</td><td>${formatarMinutosRelatorio(item.minutos)}</td></tr>`).join('')}</tbody></table>`;
+    }
+
+    function renderizarParadasMaquinasRelatorio(resultados) {
+        const container = document.getElementById('relatorio-paradas-maquinas');
+        const registros = resultados.map(os => {
+            const apontamento = obterApontamentoOS(os) || (os.horaInicio || os.horaFim ? {
+                dataExecucao: os.dataConclusao || os.data,
+                horaInicio: os.horaInicio,
+                horaFim: os.horaFim,
+                executorNome: os.executadoPorNome
+            } : null);
+            const dataFim = apontamento?.dataExecucao || os.dataConclusao || os.data;
+            return {
+                maquina: os.equipamento || 'Máquina não identificada',
+                numero: os.numero,
+                data: os.data,
+                dataFim,
+                mantenedor: apontamento?.executorNome || os.executadoPorNome || '—',
+                horaAbertura: os.horaAbertura || '',
+                horaFim: apontamento?.horaFim || '',
+                paradaMinutos: apontamento
+                    ? calcularMinutosEntre(os.data, os.horaAbertura, dataFim, apontamento.horaFim, true)
+                    : null,
+                manutencaoMinutos: apontamento
+                    ? calcularMinutosEntre(apontamento.dataExecucao || dataFim, apontamento.horaInicio, dataFim, apontamento.horaFim, true)
+                    : null
+            };
+        });
+        relatorioParadasMaquinasAtual = registros.filter(item => item.paradaMinutos !== null)
+            .sort((a, b) => b.paradaMinutos - a.paradaMinutos);
+        document.getElementById('btn-exportar-paradas-maquinas').disabled = relatorioParadasMaquinasAtual.length === 0;
+
+        if (!registros.length) {
+            container.innerHTML = '<p>Não há ordens de serviço neste período.</p>';
+            return;
+        }
+
+        const totaisMaquina = new Map();
+        relatorioParadasMaquinasAtual.forEach(item => {
+            const total = totaisMaquina.get(item.maquina) || { maquina: item.maquina, minutos: 0, ordens: 0 };
+            total.minutos += item.paradaMinutos;
+            total.ordens += 1;
+            totaisMaquina.set(item.maquina, total);
+        });
+        const resumo = [...totaisMaquina.values()].sort((a, b) => b.minutos - a.minutos);
+        container.innerHTML = `<p><small>Parada estimada por OS: da abertura registrada até o fim do serviço apontado. Sem hora de abertura ou de conclusão, a duração não é calculada.</small></p><h4>Total de parada por máquina</h4>${resumo.length ? `<table><thead><tr><th>Máquina</th><th>Tempo parada</th><th>OS concluídas com horários</th></tr></thead><tbody>${resumo.map(item => `<tr><td>${item.maquina}</td><td>${formatarMinutosRelatorio(item.minutos)}</td><td>${item.ordens}</td></tr>`).join('')}</tbody></table>` : '<p>Nenhuma OS tem os horários necessários para calcular a parada.</p>'}<h4>Detalhamento por OS</h4><table><thead><tr><th>OS</th><th>Máquina</th><th>Mantenedor</th><th>Abertura</th><th>Fim do serviço</th><th>Parada estimada</th><th>Execução efetiva</th></tr></thead><tbody>${registros.map(item => `<tr><td>#${item.numero || '—'}</td><td>${item.maquina}</td><td>${item.mantenedor}</td><td>${formatarData(item.data)} ${item.horaAbertura || '—'}</td><td>${item.horaFim ? `${formatarData(item.dataFim)} ${item.horaFim}` : '—'}</td><td>${formatarMinutosRelatorio(item.paradaMinutos)}</td><td>${formatarMinutosRelatorio(item.manutencaoMinutos)}</td></tr>`).join('')}</tbody></table>`;
+    }
+
+    function exportarTabelaCSV(nomeArquivo, cabecalho, linhas) {
+        if (!linhas.length) return;
+        const csv = [cabecalho, ...linhas.map(linha => linha.map(valor => `"${String(valor ?? '').replace(/"/g, '""')}"`).join(','))].join('\n');
+        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = nomeArquivo;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    function exportarHorasMantenedorCSV() {
+        exportarTabelaCSV('horas_por_mantenedor.csv', ['Data', 'Mantenedor', 'Horas efetivas', 'Apontamentos', 'OS', 'Preventivas'], relatorioHorasMantenedorAtual.map(item => [formatarData(item.data), item.mantenedor, minutosParaHorasDecimais(item.minutos), item.quantidade, item.os, item.preventivas]));
+    }
+
+    function exportarParadasMaquinasCSV() {
+        exportarTabelaCSV('paradas_por_maquina_os.csv', ['OS', 'Máquina', 'Mantenedor', 'Data abertura', 'Hora abertura', 'Data fim', 'Hora fim', 'Parada horas', 'Execução horas'], relatorioParadasMaquinasAtual.map(item => [`#${item.numero || '—'}`, item.maquina, item.mantenedor, formatarData(item.data), item.horaAbertura, formatarData(item.dataFim), item.horaFim, minutosParaHorasDecimais(item.paradaMinutos), minutosParaHorasDecimais(item.manutencaoMinutos)]));
+    }
+
+    function renderizarResumoHorasRelatorio(resultados, inicio, fim) {
+        const container = document.getElementById('relatorio-tempos');
+        const dentroDoPeriodo = data => {
+            if (!data) return false;
+            const valor = new Date(`${data}T12:00:00`);
+            return valor >= inicio && valor <= fim;
+        };
+        const registrosOS = resultados.map(os => {
+            const apontamento = obterApontamentoOS(os);
+            const tempos = calcularTemposRegistro(os.data, os.horaAbertura, apontamento);
+            return { tipo: 'OS', ...tempos };
+        });
+        const registrosPreventiva = apontamentos.filter(item => item.tipo === 'preventiva' && dentroDoPeriodo(item.dataExecucao)).map(item => {
+            const preventiva = preventivas.find(registro => registro.id === item.preventivaId) || {};
+            const tempos = calcularTemposRegistro(preventiva.proximaData || preventiva.dataPreventiva, preventiva.proximaHorario || '07:00', item);
+            return { tipo: 'Preventiva', ...tempos };
+        });
+        const grupos = [
+            { nome: 'Ordens de serviço', registros: registrosOS },
+            { nome: 'Preventivas', registros: registrosPreventiva }
+        ];
+        container.innerHTML = `<h3>Tempos médios</h3><table><thead><tr><th>Tipo</th><th>Tempo médio até iniciar</th><th>Tempo médio de execução</th><th>Apontamentos com horário</th></tr></thead><tbody>${grupos.map(grupo => {
+            const comTempos = grupo.registros.filter(registro => registro.espera !== null || registro.execucao !== null).length;
+            return `<tr><td>${grupo.nome}</td><td>${formatarMinutosRelatorio(calcularMediaMinutos(grupo.registros, 'espera'))}</td><td>${formatarMinutosRelatorio(calcularMediaMinutos(grupo.registros, 'execucao'))}</td><td>${comTempos}</td></tr>`;
+        }).join('')}</tbody></table><p><small>As médias usam apenas registros com horários informados; OS antigas sem hora de abertura não entram na média de espera.</small></p>`;
+    }
+
+    function renderizarDiagnosticosRelatorio(resultados) {
+        const container = document.getElementById('relatorio-diagnosticos');
+        const contagem = new Map();
+        resultados.forEach(os => {
+            const diagnostico = (os.diagnostico || '').trim();
+            if (!diagnostico) return;
+            const chave = diagnostico.toLocaleLowerCase('pt-BR');
+            const registro = contagem.get(chave) || { diagnostico, quantidade: 0 };
+            registro.quantidade += 1;
+            contagem.set(chave, registro);
+        });
+        const lista = [...contagem.values()].sort((a, b) => b.quantidade - a.quantidade || a.diagnostico.localeCompare(b.diagnostico));
+        container.innerHTML = `<h3>Diagnósticos registrados</h3>${lista.length ? `<table><thead><tr><th>Diagnóstico</th><th>Quantidade</th></tr></thead><tbody>${lista.map(item => `<tr><td>${item.diagnostico}</td><td>${item.quantidade}</td></tr>`).join('')}</tbody></table>` : '<p>Nenhum diagnóstico técnico registrado no período.</p>'}`;
+    }
     let chartStatusObj = null;
     let chartTecnicosObj = null;
     let chartSetoresObj = null;
@@ -6684,6 +7085,8 @@
         document.getElementById('btn-imprimir-relatorio').addEventListener('click', imprimirRelatorio);
         document.getElementById('btn-abrir-relatorio-nova-janela').addEventListener('click', abrirRelatorioNovaJanela);
         document.getElementById('btn-exportar-tecnicos').addEventListener('click', exportarRelatorioTecnicosCSV);
+        document.getElementById('btn-exportar-horas-mantenedor').addEventListener('click', exportarHorasMantenedorCSV);
+        document.getElementById('btn-exportar-paradas-maquinas').addEventListener('click', exportarParadasMaquinasCSV);
         
         // Valores padrão
         document.getElementById('relatorio-fim').valueAsDate = new Date();
@@ -6708,6 +7111,10 @@
         });
         
         relatorioAtual = resultados;
+        renderizarResumoHorasRelatorio(resultados, inicio, fim);
+        renderizarDiagnosticosRelatorio(resultados);
+        renderizarHorasMantenedorRelatorio(inicio, fim);
+        renderizarParadasMaquinasRelatorio(resultados);
         
         // Resumo
         const summary = document.getElementById('relatorio-summary');
@@ -6724,6 +7131,8 @@
         resultados.sort((a,b) => new Date(b.data) - new Date(a.data)).forEach(os => {
             const solicitante = solicitantes.find(s => s.id === os.solicitanteId) || {};
             const tecnico = tecnicos.find(t => t.id === os.tecnicoId) || {};
+            const apontamento = obterApontamentoOS(os) || (os.horaInicio || os.horaFim ? { dataExecucao: os.dataConclusao || os.data, horaInicio: os.horaInicio, horaFim: os.horaFim } : null);
+            const tempos = calcularTemposRegistro(os.data, os.horaAbertura, apontamento);
             const statusText = os.status === 'pendente' ? 'Pendente' : os.status === 'andamento' ? 'Em Andamento' : os.status === 'concluida' ? 'Concluída' : 'Cancelada';
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -6734,6 +7143,12 @@
                 <td>${formatarData(os.data)}</td>
                 <td>${statusText}</td>
                 <td>${tecnico.nome || '—'}</td>
+                <td>${os.diagnostico || '—'}</td>
+                <td>${os.horaAbertura || '—'}</td>
+                <td>${apontamento?.horaInicio || '—'}</td>
+                <td>${apontamento?.horaFim || '—'}</td>
+                <td>${formatarMinutosRelatorio(tempos.espera)}</td>
+                <td>${formatarMinutosRelatorio(tempos.execucao)}</td>
             `;
             tbody.appendChild(tr);
         });
@@ -6977,12 +7392,15 @@
             alert('Nenhum dado para exportar.');
             return;
         }
-        let csv = 'Número,Solicitante,Setor,Equipamento,Data,Status,Técnico\n';
+        let csv = 'Número,Solicitante,Setor,Equipamento,Data,Status,Técnico,Diagnóstico,Hora de abertura,Hora inicial,Hora final,Tempo até iniciar,Tempo de execução\n';
         relatorioAtual.forEach(os => {
             const solicitante = solicitantes.find(s => s.id === os.solicitanteId) || {};
             const tecnico = tecnicos.find(t => t.id === os.tecnicoId) || {};
+            const apontamento = obterApontamentoOS(os) || (os.horaInicio || os.horaFim ? { dataExecucao: os.dataConclusao || os.data, horaInicio: os.horaInicio, horaFim: os.horaFim } : null);
+            const tempos = calcularTemposRegistro(os.data, os.horaAbertura, apontamento);
             const statusText = os.status === 'pendente' ? 'Pendente' : os.status === 'andamento' ? 'Em Andamento' : os.status === 'concluida' ? 'Concluída' : 'Cancelada';
-            csv += `"#${os.numero}","${solicitante.nome || ''}","${os.setor}","${os.equipamento}","${formatarData(os.data)}","${statusText}","${tecnico.nome || ''}"\n`;
+            const campos = [`#${os.numero}`, solicitante.nome || '', os.setor || '', os.equipamento || '', formatarData(os.data), statusText, tecnico.nome || '', os.diagnostico || '', os.horaAbertura || '', apontamento?.horaInicio || '', apontamento?.horaFim || '', formatarMinutosRelatorio(tempos.espera), formatarMinutosRelatorio(tempos.execucao)];
+            csv += campos.map(valor => `"${String(valor).replace(/"/g, '""')}"`).join(',') + '\n';
         });
         const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
