@@ -2649,9 +2649,21 @@
                             <input type="text" id="os-serial" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="os-tecnico">Técnico Responsável:</label>
-                            <select id="os-tecnico" required>
-                                <option value="">Selecione um técnico</option>
+                            <label for="os-tecnico-1">Técnico 01:</label>
+                            <select id="os-tecnico-1" required>
+                                <option value="">Selecione o Técnico 01</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="os-tecnico-2">Técnico 02:</label>
+                            <select id="os-tecnico-2">
+                                <option value="">Selecione o Técnico 02 (opcional)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="os-tecnico-3">Técnico 03:</label>
+                            <select id="os-tecnico-3">
+                                <option value="">Selecione o Técnico 03 (opcional)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -3113,7 +3125,9 @@
                         <div class="form-group"><label for="apontamento-data">Data de execucao:</label><input id="apontamento-data" type="date" required></div>
                         <div class="form-group"><label for="apontamento-hora-inicio">Hora inicial do trabalho:</label><input id="apontamento-hora-inicio" type="text" placeholder="___:___" inputmode="numeric" maxlength="5" pattern="([01][0-9]|2[0-3]):[0-5][0-9]" title="Digite a hora no formato HH:MM" required></div>
                         <div class="form-group"><label for="apontamento-hora-fim">Hora final do serviço:</label><input id="apontamento-hora-fim" type="text" placeholder="___:___" inputmode="numeric" maxlength="5" pattern="([01][0-9]|2[0-3]):[0-5][0-9]" title="Digite a hora no formato HH:MM" required></div>
-                        <div class="form-group"><label for="apontamento-codigo">Codigo do executor:</label><input id="apontamento-codigo" required placeholder="Codigo do eletricista ou mecanico"></div>
+                        <div class="form-group"><label for="apontamento-codigo">Técnico 01 - Código:</label><input id="apontamento-codigo" required placeholder="Código do Técnico 01"></div>
+                        <div class="form-group"><label for="apontamento-codigo-2">Técnico 02 - Código (opcional):</label><input id="apontamento-codigo-2" placeholder="Código do Técnico 02"></div>
+                        <div class="form-group"><label for="apontamento-codigo-3">Técnico 03 - Código (opcional):</label><input id="apontamento-codigo-3" placeholder="Código do Técnico 03"></div>
                         <div class="form-group"><label for="apontamento-observacao">Observacao:</label><textarea id="apontamento-observacao" rows="3"></textarea></div>
                         <button type="submit">Dar baixa</button>
                     </form>
@@ -4897,7 +4911,12 @@
     function renderizarApontamentos() {
         const tbody = document.querySelector('#tabela-apontamentos tbody');
         if (!tbody) return;
-        tbody.innerHTML = apontamentos.slice(0, 50).map(item => `<tr><td>${item.tipo === 'os' ? 'OS' : 'Preventiva'}</td><td>${item.osNumero ? '#' + item.osNumero : item.preventivaTitulo || ''}</td><td>${formatarData(item.dataExecucao || '')}</td><td>${item.horaInicio || '—'}</td><td>${item.horaFim || '—'}</td><td>${item.executorNome || ''} (${item.executorCodigo || ''})</td><td>${item.observacao || ''}</td></tr>`).join('');
+        tbody.innerHTML = apontamentos.slice(0, 50).map(item => {
+            const executores = Array.isArray(item.executores) && item.executores.length
+                ? item.executores.map(executor => `${executor.nome} (${executor.codigo})`).join(', ')
+                : `${item.executorNome || ''}${item.executorCodigo ? ` (${item.executorCodigo})` : ''}`;
+            return `<tr><td>${item.tipo === 'os' ? 'OS' : 'Preventiva'}</td><td>${item.osNumero ? '#' + item.osNumero : item.preventivaTitulo || ''}</td><td>${formatarData(item.dataExecucao || '')}</td><td>${item.horaInicio || '—'}</td><td>${item.horaFim || '—'}</td><td>${executores}</td><td>${item.observacao || ''}</td></tr>`;
+        }).join('');
     }
 
     function atualizarCamposApontamento() {
@@ -5004,9 +5023,18 @@
             return;
         }
         const tipo = document.getElementById('apontamento-tipo').value;
-        const codigo = document.getElementById('apontamento-codigo').value.trim().toUpperCase();
-        const executor = tecnicos.find(item => (item.codigo || '').toUpperCase() === codigo);
-        if (!executor) { alert('Código do executor não encontrado. Cadastre o código no cadastro de técnicos.'); return; }
+        const codigos = [
+            document.getElementById('apontamento-codigo').value.trim().toUpperCase(),
+            document.getElementById('apontamento-codigo-2').value.trim().toUpperCase(),
+            document.getElementById('apontamento-codigo-3').value.trim().toUpperCase()
+        ].filter(Boolean);
+        if (new Set(codigos).size !== codigos.length) {
+            alert('Informe códigos diferentes para os executores.');
+            return;
+        }
+        const executores = codigos.map(codigo => tecnicos.find(item => (item.codigo || '').toUpperCase() === codigo));
+        if (executores.some(executor => !executor)) { alert('Um dos códigos informados não foi encontrado. Cadastre o código no cadastro de técnicos.'); return; }
+        const executor = executores[0];
         const dataExecucao = document.getElementById('apontamento-data').value;
         const horaInicio = document.getElementById('apontamento-hora-inicio').value;
         const horaFim = document.getElementById('apontamento-hora-fim').value;
@@ -5015,7 +5043,12 @@
             alert('Informe a data, a hora inicial e a hora final do serviço.');
             return;
         }
-        const dados = { tipo, dataExecucao, horaInicio, horaFim, executorId: executor.id, executorNome: executor.nome, executorCodigo: executor.codigo, observacao, criadoPor: currentUser.uid, criadoEm: firebase.firestore.FieldValue.serverTimestamp() };
+        const dados = {
+            tipo, dataExecucao, horaInicio, horaFim,
+            executorId: executor.id, executorNome: executor.nome, executorCodigo: executor.codigo,
+            executores: executores.map(item => ({ id: item.id, nome: item.nome, codigo: item.codigo })),
+            observacao, criadoPor: currentUser.uid, criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        };
         let atualizacao;
         if (tipo === 'os') {
             const numero = Number(document.getElementById('apontamento-os-numero').value);
@@ -5024,7 +5057,11 @@
             dados.osId = os.id; dados.osNumero = os.numero;
             dados.pecasConsumidas = obterPecasApontamento(os);
             atualizacao = debitarPecasECriarSolicitacoes(os, dados.pecasConsumidas).then(itens => {
-                return db.collection('ordensServico').doc(os.id).update({ status: 'concluida', dataConclusao: dataExecucao, horaInicio, horaFim, executadoPorId: executor.id, executadoPorNome: executor.nome, executadoPorCodigo: executor.codigo }).then(() => criarSolicitacoesAutomaticas(os, itens));
+                return db.collection('ordensServico').doc(os.id).update({
+                    status: 'concluida', dataConclusao: dataExecucao, horaInicio, horaFim,
+                    executadoPorId: executor.id, executadoPorNome: executor.nome, executadoPorCodigo: executor.codigo,
+                    executores: dados.executores
+                }).then(() => criarSolicitacoesAutomaticas(os, itens));
             });
         } else {
             const preventiva = preventivas.find(item => item.id === document.getElementById('apontamento-preventiva').value);
@@ -6376,7 +6413,17 @@
             e.preventDefault();
             const solicitanteId = document.getElementById('os-solicitante').value;
             const setor = document.getElementById('os-setor').value;
-            const tecnicoId = document.getElementById('os-tecnico').value;
+            const tecnicoIds = ['os-tecnico-1', 'os-tecnico-2', 'os-tecnico-3']
+                .map(id => document.getElementById(id).value)
+                .filter(Boolean);
+            if (new Set(tecnicoIds).size !== tecnicoIds.length) {
+                alert('Selecione técnicos diferentes nos campos Técnico 01, Técnico 02 e Técnico 03.');
+                return;
+            }
+            const tecnicoNomes = tecnicoIds.map(id => {
+                const tecnico = tecnicos.find(item => item.id === id);
+                return tecnico ? `${tecnico.nome} (${tecnico.especialidade || 'Sem especialidade'})` : '';
+            }).filter(Boolean);
             const maquinaId = document.getElementById('os-maquina').value;
             const maquinaObj = maquinas.find(m => m.id === maquinaId);
             const equipamento = maquinaObj ? maquinaObj.nome : '';
@@ -6390,7 +6437,7 @@
             const solucao = document.getElementById('os-solucao').value.trim();
             const status = document.getElementById('os-status').value;
 
-            if (!solicitanteId || !setor || !maquinaId || !tipoManutencao || !tecnicoId || !data || !horaAbertura || !problema) {
+            if (!solicitanteId || !setor || !maquinaId || !tipoManutencao || tecnicoIds.length === 0 || !data || !horaAbertura || !problema) {
                 alert('Preencha todos os campos obrigatórios.');
                 return;
             }
@@ -6411,7 +6458,9 @@
                         equipamento,
                         serial,
                         tipoManutencao,
-                        tecnicoId,
+                        tecnicoId: tecnicoIds[0],
+                        tecnicoIds,
+                        tecnicoNomes,
                         maquinaId,
                         data,
                         horaAbertura,
@@ -6479,14 +6528,27 @@
     }
 
     function atualizarSelectTecnicos() {
-        const select = document.getElementById('os-tecnico');
-        select.innerHTML = '<option value="">Selecione um técnico</option>';
-        tecnicos.forEach(t => {
-            const opt = document.createElement('option');
-            opt.value = t.id;
-            opt.textContent = `${t.nome} (${t.especialidade})`;
-            select.appendChild(opt);
+        ['os-tecnico-1', 'os-tecnico-2', 'os-tecnico-3'].forEach((selectId, index) => {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+            const valorAtual = select.value;
+            select.innerHTML = `<option value="">Selecione o Técnico ${String(index + 1).padStart(2, '0')}${index > 0 ? ' (opcional)' : ''}</option>`;
+            tecnicos.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t.id;
+                opt.textContent = `${t.nome} (${t.especialidade})`;
+                select.appendChild(opt);
+            });
+            if (tecnicos.some(t => t.id === valorAtual)) select.value = valorAtual;
         });
+    }
+
+    function obterTecnicosOS(os) {
+        if (!os) return [];
+        const ids = Array.isArray(os.tecnicoIds) && os.tecnicoIds.length
+            ? os.tecnicoIds
+            : (os.tecnicoId ? [os.tecnicoId] : []);
+        return ids.map(id => tecnicos.find(tecnico => tecnico.id === id)).filter(Boolean);
     }
 
     function atualizarSelectFiltroTecnicos() {
@@ -6793,7 +6855,7 @@
 
         return ordensServico.filter(os => {
             if (filtroStatus && os.status !== filtroStatus) return false;
-            if (filtroTecnico && os.tecnicoId !== filtroTecnico) return false;
+            if (filtroTecnico && !(Array.isArray(os.tecnicoIds) ? os.tecnicoIds.includes(filtroTecnico) : os.tecnicoId === filtroTecnico)) return false;
             if (filtroMes && (!os.data || os.data.slice(0, 7) !== filtroMes)) return false;
             return true;
         });
@@ -6884,14 +6946,15 @@
         
         let osFiltradas = ordensServico.filter(os => {
             if (filtroStatus && os.status !== filtroStatus) return false;
-            if (filtroTecnico && os.tecnicoId !== filtroTecnico) return false;
+            if (filtroTecnico && !(Array.isArray(os.tecnicoIds) ? os.tecnicoIds.includes(filtroTecnico) : os.tecnicoId === filtroTecnico)) return false;
             if (filtroMes && (!os.data || os.data.slice(0, 7) !== filtroMes)) return false;
             return true;
         });
         
         osFiltradas.forEach(os => {
             const solicitante = solicitantes.find(s => s.id === os.solicitanteId) || {};
-            const tecnico = tecnicos.find(t => t.id === os.tecnicoId) || {};
+            const tecnicosOS = obterTecnicosOS(os);
+            const tecnicosOSTexto = tecnicosOS.map(tecnico => tecnico.nome).join(', ');
             
             let statusClass = os.status === 'pendente' ? 'status-pendente' :
                             os.status === 'andamento' ? 'status-andamento' :
@@ -7065,7 +7128,12 @@
             const maquina = maquinas.find(m => m.id === os.maquinaId);
             if (maquina) document.getElementById('os-serial').value = maquina.patrimonio || '';
         }
-        document.getElementById('os-tecnico').value = os.tecnicoId;
+        const idsTecnicos = Array.isArray(os.tecnicoIds) && os.tecnicoIds.length
+            ? os.tecnicoIds
+            : (os.tecnicoId ? [os.tecnicoId] : []);
+        ['os-tecnico-1', 'os-tecnico-2', 'os-tecnico-3'].forEach((selectId, index) => {
+            document.getElementById(selectId).value = idsTecnicos[index] || '';
+        });
         document.getElementById('os-tipo-manutencao').value = os.tipoManutencao || '';
         document.getElementById('os-data').value = os.data;
         document.getElementById('os-hora-abertura').value = os.horaAbertura || '';
@@ -7090,7 +7158,10 @@
         const os = ordensServico.find(o => o.id === osId);
         if (!os) return;
         const solicitante = solicitantes.find(s => s.id === os.solicitanteId) || {};
-        const tecnico = tecnicos.find(t => t.id === os.tecnicoId) || {};
+        const tecnicosOS = obterTecnicosOS(os);
+        const tecnicosOSTexto = tecnicosOS.length
+            ? tecnicosOS.map(tecnico => `${tecnico.nome} (${tecnico.especialidade || 'Sem especialidade'})`).join(', ')
+            : 'Não informado';
         const statusText = os.status === 'pendente' ? 'Pendente' :
                           os.status === 'andamento' ? 'Em Andamento' :
                           os.status === 'concluida' ? 'Concluída' : 'Cancelada';
@@ -7150,7 +7221,7 @@
                         <p><strong>Equipamento:</strong> ${os.equipamento}</p>
                         <p><strong>Patrimônio:</strong> ${os.serial || 'Não informado'}</p>
                         <p><strong>Tipo de manutenção:</strong> ${tipoManutencaoText}</p>
-                        <p><strong>Técnico:</strong> ${tecnico.nome || 'Não informado'} (${tecnico.especialidade || 'Não informado'})</p>
+                        <p><strong>Técnico(s):</strong> ${tecnicosOSTexto}</p>
                         <p><strong>Prazo:</strong> ${os.prazo ? formatarDataInput(os.prazo) : 'Não definido'}</p>
                         <p><strong>Hora de abertura:</strong> ${os.horaAbertura || 'Não informada'}</p>
                         <p><strong>Início do trabalho:</strong> <input class="os-time-input" id="visualizar-os-hora-inicio" type="text" placeholder="___:___" inputmode="numeric" maxlength="5" pattern="([01][0-9]|2[0-3]):[0-5][0-9]" title="Digite a hora no formato HH:MM" value="${os.horaInicio || ''}" aria-label="Hora inicial do trabalho"></p>
@@ -7981,7 +8052,8 @@
         tbody.innerHTML = '';
         resultados.sort((a,b) => new Date(b.data) - new Date(a.data)).forEach(os => {
             const solicitante = solicitantes.find(s => s.id === os.solicitanteId) || {};
-            const tecnico = tecnicos.find(t => t.id === os.tecnicoId) || {};
+            const tecnicosOS = obterTecnicosOS(os);
+            const tecnicosOSTexto = tecnicosOS.map(tecnico => tecnico.nome).join(', ');
             const apontamento = obterApontamentoOS(os) || (os.horaInicio || os.horaFim ? { dataExecucao: os.dataConclusao || os.data, horaInicio: os.horaInicio, horaFim: os.horaFim } : null);
             const tempos = calcularTemposRegistro(os.data, os.horaAbertura, apontamento);
             const statusText = os.status === 'pendente' ? 'Pendente' : os.status === 'andamento' ? 'Em Andamento' : os.status === 'concluida' ? 'Concluída' : 'Cancelada';
@@ -7993,7 +8065,7 @@
                 <td>${os.equipamento}</td>
                 <td>${formatarData(os.data)}</td>
                 <td>${statusText}</td>
-                <td>${tecnico.nome || '—'}</td>
+                <td>${tecnicosOSTexto || '—'}</td>
                 <td>${os.diagnostico || '—'}</td>
                 <td>${os.horaAbertura || '—'}</td>
                 <td>${apontamento?.horaInicio || '—'}</td>
@@ -8372,11 +8444,11 @@
         let csv = 'Número,Solicitante,Setor,Equipamento,Data,Status,Técnico,Diagnóstico,Hora de abertura,Hora inicial,Hora final,Tempo até iniciar,Tempo de execução\n';
         relatorioAtual.forEach(os => {
             const solicitante = solicitantes.find(s => s.id === os.solicitanteId) || {};
-            const tecnico = tecnicos.find(t => t.id === os.tecnicoId) || {};
+            const tecnicosOSTexto = obterTecnicosOS(os).map(tecnico => tecnico.nome).join(', ');
             const apontamento = obterApontamentoOS(os) || (os.horaInicio || os.horaFim ? { dataExecucao: os.dataConclusao || os.data, horaInicio: os.horaInicio, horaFim: os.horaFim } : null);
             const tempos = calcularTemposRegistro(os.data, os.horaAbertura, apontamento);
             const statusText = os.status === 'pendente' ? 'Pendente' : os.status === 'andamento' ? 'Em Andamento' : os.status === 'concluida' ? 'Concluída' : 'Cancelada';
-            const campos = [`#${os.numero}`, solicitante.nome || '', os.setor || '', os.equipamento || '', formatarData(os.data), statusText, tecnico.nome || '', os.diagnostico || '', os.horaAbertura || '', apontamento?.horaInicio || '', apontamento?.horaFim || '', formatarMinutosRelatorio(tempos.espera), formatarMinutosRelatorio(tempos.execucao)];
+            const campos = [`#${os.numero}`, solicitante.nome || '', os.setor || '', os.equipamento || '', formatarData(os.data), statusText, tecnicosOSTexto, os.diagnostico || '', os.horaAbertura || '', apontamento?.horaInicio || '', apontamento?.horaFim || '', formatarMinutosRelatorio(tempos.espera), formatarMinutosRelatorio(tempos.execucao)];
             csv += campos.map(valor => `"${String(valor).replace(/"/g, '""')}"`).join(',') + '\n';
         });
         const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
@@ -8506,9 +8578,9 @@
                 if (dataOS < dataLimite) return;
             }
             const solicitante = solicitantes.find(s => s.id === os.solicitanteId) || {};
-            const tecnico = tecnicos.find(t => t.id === os.tecnicoId) || {};
+            const tecnicosOSTexto = obterTecnicosOS(os).map(tecnico => tecnico.nome).join(', ');
             const statusText = os.status === 'pendente' ? 'Pendente' : os.status === 'andamento' ? 'Em Andamento' : os.status === 'concluida' ? 'Concluída' : 'Cancelada';
-            csv += `"#${os.numero}","${solicitante.nome || ''}","${os.setor}","${os.equipamento}","${formatarData(os.data)}","${statusText}","${tecnico.nome || ''}"\n`;
+            csv += `"#${os.numero}","${solicitante.nome || ''}","${os.setor}","${os.equipamento}","${formatarData(os.data)}","${statusText}","${tecnicosOSTexto}"\n`;
         });
         
         const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
