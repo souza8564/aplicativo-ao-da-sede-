@@ -3122,9 +3122,11 @@
                             <small>Informe somente as peças realmente utilizadas. O estoque será atualizado ao registrar a baixa.</small>
                         </div>
                         <div class="form-group" id="apontamento-preventiva-grupo" style="display:none;"><label for="apontamento-preventiva">Preventiva:</label><select id="apontamento-preventiva"></select></div>
-                        <div class="form-group"><label for="apontamento-data">Data de execucao:</label><input id="apontamento-data" type="date" required></div>
+                        <div class="form-group"><label for="apontamento-data">Data inicial:</label><input id="apontamento-data" type="date" required></div>
+                        <div class="form-group"><label for="apontamento-data-fim">Data final:</label><input id="apontamento-data-fim" type="date" required></div>
                         <div class="form-group"><label for="apontamento-hora-inicio">Hora inicial do trabalho:</label><input id="apontamento-hora-inicio" type="text" placeholder="___:___" inputmode="numeric" maxlength="5" pattern="([01][0-9]|2[0-3]):[0-5][0-9]" title="Digite a hora no formato HH:MM" required></div>
                         <div class="form-group"><label for="apontamento-hora-fim">Hora final do serviço:</label><input id="apontamento-hora-fim" type="text" placeholder="___:___" inputmode="numeric" maxlength="5" pattern="([01][0-9]|2[0-3]):[0-5][0-9]" title="Digite a hora no formato HH:MM" required></div>
+                        <div class="form-group" id="apontamento-situacao-grupo"><label for="apontamento-situacao">Situação da OS após este apontamento:</label><select id="apontamento-situacao" required><option value="concluida">Concluir a OS</option><option value="andamento">Manter OS em andamento</option></select></div>
                         <div class="form-group"><label for="apontamento-codigo">Técnico 01 - Código:</label><input id="apontamento-codigo" required placeholder="Código do Técnico 01"></div>
                         <div class="form-group"><label for="apontamento-codigo-2">Técnico 02 - Código (opcional):</label><input id="apontamento-codigo-2" placeholder="Código do Técnico 02"></div>
                         <div class="form-group"><label for="apontamento-codigo-3">Técnico 03 - Código (opcional):</label><input id="apontamento-codigo-3" placeholder="Código do Técnico 03"></div>
@@ -4915,7 +4917,10 @@
             const executores = Array.isArray(item.executores) && item.executores.length
                 ? item.executores.map(executor => `${executor.nome} (${executor.codigo})`).join(', ')
                 : `${item.executorNome || ''}${item.executorCodigo ? ` (${item.executorCodigo})` : ''}`;
-            return `<tr><td>${item.tipo === 'os' ? 'OS' : 'Preventiva'}</td><td>${item.osNumero ? '#' + item.osNumero : item.preventivaTitulo || ''}</td><td>${formatarData(item.dataExecucao || '')}</td><td>${item.horaInicio || '—'}</td><td>${item.horaFim || '—'}</td><td>${executores}</td><td>${item.observacao || ''}</td></tr>`;
+            const periodo = item.dataFimExecucao && item.dataFimExecucao !== item.dataExecucao
+                ? `${formatarData(item.dataExecucao || '')} até ${formatarData(item.dataFimExecucao)}`
+                : formatarData(item.dataExecucao || '');
+            return `<tr><td>${item.tipo === 'os' ? 'OS' : 'Preventiva'}</td><td>${item.osNumero ? '#' + item.osNumero : item.preventivaTitulo || ''}</td><td>${periodo}</td><td>${item.horaInicio || '—'}</td><td>${item.horaFim || '—'}</td><td>${executores}</td><td>${item.observacao || ''}</td></tr>`;
         }).join('');
     }
 
@@ -4924,6 +4929,7 @@
         document.getElementById('apontamento-os-grupo').style.display = tipo === 'os' ? 'block' : 'none';
         document.getElementById('apontamento-pecas-grupo').style.display = tipo === 'os' ? 'block' : 'none';
         document.getElementById('apontamento-preventiva-grupo').style.display = tipo === 'preventiva' ? 'block' : 'none';
+        document.getElementById('apontamento-situacao-grupo').style.display = tipo === 'os' ? 'block' : 'none';
         if (tipo === 'os') atualizarPecasApontamento();
     }
 
@@ -5036,15 +5042,23 @@
         if (executores.some(executor => !executor)) { alert('Um dos códigos informados não foi encontrado. Cadastre o código no cadastro de técnicos.'); return; }
         const executor = executores[0];
         const dataExecucao = document.getElementById('apontamento-data').value;
+        const dataFimExecucao = document.getElementById('apontamento-data-fim').value || dataExecucao;
         const horaInicio = document.getElementById('apontamento-hora-inicio').value;
         const horaFim = document.getElementById('apontamento-hora-fim').value;
+        const situacao = document.getElementById('apontamento-situacao').value;
         const observacao = document.getElementById('apontamento-observacao').value.trim();
-        if (!dataExecucao || !horaInicio || !horaFim) {
-            alert('Informe a data, a hora inicial e a hora final do serviço.');
+        if (!dataExecucao || !dataFimExecucao || !horaInicio || !horaFim) {
+            alert('Informe as datas inicial/final e as horas inicial/final do serviço.');
+            return;
+        }
+        const inicioServico = new Date(`${dataExecucao}T${horaInicio}:00`);
+        const fimServico = new Date(`${dataFimExecucao}T${horaFim}:00`);
+        if (Number.isNaN(inicioServico.getTime()) || Number.isNaN(fimServico.getTime()) || fimServico <= inicioServico) {
+            alert('A data e hora final devem ser posteriores à data e hora inicial.');
             return;
         }
         const dados = {
-            tipo, dataExecucao, horaInicio, horaFim,
+            tipo, dataExecucao, dataFimExecucao, horaInicio, horaFim,
             executorId: executor.id, executorNome: executor.nome, executorCodigo: executor.codigo,
             executores: executores.map(item => ({ id: item.id, nome: item.nome, codigo: item.codigo })),
             observacao, criadoPor: currentUser.uid, criadoEm: firebase.firestore.FieldValue.serverTimestamp()
@@ -5057,8 +5071,14 @@
             dados.osId = os.id; dados.osNumero = os.numero;
             dados.pecasConsumidas = obterPecasApontamento(os);
             atualizacao = debitarPecasECriarSolicitacoes(os, dados.pecasConsumidas).then(itens => {
+                const concluida = situacao === 'concluida';
                 return db.collection('ordensServico').doc(os.id).update({
-                    status: 'concluida', dataConclusao: dataExecucao, horaInicio, horaFim,
+                    status: concluida ? 'concluida' : 'andamento',
+                    dataConclusao: concluida ? dataFimExecucao : null,
+                    dataInicioExecucao: dataExecucao,
+                    dataFimExecucao,
+                    horaInicio,
+                    horaFim,
                     executadoPorId: executor.id, executadoPorNome: executor.nome, executadoPorCodigo: executor.codigo,
                     executores: dados.executores
                 }).then(() => criarSolicitacoesAutomaticas(os, itens));
@@ -5070,7 +5090,19 @@
             dados.preventivaNumero = preventiva.numeroPreventiva || '';
             atualizacao = concluirPreventiva(preventiva.id, dataExecucao, executor.id, executor.nome, executor.codigo, horaInicio, horaFim);
         }
-        atualizacao.then(() => db.collection('apontamentos').add(dados)).then(() => { alert('Baixa registrada com sucesso.'); document.getElementById('apontamentoForm').reset(); document.getElementById('apontamento-data').valueAsDate = new Date(); atualizarCamposApontamento(); carregarApontamentos(); carregarOrdensServico(); carregarPreventivas(); carregarMaquinas(); carregarSolicitacoesCompras(); }).catch(error => alert('Erro ao registrar baixa: ' + error.message));
+        atualizacao.then(() => db.collection('apontamentos').add(dados)).then(() => {
+            alert(situacao === 'andamento' && tipo === 'os' ? 'Apontamento registrado. A OS continuará em andamento.' : 'Baixa registrada com sucesso.');
+            document.getElementById('apontamentoForm').reset();
+            document.getElementById('apontamento-data').valueAsDate = new Date();
+            document.getElementById('apontamento-data-fim').valueAsDate = new Date();
+            document.getElementById('apontamento-data-fim').valueAsDate = new Date();
+            atualizarCamposApontamento();
+            carregarApontamentos();
+            carregarOrdensServico();
+            carregarPreventivas();
+            carregarMaquinas();
+            carregarSolicitacoesCompras();
+        }).catch(error => alert('Erro ao registrar baixa: ' + error.message));
     }
 
     function carregarOrdensServico() {
@@ -7803,8 +7835,9 @@
     function calcularTemposRegistro(dataAbertura, horaAbertura, apontamento, dataPadraoFim = '') {
         if (!apontamento) return { espera: null, execucao: null };
         const dataInicio = apontamento.dataExecucao || dataPadraoFim;
+        const dataFim = apontamento.dataFimExecucao || apontamento.dataExecucao || dataPadraoFim;
         const espera = calcularMinutosEntre(dataAbertura, horaAbertura, dataInicio, apontamento.horaInicio);
-        const execucao = calcularMinutosEntre(dataInicio, apontamento.horaInicio, dataInicio, apontamento.horaFim, true);
+        const execucao = calcularMinutosEntre(dataInicio, apontamento.horaInicio, dataFim, apontamento.horaFim, true);
         return { espera, execucao };
     }
 
@@ -7830,6 +7863,8 @@
             const preventiva = item.tipo === 'preventiva'
                 ? preventivas.find(registro => registro.id === item.preventivaId) || {}
                 : {};
+            const dataInicio = item.dataExecucao;
+            const dataFim = item.dataFimExecucao || item.dataExecucao;
             return {
                 data: item.dataExecucao,
                 mantenedorId: item.executorId || executor.id || item.executorNome || 'sem-identificacao',
@@ -7841,7 +7876,7 @@
                 maquina: os.equipamento || preventiva.maquinaNome || 'Máquina não identificada',
                 horaInicio: item.horaInicio,
                 horaFim: item.horaFim,
-                minutos: calcularMinutosEntre(item.dataExecucao, item.horaInicio, item.dataExecucao, item.horaFim, true)
+                minutos: calcularMinutosEntre(dataInicio, item.horaInicio, dataFim, item.horaFim, true)
             };
         }).filter(item => item.minutos !== null);
     }
@@ -7887,7 +7922,7 @@
                 horaFim: os.horaFim,
                 executorNome: os.executadoPorNome
             } : null);
-            const dataFim = apontamento?.dataExecucao || os.dataConclusao || os.data;
+            const dataFim = apontamento?.dataFimExecucao || apontamento?.dataExecucao || os.dataConclusao || os.data;
             return {
                 maquina: os.equipamento || 'Máquina não identificada',
                 numero: os.numero,
@@ -7900,7 +7935,7 @@
                     ? calcularMinutosEntre(os.data, os.horaAbertura, dataFim, apontamento.horaFim, true)
                     : null,
                 manutencaoMinutos: apontamento
-                    ? calcularMinutosEntre(apontamento.dataExecucao || dataFim, apontamento.horaInicio, dataFim, apontamento.horaFim, true)
+                    ? calcularMinutosEntre(apontamento.dataExecucao || dataFim, apontamento.horaInicio, apontamento.dataFimExecucao || dataFim, apontamento.horaFim, true)
                     : null
             };
         });
