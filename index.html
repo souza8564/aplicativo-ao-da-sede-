@@ -2975,6 +2975,7 @@
             select.innerHTML = `<option value="">${textoInicial}</option>` + setores.map(setor => `<option value="${setor}">${setor}</option>`).join('');
             if (valorAtual && setores.includes(valorAtual)) select.value = valorAtual;
         });
+        atualizarSelectMaquinas();
     }
 
     function renderizarTabelaStoresFabrica() {
@@ -5596,7 +5597,7 @@
                     });
                     const novoNumero = ultimoNumero + 1;
 
-                    return db.collection('ordensServico').add({
+                    const novaOS = {
                         numero: novoNumero,
                         solicitanteId,
                         setor,
@@ -5613,20 +5614,28 @@
                         status,
                         dataConclusao: status === 'concluida' ? new Date().toISOString().split('T')[0] : null,
                         criadoEm: firebase.firestore.FieldValue.serverTimestamp()
-                    });
+                    };
+                    return db.collection('ordensServico').add(novaOS).then(docRef => ({
+                        ...novaOS,
+                        id: docRef.id
+                    }));
                 })
-                .then(() => {
+                .then(novaOS => {
                     alert('Ordem de Serviço cadastrada com sucesso!');
                     document.getElementById('osForm').reset();
+                    atualizarSelectMaquinas();
+                    document.getElementById('os-serial').value = '';
                     document.getElementById('os-data').valueAsDate = new Date();
                     document.getElementById('os-hora-abertura').value = horaLocalAtual();
-                    carregarOrdensServico();
-                    if (confirm('Deseja imprimir esta ordem de serviço?')) {
-                        // A impressão será feita após carregar a nova OS
-                        setTimeout(() => {
-                            carregarOrdensServico();
-                        }, 500);
-                    }
+                    ordensServico = [novaOS, ...ordensServico];
+                    atualizarTabelaOS();
+                    atualizarTabelaOSVisualizacao();
+                    atualizarTabelaHistorico();
+                    atualizarDashboard();
+                    preencherOSNovaCompra();
+                    renderizarCompras();
+                    document.querySelector('[data-tab="visualizar-os"]').click();
+                    visualizarOS(novaOS.id);
                 })
                 .catch(err => {
                     console.error('Erro ao cadastrar OS:', err);
@@ -5638,6 +5647,11 @@
         document.getElementById('os-maquina').addEventListener('change', function() {
             const maquina = maquinas.find(m => m.id === this.value);
             document.getElementById('os-serial').value = maquina ? (maquina.patrimonio || '') : '';
+        });
+
+        document.getElementById('os-setor').addEventListener('change', function() {
+            atualizarSelectMaquinas();
+            document.getElementById('os-serial').value = '';
         });
     }
 
@@ -5680,13 +5694,32 @@
 
     function atualizarSelectMaquinas() {
         const select = document.getElementById('os-maquina');
-        select.innerHTML = '<option value="">Selecione uma máquina</option>';
-        maquinas.forEach(m => {
+        const setor = document.getElementById('os-setor').value;
+        const maquinaSelecionada = select.value;
+        const maquinasDoSetor = setor
+            ? maquinas.filter(m => String(m.setor || '').trim() === setor)
+            : [];
+
+        select.innerHTML = '';
+        const opcaoInicial = document.createElement('option');
+        opcaoInicial.value = '';
+        opcaoInicial.textContent = !setor
+            ? 'Selecione um setor primeiro'
+            : maquinasDoSetor.length
+                ? 'Selecione uma máquina'
+                : 'Nenhuma máquina cadastrada neste setor';
+        select.appendChild(opcaoInicial);
+
+        maquinasDoSetor.forEach(m => {
             const opt = document.createElement('option');
             opt.value = m.id;
             opt.textContent = `${m.nome}${m.patrimonio ? ' - ' + m.patrimonio : ''} (${m.setor})`;
             select.appendChild(opt);
         });
+
+        if (maquinasDoSetor.some(m => m.id === maquinaSelecionada)) {
+            select.value = maquinaSelecionada;
+        }
     }
 
     function atualizarSelectPreventivasSetor() {
@@ -6218,6 +6251,7 @@
         // Preenche os campos
         document.getElementById('os-solicitante').value = os.solicitanteId;
         document.getElementById('os-setor').value = os.setor;
+        atualizarSelectMaquinas();
         if (os.maquinaId) {
             document.getElementById('os-maquina').value = os.maquinaId;
             const maquina = maquinas.find(m => m.id === os.maquinaId);
