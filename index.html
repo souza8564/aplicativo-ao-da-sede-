@@ -1218,7 +1218,7 @@
             position: relative;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 18px;
             width: 100vw;
             max-width: none;
@@ -1233,19 +1233,19 @@
 
         .app-brand-home {
             display: inline-flex;
-            flex-direction: column;
-            align-items: flex-end;
-            justify-content: center;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
             gap: 0;
             min-width: 270px;
             min-height: 128px;
-            padding: 14px 30px 12px;
+            padding: 14px 0 12px;
             border: 0;
             border-radius: 0 !important;
             background: transparent;
             color: #111;
             cursor: pointer;
-            text-align: right;
+            text-align: left;
             box-shadow: none;
         }
 
@@ -1254,15 +1254,21 @@
             box-shadow: none;
         }
 
+        .app-brand-lockup {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
         .app-brand-logo {
             display: inline-flex;
             align-items: center;
             position: relative;
-            margin-bottom: 5px;
+            margin-bottom: 0;
             padding-right: 0.58em;
             color: #050505;
             font-family: Arial, sans-serif;
-            font-size: 3.2rem;
+            font-size: 3.8rem;
             font-weight: 800;
             letter-spacing: 0;
             line-height: 0.9;
@@ -1295,8 +1301,9 @@
         }
 
         .app-brand-subtitle {
+            align-self: flex-end;
             color: #075d32;
-            font-size: 1.15rem;
+            font-size: 1.3rem;
             font-weight: 600;
             font-style: italic;
             letter-spacing: 0.045em;
@@ -1801,11 +1808,11 @@
             }
 
             .app-brand-logo {
-                font-size: 2.8rem;
+                font-size: 2.6rem;
             }
 
             .app-brand-subtitle {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
 
             .container {
@@ -2047,8 +2054,10 @@
         <div class="container">
             <header class="app-topbar">
                 <button id="app-brand-home" class="app-brand-home" type="button" aria-label="Voltar para a área de trabalho">
-                    <span class="app-brand-logo" aria-hidden="true">ambipar</span>
-                    <span class="app-brand-subtitle">environment</span>
+                    <span class="app-brand-lockup">
+                        <span class="app-brand-logo" aria-hidden="true">ambipar</span>
+                        <span class="app-brand-subtitle">environment</span>
+                    </span>
                 </button>
                 <div class="app-topbar-actions">
                     <button id="btn-voltar-area-trabalho" class="btn-voltar-area-trabalho" type="button" style="display:none;">
