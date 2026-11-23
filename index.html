@@ -171,100 +171,6 @@
             border-top: 1px solid rgba(148, 163, 184, 0.38);
         }
         .notification-dropdown.open { display: block; }
-        .mensagens-panel {
-            display: grid;
-            grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
-            gap: 20px;
-            min-height: 640px;
-            background: linear-gradient(180deg, rgba(11, 20, 28, 0.02), rgba(11, 20, 28, 0.04));
-            padding: 12px;
-        }
-        .mensagem-box {
-            background: #fff;
-            border: 1px solid #e5e7eb;
-            border-radius: 18px;
-            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            overflow: hidden;
-        }
-        .mensagem-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .mensagem-form textarea {
-            min-height: 120px;
-            resize: vertical;
-            border: 1px solid #dfe6ee;
-            border-radius: 12px;
-            padding: 12px 14px;
-        }
-        .mensagem-lista {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            gap: 12px;
-            max-height: 480px;
-            overflow-y: auto;
-            background: linear-gradient(180deg, #f0f4f8 0%, #edf7f0 100%);
-            border-radius: 16px;
-            padding: 18px;
-            border: 1px solid #dfe6ee;
-            min-height: 420px;
-        }
-        .mensagem-item {
-            max-width: min(75%, 420px);
-            width: fit-content;
-            align-self: flex-start;
-            background: #fff;
-            border: 1px solid #dfe6ee;
-            border-radius: 16px 16px 16px 4px;
-            padding: 12px 14px 10px;
-            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .mensagem-item.mine {
-            margin-left: auto;
-            align-self: flex-end;
-            background: #d9fdd3;
-            border-color: rgba(34, 197, 94, 0.2);
-            border-radius: 16px 16px 4px 16px;
-        }
-        .mensagem-item strong {
-            display: block;
-            color: #0f172a;
-            font-size: 0.9rem;
-        }
-        .mensagem-item p {
-            margin: 0;
-            color: #334155;
-            line-height: 1.5;
-            word-break: break-word;
-        }
-        .mensagem-item small {
-            display: block;
-            margin-top: 2px;
-            color: #64748b;
-            font-size: 0.72rem;
-            text-align: right;
-            align-self: flex-end;
-            opacity: 0.9;
-        }
-        .mensagem-vazia {
-            background: rgba(255,255,255,0.7);
-            border: 1px dashed #cbd5e1;
-            border-radius: 14px;
-            padding: 22px 18px;
-            text-align: center;
-            color: #475569;
-        }
         .notification-item {
             padding: 12px 12px;
             border-radius: 14px;
@@ -715,37 +621,134 @@
             max-height: 260px;
         }
 
+        #relatorios .report-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 16px;
+            border: 1px solid rgba(57, 255, 20, 0.18);
+            border-radius: 14px;
+            background: linear-gradient(120deg, #f3fff2, #fff 72%);
+        }
+
+        #relatorios .report-toolbar label {
+            margin-left: 4px;
+        }
+
+        #relatorios .report-toolbar button {
+            width: auto;
+            margin: 0;
+            padding: 0 15px;
+        }
+
+        #relatorios .report-toolbar #btn-gerar-relatorio {
+            background: linear-gradient(135deg, var(--verde-neon), var(--verde-institucional));
+            color: #101a12;
+        }
+
+        #relatorios .report-toolbar button:disabled {
+            cursor: not-allowed;
+            filter: grayscale(0.35);
+            opacity: 0.55;
+            transform: none;
+        }
+
+        #relatorios .report-chart-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        #relatorios .report-chart-card {
+            min-width: 0;
+            min-height: 360px;
+            padding: 18px !important;
+            border: 1px solid #dfe9e2;
+            border-radius: 16px;
+            background: linear-gradient(150deg, #fff 55%, #f8fcf8);
+            box-shadow: 0 10px 24px rgba(11, 42, 25, 0.07);
+        }
+
+        #relatorios .report-chart-card h3 {
+            margin: 0;
+            color: #183b27 !important;
+            font-size: 1rem;
+            font-weight: 750;
+        }
+
+        #relatorios .report-chart-description {
+            margin: 5px 0 14px;
+            color: #718078;
+            font-size: 0.8rem;
+        }
+
+        #relatorios .report-chart-plot {
+            position: relative;
+            width: 100%;
+            height: 278px;
+        }
+
+        #relatorios .report-chart-plot canvas {
+            width: 100% !important;
+            height: 100% !important;
+            max-height: none;
+        }
+
+        #relatorios .report-results-panel {
+            margin-top: 12px;
+            padding: 18px;
+            border: 1px solid #e1ebe4;
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 6px 18px rgba(11, 42, 25, 0.05);
+        }
+
+        #relatorios .report-results-panel h3 {
+            color: #183b27;
+        }
+
         /* Mini-charts por técnico */
         .mini-charts-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 12px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 14px;
+            margin-top: 18px;
             align-items: stretch;
         }
         .mini-chart-card {
-            width: 170px;
+            width: auto;
+            min-width: 0;
             background: #fff;
-            border-radius: 8px;
-            padding: 8px;
-            box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+            border: 1px solid #e1ebe4;
+            border-radius: 14px;
+            padding: 14px;
+            box-shadow: 0 6px 16px rgba(11, 42, 25, 0.05);
             text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            gap: 8px;
         }
-        .mini-chart-card canvas { height: 110px !important; width: 100% !important; }
-        .mini-chart-card .mini-label { font-size: 0.92em; margin-top: 6px; color: #222; font-weight: 600; }
-        .mini-chart-card .mini-sub { font-size: 0.8em; color: #666; margin-top: 2px; }
+        #relatorios .mini-chart-card { width: auto; }
+        .mini-chart-card canvas { height: 145px !important; width: 100% !important; }
+        .mini-chart-card .mini-label { font-size: 0.9em; margin-top: 6px; color: #183b27; font-weight: 700; }
+        .mini-chart-card .mini-sub { font-size: 0.78em; color: #718078; margin-top: 2px; }
 
         /* Ajustes responsivos */
         @media (max-width: 900px) {
             .chart-card { min-height: 180px; padding: 12px; }
             .chart-card canvas { height: 160px !important; }
             .mini-chart-card { width: calc(50% - 12px); }
+            #relatorios .report-chart-grid { grid-template-columns: minmax(0, 1fr); }
         }
         @media (max-width: 520px) {
             .mini-chart-card { width: 100%; }
+            #relatorios .report-chart-card { min-height: 320px; padding: 14px !important; }
+            #relatorios .report-chart-plot { height: 245px; }
+            #relatorios .report-toolbar button { flex: 1 1 100%; }
         }
 
         /* Identidade visual futurista da empresa */
@@ -1065,6 +1068,838 @@
             0% { width: 0%; }
             100% { width: 100%; }
         }
+
+        :root {
+            --verde-neon: #39ff14;
+            --verde-institucional: #00843d;
+            --grafite-profundo: #081012;
+            --grafite-painel: #101b1e;
+            --linha-tecnica: rgba(57, 255, 20, 0.16);
+            --texto-claro: #e8f5ed;
+            --app-fundo: #081012;
+            --app-superficie: #ffffff;
+            --app-texto: #192b25;
+            --app-texto-secundario: #65756e;
+            --app-borda: #e0e9e4;
+            --app-sombra: 0 18px 45px rgba(0, 0, 0, 0.24);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            color: var(--app-texto);
+            background-color: var(--grafite-profundo);
+            background-image:
+                linear-gradient(rgba(57, 255, 20, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(57, 255, 20, 0.035) 1px, transparent 1px),
+                radial-gradient(circle at 82% 0%, rgba(0, 132, 61, 0.25), transparent 36%);
+            background-size: 34px 34px, 34px 34px, 100% 100%;
+            font-family: "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+        }
+
+        .main-layout {
+            min-height: 100vh;
+            background: transparent;
+        }
+
+        .sidebar {
+            display: none !important;
+        }
+
+        .sidebar-header {
+            min-height: 104px;
+            margin: 0 0 18px;
+            padding: 22px 10px 12px;
+            background: var(--verde-neon);
+            border-bottom: 0;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 0 18px rgba(57, 255, 20, 0.35), 0 8px 24px rgba(0, 0, 0, 0.3);
+            color: #07110b;
+        }
+
+        .sidebar-header .empresa-marca {
+            color: #050505;
+        }
+
+        .sidebar-header .empresa-marca::before {
+            border-color: #050505;
+        }
+
+        .sidebar-header .empresa-marca::after {
+            color: #050505;
+        }
+
+        .sidebar-header .subtitle {
+            color: #00843d;
+        }
+
+        .sidebar-menu {
+            gap: 4px;
+            padding: 0 12px;
+        }
+
+        .sidebar-btn {
+            min-height: 44px;
+            padding: 10px 14px;
+            border: 0;
+            border-left: 3px solid transparent;
+            border-radius: 10px;
+            color: #b7c8c0;
+            font-size: 0.91rem;
+            font-weight: 550;
+        }
+
+        .sidebar-btn svg {
+            width: 19px;
+            height: 19px;
+            flex: 0 0 19px;
+            opacity: 0.88;
+        }
+
+        .sidebar-btn.active,
+        .sidebar-btn:hover {
+            transform: none;
+            border-left-color: var(--verde-neon);
+            background: linear-gradient(90deg, rgba(57, 255, 20, 0.2), rgba(57, 255, 20, 0.04));
+            color: var(--verde-neon);
+        }
+
+        .sidebar-btn:focus-visible,
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid rgba(8, 127, 80, 0.35);
+            outline-offset: 2px;
+        }
+
+        .user-actions {
+            padding: 12px;
+            gap: 10px;
+        }
+
+        .notification-wrapper {
+            position: relative;
+            inset: auto;
+            width: 100%;
+        }
+
+        .notification-button {
+            width: 100%;
+            min-width: 0;
+            height: 44px;
+            justify-content: flex-start;
+            padding: 0 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: none;
+        }
+
+        .notification-button:hover {
+            transform: none;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .notification-dropdown {
+            right: 0;
+            width: min(360px, calc(100vw - 32px));
+            border-radius: 14px;
+            background: #fff;
+        }
+
+        .notification-dropdown::before {
+            display: none;
+        }
+
+        .app-topbar {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            width: 100vw;
+            max-width: none;
+            box-sizing: border-box;
+            min-height: 148px;
+            margin: 0 0 18px calc(50% - 50vw);
+            padding: 12px clamp(20px, 3vw, 48px) 18px;
+            background: var(--verde-neon);
+            border-bottom: 1px solid rgba(0, 80, 35, 0.28);
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.18);
+        }
+
+        .app-brand-home {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 0;
+            min-width: 270px;
+            min-height: 128px;
+            padding: 14px 30px 12px;
+            border: 0;
+            border-radius: 0 !important;
+            background: transparent;
+            color: #111;
+            cursor: pointer;
+            text-align: right;
+            box-shadow: none;
+        }
+
+        .app-brand-home:hover {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .app-brand-logo {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            margin-bottom: 5px;
+            padding-right: 0.58em;
+            color: #050505;
+            font-family: Arial, sans-serif;
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: 0;
+            line-height: 0.9;
+        }
+
+        .app-brand-logo::before {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 0.42em;
+            height: 0.42em;
+            border: 1.5px solid #050505;
+            border-radius: 3px;
+            content: "";
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .app-brand-logo::after {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 1em;
+            color: #050505;
+            content: "a";
+            font-size: 0.42em;
+            font-weight: 800;
+            line-height: 1;
+            text-align: center;
+            transform: translateY(calc(-50% - 2px));
+        }
+
+        .app-brand-subtitle {
+            color: #075d32;
+            font-size: 1.15rem;
+            font-weight: 600;
+            font-style: italic;
+            letter-spacing: 0.045em;
+        }
+
+        .app-topbar-actions {
+            position: absolute;
+            top: 50%;
+            right: clamp(12px, 3vw, 40px);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            transform: translateY(-50%);
+        }
+
+        .top-user-badge {
+            position: static;
+            padding: 9px 14px;
+            background: rgba(16, 27, 30, 0.88);
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            color: #e8f5ed;
+            box-shadow: none;
+            backdrop-filter: none;
+        }
+
+        .top-user-badge .user-dot {
+            background: var(--verde-neon);
+            box-shadow: 0 0 0 4px rgba(57, 255, 20, 0.15), 0 0 10px rgba(57, 255, 20, 0.65);
+        }
+
+        .app-topbar .notification-wrapper {
+            position: relative;
+            inset: auto;
+            width: auto;
+        }
+
+        .app-topbar .notification-button {
+            width: auto;
+            min-width: 0;
+            border-color: rgba(57, 255, 20, 0.26);
+            background: rgba(16, 27, 30, 0.88);
+            color: #e8f5ed;
+        }
+
+        .btn-voltar-area-trabalho {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 40px;
+            padding: 8px 12px;
+            border: 1px solid rgba(8, 16, 18, 0.35);
+            border-radius: 10px !important;
+            background: rgba(8, 16, 18, 0.9);
+            color: var(--verde-neon);
+            cursor: pointer;
+            font-size: 0.84rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .btn-voltar-area-trabalho:hover {
+            background: #101b1e;
+        }
+
+        .btn-voltar-area-trabalho svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .app-topbar #btn-logout {
+            display: inline-flex !important;
+            align-items: center;
+            gap: 8px;
+            margin: 0 !important;
+            padding: 8px 13px !important;
+            border: 1px solid rgba(255, 110, 110, 0.28) !important;
+            border-radius: 10px !important;
+            background: rgba(120, 25, 25, 0.28) !important;
+            color: #ffe4e4 !important;
+        }
+
+        .app-topbar #btn-logout svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: none;
+            min-width: 0;
+            flex: 1;
+            padding: 20px clamp(20px, 3vw, 48px) 40px;
+        }
+
+        .tabcontent {
+            animation: fadeEffect 0.22s ease-out;
+        }
+
+        .os-card {
+            width: 100%;
+            max-width: 1480px;
+            box-sizing: border-box;
+            margin: 0 auto 28px;
+            padding: clamp(20px, 3vw, 34px);
+            overflow: visible;
+            border: 1px solid rgba(0, 132, 61, 0.2);
+            border-radius: 18px;
+            background: var(--app-superficie);
+            box-shadow: var(--app-sombra);
+        }
+
+        .os-card::before {
+            height: 3px;
+            border-radius: 18px 18px 0 0;
+            background: linear-gradient(90deg, var(--verde-neon), var(--verde-institucional), transparent 100%);
+        }
+
+        .os-card h2 {
+            margin: 0 0 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #edf2ef;
+            color: var(--app-texto);
+            font-size: clamp(1.25rem, 2vw, 1.65rem);
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            text-align: left;
+            text-transform: none;
+        }
+
+        .os-card h3 {
+            color: #294438;
+            letter-spacing: -0.01em;
+        }
+
+        .os-card form {
+            gap: 20px 24px;
+        }
+
+        .form-group {
+            gap: 8px;
+        }
+
+        label {
+            color: #40564c;
+            font-size: 0.9rem;
+            font-weight: 650;
+            letter-spacing: 0;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="password"],
+        input[type="search"],
+        input[type="number"],
+        select,
+        textarea {
+            min-height: 42px;
+            box-sizing: border-box;
+            padding: 10px 12px;
+            border: 1px solid #d5e0da !important;
+            border-radius: 10px !important;
+            background: #fbfdfc !important;
+            color: var(--app-texto);
+            font: inherit;
+            box-shadow: none !important;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+
+        textarea {
+            min-height: 100px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--verde-institucional) !important;
+            outline: none;
+            background: #fff !important;
+            box-shadow: 0 0 0 4px rgba(8, 127, 80, 0.1) !important;
+        }
+
+        input[readonly] {
+            background: #f1f5f2 !important;
+            color: #65756e;
+        }
+
+        button,
+        .btn-action {
+            min-height: 38px;
+            border-radius: 9px !important;
+            font-family: inherit;
+            font-weight: 650;
+            letter-spacing: 0;
+            transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.16s ease;
+        }
+
+        button:hover,
+        .btn-action:hover {
+            filter: brightness(1.04);
+            transform: translateY(-1px);
+        }
+
+        button[type="submit"] {
+            min-height: 46px;
+            border-radius: 10px !important;
+            background: linear-gradient(135deg, var(--verde-neon), var(--verde-institucional));
+            color: #101a12;
+            box-shadow: 0 8px 18px rgba(0, 132, 61, 0.2), 0 0 12px rgba(57, 255, 20, 0.12);
+        }
+
+        button[type="submit"]:hover {
+            background: linear-gradient(135deg, var(--verde-institucional), var(--verde-neon));
+            color: #fff;
+        }
+
+        table {
+            width: 100%;
+            border: 1px solid var(--app-borda);
+            border-radius: 12px;
+            border-spacing: 0;
+            background: #fff;
+            box-shadow: 0 4px 14px rgba(20, 45, 34, 0.035);
+        }
+
+        th {
+            padding: 13px 14px;
+            border-color: #e5ece8;
+            background: #f5f8f6;
+            color: #52665c;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.055em;
+        }
+
+        td {
+            padding: 12px 14px;
+            border-color: #edf1ef;
+            color: #34493e;
+            vertical-align: middle;
+        }
+
+        tr:nth-child(even) {
+            background: #fbfcfb;
+        }
+
+        tr:hover {
+            background: #f2f8f4;
+        }
+
+        .chart-card,
+        .relatorio-grafico,
+        .mini-chart-card {
+            border: 1px solid var(--app-borda);
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 8px 22px rgba(20, 45, 34, 0.055);
+        }
+
+        #dashboard .os-card > div[style*="grid-template-columns"] > div[style] {
+            border: 1px solid var(--app-borda) !important;
+            border-left: 4px solid var(--verde-institucional) !important;
+            border-radius: 14px !important;
+            background: linear-gradient(145deg, #fff, #f8fbf9) !important;
+            box-shadow: 0 8px 22px rgba(20, 45, 34, 0.055) !important;
+            text-align: left !important;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        #dashboard .os-card > div[style*="grid-template-columns"] > div[style]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(20, 45, 34, 0.09) !important;
+        }
+
+        #dashboard .os-card > div[style*="grid-template-columns"] > div[style] h3 {
+            color: #61736a !important;
+            font-size: 0.88rem;
+            font-weight: 650;
+        }
+
+        #dashboard .os-card > div[style*="grid-template-columns"] > div[style] p {
+            margin: 12px 0 0;
+            color: #18392a;
+            font-size: 2rem !important;
+            font-weight: 750;
+        }
+
+        .admin-badge {
+            border-radius: 999px;
+        }
+
+        .loading {
+            border-top-color: var(--verde-institucional);
+        }
+
+        .desktop-launcher {
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(244, 250, 246, 0.98));
+        }
+
+        .dashboard-summary {
+            padding: 0 clamp(20px, 3vw, 34px);
+        }
+
+        .dashboard-summary > summary {
+            padding: 20px 0;
+            color: var(--app-texto);
+            cursor: pointer;
+            font-size: 1.08rem;
+            font-weight: 750;
+            list-style: none;
+        }
+
+        .dashboard-summary > summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .dashboard-summary > summary::after {
+            content: "+";
+            float: right;
+            color: var(--verde-institucional);
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+
+        .dashboard-summary[open] > summary::after {
+            content: "−";
+        }
+
+        .dashboard-summary-content {
+            padding-bottom: 24px;
+        }
+
+        .desktop-launcher-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .desktop-launcher-heading h2 {
+            margin: 0 0 4px;
+            padding: 0;
+            border: 0;
+        }
+
+        .desktop-launcher-heading p {
+            margin: 0;
+            color: var(--app-texto-secundario);
+            font-size: 0.92rem;
+        }
+
+        .desktop-launcher-mark {
+            flex: 0 0 auto;
+            color: var(--verde-institucional);
+            font-size: 0.78rem;
+            font-weight: 750;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .desktop-app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+            gap: 14px;
+        }
+
+        .desktop-app {
+            display: flex;
+            min-width: 0;
+            min-height: 126px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 11px;
+            padding: 14px 9px;
+            border: 1px solid #e1ebe4;
+            border-radius: 14px !important;
+            background: #fff;
+            color: #263b30;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 5px 16px rgba(20, 45, 34, 0.045);
+        }
+
+        .desktop-app:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 132, 61, 0.38);
+            background: #fbfffb;
+            box-shadow: 0 12px 22px rgba(0, 80, 40, 0.11), 0 0 0 3px rgba(57, 255, 20, 0.08);
+        }
+
+        .desktop-app-icon {
+            display: grid;
+            width: 58px;
+            height: 58px;
+            place-items: center;
+            border: 1px solid var(--verde-institucional);
+            border-radius: 17px;
+            background: linear-gradient(145deg, var(--verde-neon), #a8ff91);
+            color: #050505;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 6px 12px rgba(0, 132, 61, 0.18);
+        }
+
+        .desktop-app-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        .desktop-app-label {
+            max-width: 100%;
+            font-size: 0.82rem;
+            font-weight: 700;
+            line-height: 1.25;
+            overflow-wrap: anywhere;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                display: none !important;
+            }
+
+            .sidebar-header {
+                min-height: auto;
+                margin: 0 16px;
+                padding: 12px 0;
+                text-align: left;
+            }
+
+            .sidebar-header .empresa-marca {
+                margin: 0;
+                font-size: 1.25em;
+            }
+
+            .sidebar-header .subtitle {
+                display: inline;
+                margin-left: 8px;
+                font-size: 0.7em;
+            }
+
+            .sidebar-menu {
+                display: flex;
+                flex-direction: row;
+                gap: 6px;
+                width: auto;
+                padding: 8px 12px;
+                overflow-x: auto;
+                overscroll-behavior-x: contain;
+            }
+
+            .sidebar-btn {
+                flex: 0 0 auto;
+                min-width: max-content;
+                min-height: 40px;
+                padding: 8px 12px;
+                border: 0;
+                border-radius: 9px;
+                font-size: 0.84rem;
+            }
+
+            .sidebar-btn.active,
+            .sidebar-btn:hover {
+                border: 0;
+                background: rgba(57, 255, 20, 0.14);
+                color: var(--verde-neon);
+            }
+
+            .app-topbar {
+                min-height: 138px;
+                margin-bottom: 14px;
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+
+            .container {
+                padding: 14px 20px 32px;
+            }
+
+            .top-user-badge {
+                padding: 8px 11px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .app-topbar {
+                align-items: center;
+                flex-wrap: wrap;
+                padding: 4px 0 12px;
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+
+            .app-brand-home {
+                min-width: 0;
+                min-height: 112px;
+            }
+
+            .app-brand-logo {
+                font-size: 2.8rem;
+            }
+
+            .app-brand-subtitle {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 12px 12px 24px;
+            }
+
+            .os-card {
+                padding: 20px 16px;
+                border-radius: 14px;
+            }
+
+            .os-card h2 {
+                margin-bottom: 18px;
+                padding-bottom: 12px;
+            }
+
+            .os-card form {
+                gap: 14px;
+            }
+
+            .form-group {
+                width: 100%;
+            }
+
+            .desktop-launcher-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .desktop-app-grid {
+                grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+                gap: 10px;
+            }
+
+            .desktop-app {
+                min-height: 112px;
+                padding: 10px 6px;
+            }
+
+            .desktop-app-icon {
+                width: 52px;
+                height: 52px;
+                border-radius: 15px;
+            }
+
+            .desktop-app-label {
+                font-size: 0.76rem;
+            }
+
+            .app-topbar-actions {
+                position: static;
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 7px;
+                transform: none;
+            }
+
+            .top-user-badge {
+                max-width: 42vw;
+                overflow: hidden;
+                font-size: 0.72rem;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .app-topbar .notification-label {
+                display: none;
+            }
+
+            .app-topbar .notification-button {
+                padding: 0 12px;
+            }
+
+            #dashboard .os-card > div[style*="grid-template-columns"] {
+                gap: 12px !important;
+                grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)) !important;
+            }
+
+            #dashboard .os-card > div[style*="grid-template-columns"] > div[style] {
+                padding: 14px !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1129,10 +1964,6 @@
 
     <!-- App Principal -->
     <div class="main-layout" style="display:none;" id="app-main-layout">
-        <div id="top-user-badge" class="top-user-badge" aria-live="polite">
-            <span class="user-dot"></span>
-            <span id="top-user-name">Usuário</span>
-        </div>
         <nav class="sidebar">
             <div class="sidebar-header">
                 <div class="empresa-marca">ambipar</div>
@@ -1142,10 +1973,6 @@
                 <button class="sidebar-btn active" data-tab="dashboard">
                     <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
                     Painel
-                </button>
-                <button class="sidebar-btn" data-tab="mensagens">
-                    <svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-2 10H6V10h12v2zm0-4H6V6h12v2z"/></svg>
-                    Mensagens
                 </button>
                 <button class="sidebar-btn" data-tab="solicitantes">
                     <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -1216,26 +2043,51 @@
                     Nova compra
                 </button>
             </div>
-            <div class="user-actions">
-                <div class="notification-wrapper">
-                    <button id="btn-notificacoes" class="notification-button" type="button">
-                        <span aria-hidden="true">🔔</span>
-                        <span class="notification-label">Notificações</span>
-                        <span id="notification-count" class="notification-count">0</span>
-                    </button>
-                    <div id="notification-dropdown" class="notification-dropdown"></div>
-                </div>
-                <button id="btn-logout" class="sidebar-btn" type="button" style="display:flex; align-items:center; gap:14px; margin-top: 4px; background: rgba(220,38,38,0.12); color:#fff; border-top:1px solid rgba(255,255,255,0.08);">
-                    <svg viewBox="0 0 24 24"><path d="M10 17v-2h7V9h-7V7l-5 5 5 5zm-8-1V8h8V4H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8v-4H2z"/></svg>
-                    Sair
-                </button>
-            </div>
         </nav>
         <div class="container">
+            <header class="app-topbar">
+                <button id="app-brand-home" class="app-brand-home" type="button" aria-label="Voltar para a área de trabalho">
+                    <span class="app-brand-logo" aria-hidden="true">ambipar</span>
+                    <span class="app-brand-subtitle">environment</span>
+                </button>
+                <div class="app-topbar-actions">
+                    <button id="btn-voltar-area-trabalho" class="btn-voltar-area-trabalho" type="button" style="display:none;">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                        Área de trabalho
+                    </button>
+                    <div id="top-user-badge" class="top-user-badge" aria-live="polite">
+                        <span class="user-dot"></span>
+                        <span id="top-user-name">Usuário</span>
+                    </div>
+                    <div class="notification-wrapper">
+                        <button id="btn-notificacoes" class="notification-button" type="button">
+                            <span aria-hidden="true">🔔</span>
+                            <span class="notification-label">Notificações</span>
+                            <span id="notification-count" class="notification-count">0</span>
+                        </button>
+                        <div id="notification-dropdown" class="notification-dropdown"></div>
+                    </div>
+                    <button id="btn-logout" class="sidebar-btn" type="button" style="display:flex; align-items:center; gap:14px; margin-top: 4px; background: rgba(220,38,38,0.12); color:#fff; border-top:1px solid rgba(255,255,255,0.08);">
+                        <svg viewBox="0 0 24 24"><path d="M10 17v-2h7V9h-7V7l-5 5 5 5zm-8-1V8h8V4H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8v-4H2z"/></svg>
+                        Sair
+                    </button>
+                </div>
+            </header>
             <!-- Painel Dashboard -->
             <div id="dashboard" class="tabcontent active">
-                <div class="os-card">
-                    <h2>Painel de Controle</h2>
+                <section class="os-card desktop-launcher" aria-labelledby="desktop-launcher-title">
+                    <div class="desktop-launcher-heading">
+                        <div>
+                            <h2 id="desktop-launcher-title">Área de trabalho</h2>
+                            <p>Escolha um aplicativo para acessar uma área do sistema.</p>
+                        </div>
+                        <span class="desktop-launcher-mark">Ambipar · Aplicativos</span>
+                    </div>
+                    <div id="atalhos-area-trabalho" class="desktop-app-grid" aria-label="Aplicativos disponíveis"></div>
+                </section>
+                <details class="os-card dashboard-summary">
+                    <summary>Resumo do sistema</summary>
+                    <div class="dashboard-summary-content">
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
                         <div style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; border-left: 5px solid #39ff14;">
                             <h3 style="margin-top: 0; color: #00843d;">OS Pendentes</h3>
@@ -1276,23 +2128,8 @@
 
                     <h3 style="margin-top:30px;">Pendências de compras por OS</h3>
                     <div id="os-pendencias-compras"></div>
-                </div>
-            </div>
-
-            <div id="mensagens" class="tabcontent">
-                <div class="os-card mensagens-panel">
-                    <h2>Mensagens internas</h2>
-                    <div class="mensagem-box">
-                        <div class="mensagem-lista" id="mensagens-lista"></div>
-                        <div class="mensagem-form">
-                            <label for="mensagem-destinatario">Enviar para:</label>
-                            <select id="mensagem-destinatario"></select>
-                            <label for="mensagem-texto">Mensagem:</label>
-                            <textarea id="mensagem-texto" rows="4" placeholder="Escreva a mensagem para o usuário..."></textarea>
-                            <button type="button" id="btn-enviar-mensagem">Enviar mensagem</button>
-                        </div>
                     </div>
-                </div>
+                </details>
             </div>
 
             <datalist id="lista-itens-compra"></datalist>
@@ -2008,8 +2845,8 @@
             <div id="relatorios" class="tabcontent">
                 <div class="os-card">
                     <h2>Relatórios</h2>
-                    <div style="display: grid; gap: 12px;">
-                        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+                    <div style="display: grid; gap: 18px;">
+                        <div class="report-toolbar">
                             <label for="relatorio-periodo">Período:</label>
                             <select id="relatorio-periodo">
                                 <option value="semanal">Semanal (últimos 7 dias)</option>
@@ -2030,28 +2867,35 @@
                             <button id="btn-abrir-relatorio-nova-janela" disabled>Visualizar em Nova Janela</button>
                         </div>
 
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
-                            <div class="chart-card" style="padding:12px;">
-                                <h3 style="margin-top: 0; color: #00843d;">OS por Status</h3>
-                                <canvas id="chart-status" height="160"></canvas>
+                        <div class="report-chart-grid">
+                            <div class="chart-card report-chart-card">
+                                <h3>Ordens por status</h3>
+                                <p class="report-chart-description">Distribuição das ordens no período selecionado.</p>
+                                <div class="report-chart-plot"><canvas id="chart-status"></canvas></div>
                             </div>
-                            <div class="chart-card" style="padding:12px;">
-                                <h3 style="margin-top: 0; color: #00843d;">OS por Técnico</h3>
-                                <canvas id="chart-tecnicos" height="160"></canvas>
+                            <div class="chart-card report-chart-card">
+                                <h3>Ordens por técnico</h3>
+                                <p class="report-chart-description">Comparativo de pendentes, em andamento e concluídas.</p>
+                                <div class="report-chart-plot"><canvas id="chart-tecnicos"></canvas></div>
                             </div>
-                            <div class="chart-card" style="padding:12px;">
-                                <h3 style="margin-top: 0; color: #00843d;">OS por Setor</h3>
-                                <canvas id="chart-setores" height="160"></canvas>
+                            <div class="chart-card report-chart-card">
+                                <h3>Ordens por setor</h3>
+                                <p class="report-chart-description">Setores com maior volume de solicitações.</p>
+                                <div class="report-chart-plot"><canvas id="chart-setores"></canvas></div>
                             </div>
-                            <div class="chart-card" style="padding:12px;">
-                                <h3 style="margin-top: 0; color: #00843d;">OS por Máquina (top 10)</h3>
-                                <canvas id="chart-maquinas" height="160"></canvas>
+                            <div class="chart-card report-chart-card">
+                                <h3>Ordens por máquina <span class="report-chart-description">(top 10)</span></h3>
+                                <p class="report-chart-description">Equipamentos com maior recorrência de ordens.</p>
+                                <div class="report-chart-plot"><canvas id="chart-maquinas"></canvas></div>
                             </div>
                         </div>
 
-                        <div id="mini-charts-per-tecnico" class="mini-charts-container" style="margin-top:10px;"></div>
+                        <section class="report-results-panel">
+                            <h3 style="margin-top:0;color:#00843d;">Indicadores por técnico</h3>
+                            <div id="mini-charts-per-tecnico" class="mini-charts-container"></div>
+                        </section>
 
-                        <div style="margin-top:12px; background:#fff; border-radius:10px; padding:12px; box-shadow: 0 1px 6px rgba(0,0,0,0.05);">
+                        <div class="report-results-panel">
                             <h3 style="margin-top:0;color:#00843d;">Resumo por Técnico</h3>
                             <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
                                 <button id="btn-exportar-tecnicos" disabled>Exportar Técnicos CSV</button>
@@ -2069,7 +2913,7 @@
                             </table>
                         </div>
 
-                        <div style="margin-top: 12px; background:#fff; border-radius:10px; padding:12px; box-shadow: 0 1px 6px rgba(0,0,0,0.05);">
+                        <div class="report-results-panel">
                             <div id="relatorio-summary"></div>
                             <div id="relatorio-tempos"></div>
                             <div id="relatorio-diagnosticos"></div>
@@ -2283,12 +3127,10 @@
     let notificacoes = [];
     let preventivas = [];
     let apontamentos = [];
-    let mensagensInternasListener = null;
     const graficosCompras = {};
     const EMAIL_MESTRE_SISTEMA = 'souza73e@gmail.com';
     const ABAS_DISPONIVEIS = [
         ['dashboard', 'Painel'],
-        ['mensagens', 'Mensagens'],
         ['usuarios', 'Usuários'],
         ['solicitantes', 'Solicitantes'],
         ['tecnicos', 'Técnicos'],
@@ -2310,18 +3152,18 @@
 
     const PERMISSOES_POR_PERFIL = {
         admin: [
-            'dashboard','mensagens','usuarios','solicitantes','tecnicos','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','estoque-insumos','stores-fabrica','preventivas','apontamentos','relatorios','nova-compra','compras','relatorio-compras'
+            'dashboard','usuarios','solicitantes','tecnicos','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','estoque-insumos','stores-fabrica','preventivas','apontamentos','relatorios','nova-compra','compras','relatorio-compras'
         ],
         apontador: [
-            'dashboard','mensagens','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','estoque-insumos','stores-fabrica','preventivas','apontamentos','relatorios','nova-compra'
+            'dashboard','nova-os','gerenciar-os','visualizar-os','historico-os','maquinas','pecas','estoque-insumos','stores-fabrica','preventivas','apontamentos','relatorios','nova-compra'
         ],
         supervisor: [
-            'dashboard','mensagens','historico-os','visualizar-os','nova-compra','compras','relatorio-compras','pecas','estoque-insumos','stores-fabrica'
+            'dashboard','historico-os','visualizar-os','nova-compra','compras','relatorio-compras','pecas','estoque-insumos','stores-fabrica'
         ],
-        comprador: ['dashboard','mensagens','nova-compra','compras','relatorio-compras','visualizar-os','estoque-insumos','stores-fabrica'],
-        manutencao: ['dashboard','mensagens','nova-os','gerenciar-os','visualizar-os','historico-os','preventivas','apontamentos','relatorios','estoque-insumos','stores-fabrica'],
-        producao: ['dashboard','mensagens','historico-os','visualizar-os'],
-        compras: ['dashboard','mensagens','compras','relatorio-compras','visualizar-os','estoque-insumos','stores-fabrica']
+        comprador: ['dashboard','nova-compra','compras','relatorio-compras','visualizar-os','estoque-insumos','stores-fabrica'],
+        manutencao: ['dashboard','nova-os','gerenciar-os','visualizar-os','historico-os','preventivas','apontamentos','relatorios','estoque-insumos','stores-fabrica'],
+        producao: ['dashboard','historico-os','visualizar-os'],
+        compras: ['dashboard','compras','relatorio-compras','visualizar-os','estoque-insumos','stores-fabrica']
     };
 
     function ehUsuarioMaster(usuario) {
@@ -2647,7 +3489,6 @@
         mostrarBotoesAdmin(isAdmin);
         aplicarRestricoesDePerfil();
         carregarDadosIniciais();
-        carregarMensagensInternasEmTempoReal();
     }
 
     function esconderApp() {
@@ -2683,6 +3524,40 @@
         if (tabAtual && !usuarioTemAcesso(tabAtual)) {
             document.querySelector('[data-tab="dashboard"]').click();
         }
+        renderizarAtalhosAreaTrabalho();
+    }
+
+    function renderizarAtalhosAreaTrabalho() {
+        const areaTrabalho = document.getElementById('atalhos-area-trabalho');
+        if (!areaTrabalho) return;
+
+        areaTrabalho.replaceChildren();
+        document.querySelectorAll('.sidebar-btn[data-tab]').forEach(botaoLateral => {
+            const tabId = botaoLateral.dataset.tab;
+            if (botaoLateral.style.display === 'none' || !usuarioTemAcesso(tabId)) return;
+
+            const atalho = document.createElement('button');
+            atalho.type = 'button';
+            atalho.className = 'desktop-app';
+            atalho.setAttribute('aria-label', botaoLateral.textContent.replace(/\s+/g, ' ').trim());
+
+            const icone = document.createElement('span');
+            icone.className = 'desktop-app-icon';
+            const svg = botaoLateral.querySelector('svg');
+            if (svg) {
+                const iconeClonado = svg.cloneNode(true);
+                iconeClonado.setAttribute('aria-hidden', 'true');
+                icone.appendChild(iconeClonado);
+            }
+
+            const rotulo = document.createElement('span');
+            rotulo.className = 'desktop-app-label';
+            rotulo.textContent = botaoLateral.textContent.replace(/\s+/g, ' ').trim();
+
+            atalho.append(icone, rotulo);
+            atalho.addEventListener('click', () => botaoLateral.click());
+            areaTrabalho.appendChild(atalho);
+        });
     }
 
     // ============================================
@@ -3962,72 +4837,6 @@
         });
     }
 
-    function notificarMensagemInterna(destinatarioEmail, remetenteNome, texto) {
-        const emailDestino = String(destinatarioEmail || '').trim().toLowerCase();
-        const textoResumo = String(texto || '').trim();
-        if (!emailDestino || !textoResumo) return Promise.resolve();
-
-        return db.collection('usuarios').where('email', '==', emailDestino).limit(1).get().then(snapshot => {
-            if (!snapshot || snapshot.empty) return null;
-            const destinatario = snapshot.docs[0];
-            const destinatarioUid = destinatario.id;
-            const titulo = 'Nova mensagem interna';
-            const mensagem = `${remetenteNome || 'Usuário'}: ${textoResumo.length > 80 ? textoResumo.slice(0, 77) + '...' : textoResumo}`;
-
-            return notificar(destinatarioUid, titulo, mensagem, null, {
-                tipo: 'mensagem',
-                remetenteEmail: ((usuarioLogado && usuarioLogado.email) || (currentUser && currentUser.email) || '').toLowerCase(),
-                destinatarioEmail: emailDestino,
-                remetenteNome: remetenteNome || 'Usuário'
-            }).then(() => {
-                if ((currentUser && (currentUser.email || '').toLowerCase()) === emailDestino) {
-                    tocarNotificacao();
-                    if (document.getElementById('notification-dropdown')) {
-                        document.getElementById('notification-dropdown').classList.add('open');
-                    }
-                    carregarNotificacoes();
-                }
-                return true;
-            });
-        }).catch(error => {
-            console.warn('Erro ao notificar destinatário da mensagem:', error);
-            return null;
-        });
-    }
-
-    function carregarMensagensInternasEmTempoReal() {
-        const uidAtual = (currentUser && currentUser.uid) || (usuarioLogado && usuarioLogado.uid) || '';
-        if (!uidAtual) return;
-
-        if (mensagensInternasListener) {
-            mensagensInternasListener();
-            mensagensInternasListener = null;
-        }
-
-        const ref = db.collection('mensagensInternas').where('participantes', 'array-contains', uidAtual);
-        mensagensInternasListener = ref.onSnapshot(snapshot => {
-            const mensagens = snapshot.docs
-                .map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
-                .filter(msg => {
-                    const remetente = String(msg.remetenteUid || '');
-                    const destinatario = String(msg.destinatarioUid || '');
-                    return remetente === uidAtual || destinatario === uidAtual;
-                })
-                .sort((a, b) => {
-                    const aTime = a.data && a.data.toDate ? a.data.toDate().getTime() : new Date(a.data || 0).getTime();
-                    const bTime = b.data && b.data.toDate ? b.data.toDate().getTime() : new Date(b.data || 0).getTime();
-                    return aTime - bTime;
-                });
-
-            const storageKey = `mensagensInternas_${uidAtual}`;
-            localStorage.setItem(storageKey, JSON.stringify(mensagens));
-            renderizarMensagens();
-        }, error => {
-            console.warn('Erro ao carregar mensagens em tempo real:', error);
-            renderizarMensagens();
-        });
-    }
-
     function tecnicosOptions(selectId, textoInicial) {
         const select = document.getElementById(selectId);
         if (!select) return;
@@ -4718,6 +5527,12 @@
                 document.getElementById('modal-registro').style.display = 'flex';
             }
         });
+        document.getElementById('app-brand-home').addEventListener('click', function() {
+            document.querySelector('.sidebar-btn[data-tab="dashboard"]').click();
+        });
+        document.getElementById('btn-voltar-area-trabalho').addEventListener('click', function() {
+            document.querySelector('.sidebar-btn[data-tab="dashboard"]').click();
+        });
 
         // ============================================
         // NAVEGAÇÃO ENTRE ABAS
@@ -4731,6 +5546,7 @@
                 tabContents.forEach(tab => tab.classList.remove('active'));
                 this.classList.add('active');
                 const tabId = this.getAttribute('data-tab');
+                document.getElementById('btn-voltar-area-trabalho').style.display = tabId === 'dashboard' ? 'none' : 'inline-flex';
                 const tab = document.getElementById(tabId);
                 if (tab) tab.classList.add('active');
                 
@@ -4738,9 +5554,6 @@
                 switch(tabId) {
                     case 'dashboard':
                         atualizarDashboard();
-                        break;
-                    case 'mensagens':
-                        renderizarMensagens();
                         break;
                     case 'usuarios':
                         renderizarUsuarios();
@@ -4817,11 +5630,6 @@
         document.getElementById('btn-exportar-compras').addEventListener('click', exportarComprasCSV);
         document.getElementById('btn-imprimir-compras').addEventListener('click', imprimirCompras);
         document.getElementById('btn-imprimir-relatorio-compras').addEventListener('click', imprimirRelatorioCompras);
-        document.getElementById('btn-enviar-mensagem').addEventListener('click', enviarMensagemInterna);
-        const selectMensagem = document.getElementById('mensagem-destinatario');
-        if (selectMensagem) {
-            selectMensagem.addEventListener('change', renderizarMensagens);
-        }
         ['compras-filtro-status', 'compras-filtro-urgencia', 'compras-filtro-tipo', 'compras-filtro-tecnico'].forEach(id => document.getElementById(id).addEventListener('change', renderizarCompras));
         document.getElementById('compras-filtro-codigo').addEventListener('input', renderizarCompras);
         document.getElementById('fechar-modal-compra').addEventListener('click', () => document.getElementById('modal-solicitacao-compra').style.display = 'none');
@@ -4889,322 +5697,6 @@
         atualizarCamposApontamento();
         carregarInsumos();
     });
-
-    function getMensagemStorageKey(email) {
-        const base = String(email || 'visitante').trim().toLowerCase();
-        const slug = base.replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '') || 'visitante';
-        return `mensagensInternas_${slug}`;
-    }
-
-    function getMensagensInternasUsuario(email) {
-        try {
-            const raw = localStorage.getItem(getMensagemStorageKey(email));
-            const lista = raw ? JSON.parse(raw) : [];
-            return Array.isArray(lista) ? lista : [];
-        } catch (error) {
-            console.warn('Erro ao ler mensagens locais:', error);
-            return [];
-        }
-    }
-
-    function salvarMensagensInternasUsuario(email, lista) {
-        try {
-            localStorage.setItem(getMensagemStorageKey(email), JSON.stringify(lista));
-        } catch (error) {
-            console.warn('Erro ao salvar mensagens locais:', error);
-        }
-    }
-
-    function normalizarTelefone(valor) {
-        return String(valor || '').replace(/\D/g, '');
-    }
-
-    function carregarUsuariosParaMensagens() {
-        const select = document.getElementById('mensagem-destinatario');
-        if (!select) return;
-
-        const emailAtual = ((usuarioLogado && usuarioLogado.email) || (currentUser && currentUser.email) || '').toLowerCase();
-        select.innerHTML = '<option value="">Selecione o destinatário</option>';
-
-        db.collection('usuarios').get().then(snapshot => {
-            const usuarios = snapshot.docs
-                .map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
-                .filter(usuario => (usuario.email || '').toLowerCase() !== emailAtual)
-                .sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
-
-            if (!usuarios.length) {
-                const option = document.createElement('option');
-                option.value = '';
-                option.textContent = 'Nenhum usuário disponível';
-                option.disabled = true;
-                select.appendChild(option);
-                return;
-            }
-
-            usuarios.forEach(usuario => {
-                const option = document.createElement('option');
-                option.value = usuario.id || usuario.email || normalizarTelefone(usuario.telefone) || '';
-                option.dataset.uid = usuario.id || '';
-                option.dataset.email = String(usuario.email || '').toLowerCase();
-                option.dataset.telefone = normalizarTelefone(usuario.telefone);
-                option.dataset.nome = usuario.nome || 'Usuário';
-                option.textContent = `${usuario.nome || 'Usuário'}${usuario.telefone ? ` - ${usuario.telefone}` : ''}${usuario.email ? ` (${usuario.email})` : ''}`;
-                select.appendChild(option);
-            });
-        }).catch(() => {
-            const fallback = document.createElement('option');
-            fallback.value = '';
-            fallback.textContent = 'Não foi possível carregar usuários';
-            fallback.disabled = true;
-            select.appendChild(fallback);
-        });
-    }
-
-    function resolverDestinatarioMensagem(valorDestino) {
-        const entrada = String(valorDestino || '').trim();
-        if (!entrada) return Promise.resolve({ uid: '', email: '', nome: '', telefone: '' });
-
-        const emailNormalizado = entrada.toLowerCase();
-        const telefoneNormalizado = normalizarTelefone(entrada);
-
-        if (entrada.includes('@')) {
-            return db.collection('usuarios').where('email', '==', emailNormalizado).limit(1).get().then(snapshot => {
-                if (!snapshot || snapshot.empty) return { uid: '', email: emailNormalizado, nome: '', telefone: '' };
-                const dados = snapshot.docs[0].data() || {};
-                return {
-                    uid: snapshot.docs[0].id,
-                    email: String(dados.email || emailNormalizado).toLowerCase(),
-                    nome: String(dados.nome || 'Usuário'),
-                    telefone: normalizarTelefone(dados.telefone)
-                };
-            });
-        }
-
-        if (telefoneNormalizado) {
-            return db.collection('usuarios').get().then(snapshot => {
-                const usuario = snapshot.docs
-                    .map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
-                    .find(item => normalizarTelefone(item.telefone) === telefoneNormalizado || String(item.id) === String(entrada));
-
-                if (!usuario) {
-                    return { uid: entrada, email: emailNormalizado, nome: '', telefone: telefoneNormalizado };
-                }
-
-                return {
-                    uid: usuario.id,
-                    email: String(usuario.email || '').toLowerCase(),
-                    nome: String(usuario.nome || 'Usuário'),
-                    telefone: normalizarTelefone(usuario.telefone)
-                };
-            });
-        }
-
-        return db.collection('usuarios').doc(entrada).get().then(doc => {
-            if (!doc || !doc.exists) {
-                return db.collection('usuarios').get().then(snapshot => {
-                    const usuario = snapshot.docs
-                        .map(item => ({ id: item.id, ...(item.data() || {}) }))
-                        .find(item => (item.nome || '').toLowerCase() === entrada.toLowerCase());
-
-                    if (!usuario) {
-                        return { uid: entrada, email: emailNormalizado, nome: '', telefone: telefoneNormalizado };
-                    }
-
-                    return {
-                        uid: usuario.id,
-                        email: String(usuario.email || '').toLowerCase(),
-                        nome: String(usuario.nome || 'Usuário'),
-                        telefone: normalizarTelefone(usuario.telefone)
-                    };
-                });
-            }
-            const dados = doc.data() || {};
-            return {
-                uid: doc.id,
-                email: String(dados.email || '').toLowerCase(),
-                nome: String(dados.nome || 'Usuário'),
-                telefone: normalizarTelefone(dados.telefone)
-            };
-        }).catch(() => ({ uid: entrada, email: emailNormalizado, nome: '', telefone: telefoneNormalizado }));
-    }
-
-    async function renderizarMensagens() {
-        const lista = document.getElementById('mensagens-lista');
-        const select = document.getElementById('mensagem-destinatario');
-        const emailAtual = ((usuarioLogado && usuarioLogado.email) || (currentUser && currentUser.email) || '').toLowerCase();
-        const nomeAtual = (usuarioLogado && usuarioLogado.nome) || (currentUser && currentUser.displayName) || 'Você';
-        if (!lista) return;
-
-        if (!select || !select.innerHTML || !select.querySelector('option[value]')) {
-            carregarUsuariosParaMensagens();
-        }
-
-        const uidAtual = (currentUser && currentUser.uid) || (usuarioLogado && usuarioLogado.uid) || '';
-        const destinatarioSelecionado = select ? String(select.value || '').trim() : '';
-        const destinatarioUidSelecionado = select && select.selectedOptions && select.selectedOptions[0] ? String((select.selectedOptions[0].dataset && select.selectedOptions[0].dataset.uid) || '') : '';
-
-        let mensagens = [];
-
-        if (uidAtual) {
-            try {
-                const snapshot = await db.collection('mensagensInternas').where('participantes', 'array-contains', uidAtual).get();
-                mensagens = snapshot.docs
-                    .map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
-                    .filter(msg => {
-                        const remetenteUid = String(msg.remetenteUid || '');
-                        const destinatarioUid = String(msg.destinatarioUid || '');
-                        const remetenteEmail = String(msg.remetenteEmail || '').toLowerCase();
-                        const destinatarioEmail = String(msg.destinatarioEmail || '').toLowerCase();
-                        return remetenteUid === uidAtual || destinatarioUid === uidAtual || remetenteEmail === emailAtual || destinatarioEmail === emailAtual;
-                    });
-            } catch (error) {
-                console.warn('Erro ao carregar mensagens da conversa:', error);
-                mensagens = [];
-            }
-        }
-
-        if (!mensagens.length) {
-            try {
-                const raw = localStorage.getItem(`mensagensInternas_${uidAtual || emailAtual || 'visitante'}`);
-                const local = raw ? JSON.parse(raw) : [];
-                mensagens = Array.isArray(local) ? local : [];
-            } catch (error) {
-                mensagens = [];
-            }
-        }
-
-        if (!mensagens.length) {
-            mensagens = getMensagensInternasUsuario(emailAtual)
-                .filter(msg => {
-                    const remetente = (msg.remetenteEmail || '').toLowerCase();
-                    const destinatario = (msg.destinatarioEmail || '').toLowerCase();
-                    return remetente === emailAtual || destinatario === emailAtual;
-                });
-        }
-
-        if (destinatarioSelecionado) {
-            mensagens = mensagens.filter(msg => {
-                const remetenteUid = String(msg.remetenteUid || '');
-                const destinatarioUid = String(msg.destinatarioUid || '');
-                const remetenteEmail = String(msg.remetenteEmail || '').toLowerCase();
-                const destinatarioEmail = String(msg.destinatarioEmail || '').toLowerCase();
-                const valor = String(destinatarioSelecionado || '').toLowerCase();
-                const matchUid = destinatarioUidSelecionado ? (remetenteUid === destinatarioUidSelecionado || destinatarioUid === destinatarioUidSelecionado) : false;
-                const matchEmail = remetenteEmail === valor || destinatarioEmail === valor;
-                const matchDocumentValue = remetenteUid === destinatarioSelecionado || destinatarioUid === destinatarioSelecionado;
-                return matchUid || matchEmail || matchDocumentValue;
-            });
-        }
-
-        mensagens = mensagens
-            .map(msg => ({ ...msg, dataHora: msg.data || msg.criadoEm || msg.dataEnvio || new Date().toISOString() }))
-            .sort((a, b) => new Date(a.dataHora || 0) - new Date(b.dataHora || 0));
-
-        if (!mensagens.length) {
-            lista.innerHTML = '<div class="mensagem-vazia"><strong>Sem mensagens internas</strong><p>As mensagens enviadas ou recebidas aparecerão aqui em formato de conversa.</p></div>';
-            return;
-        }
-
-        const ultimaMensagem = mensagens[mensagens.length - 1];
-        const temMensagemNova = ultimaMensagem && new Date(ultimaMensagem.dataHora || 0).getTime() >= Date.now() - 10000;
-        if (temMensagemNova) {
-            setTimeout(() => {
-                lista.scrollTop = lista.scrollHeight;
-            }, 30);
-        }
-
-        lista.innerHTML = mensagens.map(msg => {
-            const remetenteEmail = String(msg.remetenteEmail || '').toLowerCase();
-            const ehMinha = remetenteEmail === emailAtual || String(msg.remetenteUid || '') === uidAtual;
-            const nome = ehMinha ? nomeAtual : (msg.remetente || msg.remetenteNome || 'Usuário');
-            const data = (msg.dataHora ? new Date(msg.dataHora).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : 'Agora');
-            const texto = String(msg.texto || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            return `
-                <div class="mensagem-item ${ehMinha ? 'mine' : ''}">
-                    <strong>${ehMinha ? 'Você' : nome}</strong>
-                    <p>${texto}</p>
-                    <small>${data}</small>
-                </div>
-            `;
-        }).join('');
-
-        lista.scrollTop = lista.scrollHeight;
-    }
-
-    function enviarMensagemInterna() {
-        const select = document.getElementById('mensagem-destinatario');
-        const textarea = document.getElementById('mensagem-texto');
-        if (!select || !textarea) return;
-
-        const valorDestino = (select.value || '').trim();
-        const texto = (textarea.value || '').trim();
-        if (!valorDestino || !texto) {
-            alert('Selecione um destinatário e preencha a mensagem.');
-            return;
-        }
-
-        const emailAtual = ((usuarioLogado && usuarioLogado.email) || (currentUser && currentUser.email) || '').toLowerCase();
-        const nomeAtual = (usuarioLogado && usuarioLogado.nome) || (currentUser && currentUser.displayName) || 'Usuário';
-        const uidAtual = (currentUser && currentUser.uid) || (usuarioLogado && usuarioLogado.uid) || '';
-
-        resolverDestinatarioMensagem(valorDestino).then(({ uid, email, nome, telefone }) => {
-            const destinatarioUid = uid || valorDestino;
-            const destinatarioEmail = (email || valorDestino || '').toLowerCase();
-            const destinatarioNome = nome || (select.options[select.selectedIndex]?.dataset?.nome || 'Usuário');
-            const destinatarioTelefone = telefone || (select.options[select.selectedIndex]?.dataset?.telefone || '');
-            const mensagem = {
-                id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-                remetente: nomeAtual,
-                remetenteEmail: emailAtual,
-                destinatarioEmail: destinatarioEmail,
-                destinatarioUid,
-                destinatarioNome,
-                destinatarioTelefone,
-                texto,
-                data: new Date().toISOString(),
-                lida: false
-            };
-
-            const listaRemetente = getMensagensInternasUsuario(emailAtual);
-            const listaDestinatario = getMensagensInternasUsuario(destinatarioEmail || emailAtual);
-            salvarMensagensInternasUsuario(emailAtual, [...listaRemetente, mensagem]);
-            salvarMensagensInternasUsuario(destinatarioEmail || emailAtual, [...listaDestinatario, { ...mensagem, destinatarioEmail: emailAtual.toLowerCase(), remetente: nomeAtual, remetenteEmail: emailAtual.toLowerCase() }]);
-
-            const mensagemRealtime = {
-                remetenteUid: uidAtual,
-                destinatarioUid,
-                remetenteNome: nomeAtual,
-                remetenteEmail: emailAtual,
-                destinatarioEmail: destinatarioEmail,
-                destinatarioNome,
-                destinatarioTelefone,
-                texto,
-                data: firebase.firestore.FieldValue.serverTimestamp(),
-                lida: false,
-                participantes: [uidAtual, destinatarioUid].filter(Boolean).sort(),
-                tipo: 'mensagem'
-            };
-
-            return db.collection('mensagensInternas').add(mensagemRealtime).then(() => {
-                notificar(destinatarioUid, 'Nova mensagem interna', `${nomeAtual}: ${texto.length > 80 ? texto.slice(0, 77) + '...' : texto}`, null, {
-                    tipo: 'mensagem',
-                    remetenteEmail: emailAtual,
-                    destinatarioEmail: destinatarioEmail,
-                    destinatarioNome,
-                    remetenteNome: nomeAtual
-                }).catch(() => {});
-                tocarNotificacao();
-                if ((currentUser && (currentUser.email || '').toLowerCase()) === destinatarioEmail || (currentUser && currentUser.uid) === destinatarioUid) {
-                    carregarNotificacoes();
-                }
-            });
-        }).catch(error => {
-            console.warn('Erro ao enviar mensagem em tempo real:', error);
-        }).finally(() => {
-            textarea.value = '';
-            renderizarMensagens();
-        });
-    }
 
     function renderizarUsuarios() {
         const tbody = document.querySelector('#tabela-usuarios tbody');
@@ -7271,149 +7763,275 @@
             if (chartMaquinasObj) { chartMaquinasObj.destroy(); chartMaquinasObj = null; }
             chartPorTecnicoObjs.forEach(c => { try { c.destroy(); } catch(e) {} });
             chartPorTecnicoObjs = [];
-            
-            // OS por Status
+
+            Chart.defaults.font.family = '"Segoe UI", Arial, sans-serif';
+            Chart.defaults.color = '#61736a';
+
+            const pluginEstadoVazio = {
+                id: 'estadoVazioRelatorio',
+                afterDraw(chart) {
+                    const valores = chart.data.datasets.flatMap(dataset => dataset.data || []);
+                    if (valores.some(valor => Number(valor) > 0)) return;
+                    const area = chart.chartArea;
+                    if (!area) return;
+                    const contexto = chart.ctx;
+                    contexto.save();
+                    contexto.fillStyle = '#718078';
+                    contexto.font = '600 13px "Segoe UI", Arial, sans-serif';
+                    contexto.textAlign = 'center';
+                    contexto.textBaseline = 'middle';
+                    contexto.fillText('Sem dados para o período', (area.left + area.right) / 2, (area.top + area.bottom) / 2);
+                    contexto.restore();
+                }
+            };
+
             const statusCounts = [
                 resultados.filter(r => r.status === 'pendente').length,
                 resultados.filter(r => r.status === 'andamento').length,
                 resultados.filter(r => r.status === 'concluida').length,
                 resultados.filter(r => r.status === 'cancelada').length
             ];
-            const statusLabels = ['Pendente', 'Em Andamento', 'Concluída', 'Cancelada'];
-            
-            chartStatusObj = new Chart(document.getElementById('chart-status'), {
+            const totalStatus = statusCounts.reduce((total, quantidade) => total + quantidade, 0);
+            const pluginTotalStatus = {
+                id: 'totalCentroRelatorio',
+                afterDraw(chart) {
+                    if (!totalStatus) return;
+                    const area = chart.chartArea;
+                    if (!area) return;
+                    const x = (area.left + area.right) / 2;
+                    const y = (area.top + area.bottom) / 2;
+                    const contexto = chart.ctx;
+                    contexto.save();
+                    contexto.textAlign = 'center';
+                    contexto.textBaseline = 'middle';
+                    contexto.fillStyle = '#183b27';
+                    contexto.font = '700 25px "Segoe UI", Arial, sans-serif';
+                    contexto.fillText(String(totalStatus), x, y - 7);
+                    contexto.fillStyle = '#718078';
+                    contexto.font = '600 10px "Segoe UI", Arial, sans-serif';
+                    contexto.fillText('ORDENS', x, y + 14);
+                    contexto.restore();
+                }
+            };
+
+            chartStatusObj = new Chart(document.getElementById('chart-status').getContext('2d'), {
                 type: 'doughnut',
+                plugins: [pluginTotalStatus, pluginEstadoVazio],
                 data: {
-                    labels: statusLabels,
+                    labels: ['Pendente', 'Em andamento', 'Concluída', 'Cancelada'],
                     datasets: [{
                         data: statusCounts,
-                        backgroundColor: ['#d00','#ff9f00','#2ecc71','#95a5a6'],
-                        hoverOffset: 8
+                        backgroundColor: ['#f4a62a', '#2581a7', '#00843d', '#bd5b5b'],
+                        borderColor: '#fff',
+                        borderWidth: 4,
+                        hoverOffset: 7,
+                        borderRadius: 5,
+                        spacing: 2
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    cutout: '55%',
+                    cutout: '76%',
                     plugins: {
-                        legend: { position: 'right', labels: { boxWidth: 12, padding: 10, font: { size: 12 } } }
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                boxWidth: 8,
+                                boxHeight: 8,
+                                padding: 16,
+                                font: { size: 11, weight: '600' }
+                            }
+                        },
+                        tooltip: {
+                            padding: 12,
+                            cornerRadius: 10,
+                            callbacks: {
+                                label: contexto => {
+                                    const quantidade = Number(contexto.raw || 0);
+                                    const percentual = totalStatus ? Math.round((quantidade / totalStatus) * 100) : 0;
+                                    return ` ${contexto.label}: ${quantidade} (${percentual}%)`;
+                                }
+                            }
+                        }
                     }
                 }
             });
-            
-            // OS por Técnico
-            const tecnicoLabels = tecnicos.map(t => t.nome);
-            const pendData = tecnicos.map(t => resultados.filter(r => r.tecnicoId === t.id && r.status === 'pendente').length);
-            const andData = tecnicos.map(t => resultados.filter(r => r.tecnicoId === t.id && r.status === 'andamento').length);
-            const concData = tecnicos.map(t => resultados.filter(r => r.tecnicoId === t.id && r.status === 'concluida').length);
-            
-            chartTecnicosObj = new Chart(document.getElementById('chart-tecnicos'), {
+
+            const resumoTecnicos = tecnicos.map(tecnico => {
+                const ordensTecnico = resultados.filter(resultado => resultado.tecnicoId === tecnico.id);
+                return {
+                    id: tecnico.id,
+                    nome: tecnico.nome || 'Técnico sem nome',
+                    pendentes: ordensTecnico.filter(ordem => ordem.status === 'pendente').length,
+                    andamento: ordensTecnico.filter(ordem => ordem.status === 'andamento').length,
+                    concluidas: ordensTecnico.filter(ordem => ordem.status === 'concluida').length
+                };
+            }).map(tecnico => ({ ...tecnico, total: tecnico.pendentes + tecnico.andamento + tecnico.concluidas }))
+                .filter(tecnico => tecnico.total > 0)
+                .sort((a, b) => b.total - a.total || a.nome.localeCompare(b.nome));
+
+            const tecnicosPrincipais = resumoTecnicos.slice(0, 10).reverse();
+            const plotTecnicos = document.getElementById('chart-tecnicos').parentElement;
+            plotTecnicos.style.height = `${Math.max(278, tecnicosPrincipais.length * 34 + 86)}px`;
+
+            chartTecnicosObj = new Chart(document.getElementById('chart-tecnicos').getContext('2d'), {
                 type: 'bar',
+                plugins: [pluginEstadoVazio],
                 data: {
-                    labels: tecnicoLabels,
+                    labels: tecnicosPrincipais.map(tecnico => tecnico.nome),
                     datasets: [
-                        { label: 'Pendente', data: pendData, backgroundColor: '#f39c12' },
-                        { label: 'Em Andamento', data: andData, backgroundColor: '#ff9f00' },
-                        { label: 'Concluída', data: concData, backgroundColor: '#2ecc71' }
+                        { label: 'Pendente', data: tecnicosPrincipais.map(tecnico => tecnico.pendentes), backgroundColor: '#f4a62a', borderRadius: 5, borderSkipped: false, maxBarThickness: 22 },
+                        { label: 'Em andamento', data: tecnicosPrincipais.map(tecnico => tecnico.andamento), backgroundColor: '#2581a7', borderRadius: 5, borderSkipped: false, maxBarThickness: 22 },
+                        { label: 'Concluída', data: tecnicosPrincipais.map(tecnico => tecnico.concluidas), backgroundColor: '#00843d', borderRadius: 5, borderSkipped: false, maxBarThickness: 22 }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: true, position: 'bottom', labels: { boxWidth: 12, font: { size: 12 } } },
-                        tooltip: { mode: 'index', intersect: false }
-                    },
+                    indexAxis: 'y',
                     scales: {
-                        x: { ticks: { autoSkip: true, maxRotation: 45, minRotation: 0 }, grid: { display: false } },
-                        y: { beginAtZero: true, grid: { color: '#f0f0f0' }, ticks: { precision: 0 } }
+                        x: { stacked: true, beginAtZero: true, grid: { color: 'rgba(24, 59, 39, 0.07)' }, ticks: { precision: 0, stepSize: 1 } },
+                        y: { stacked: true, grid: { display: false }, ticks: { font: { size: 11, weight: '600' } } }
                     },
-                    elements: { bar: { borderRadius: 6, borderSkipped: false } }
+                    plugins: {
+                        legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle', boxWidth: 8, boxHeight: 8, padding: 14, font: { size: 11, weight: '600' } } },
+                        tooltip: { mode: 'index', intersect: false, padding: 12, cornerRadius: 10 }
+                    },
+                    interaction: { mode: 'index', intersect: false }
                 }
             });
-            
-            // Mini-gráficos por técnico
+
             const container = document.getElementById('mini-charts-per-tecnico');
             if (container) {
                 container.innerHTML = '';
-                tecnicos.forEach(tecnico => {
-                    const tPend = resultados.filter(r => r.tecnicoId === tecnico.id && r.status === 'pendente').length;
-                    const tAnd = resultados.filter(r => r.tecnicoId === tecnico.id && r.status === 'andamento').length;
-                    const tConc = resultados.filter(r => r.tecnicoId === tecnico.id && r.status === 'concluida').length;
-                    const total = tPend + tAnd + tConc;
-                    
+                resumoTecnicos.forEach(tecnico => {
                     const card = document.createElement('div');
                     card.className = 'mini-chart-card';
-                    card.innerHTML = `<canvas></canvas><div class="mini-label">${tecnico.nome}</div><div class="mini-sub">Total: ${total}</div>`;
+                    const canvas = document.createElement('canvas');
+                    canvas.setAttribute('aria-label', `Ordens por status de ${tecnico.nome}`);
+                    const nome = document.createElement('div');
+                    nome.className = 'mini-label';
+                    nome.textContent = tecnico.nome;
+                    const total = document.createElement('div');
+                    total.className = 'mini-sub';
+                    total.textContent = `Total: ${tecnico.total}`;
+                    card.append(canvas, nome, total);
                     container.appendChild(card);
                     
-                    const ctx = card.querySelector('canvas').getContext('2d');
-                    const ch = new Chart(ctx, {
+                    const ch = new Chart(canvas.getContext('2d'), {
                         type: 'doughnut',
                         data: {
-                            labels: ['Pendente','Andamento','Concluída'],
-                            datasets: [{ data: [tPend,tAnd,tConc], backgroundColor: ['#f39c12','#ff9f00','#2ecc71'] }]
+                            labels: ['Pendente', 'Em andamento', 'Concluída'],
+                            datasets: [{
+                                data: [tecnico.pendentes, tecnico.andamento, tecnico.concluidas],
+                                backgroundColor: ['#f4a62a', '#2581a7', '#00843d'],
+                                borderColor: '#fff',
+                                borderWidth: 3,
+                                hoverOffset: 5
+                            }]
                         },
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                            cutout: '60%',
-                            plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.formattedValue } } }
+                            cutout: '72%',
+                            plugins: {
+                                legend: { display: false },
+                                tooltip: {
+                                    padding: 10,
+                                    cornerRadius: 8,
+                                    callbacks: { label: contexto => ` ${contexto.label}: ${contexto.formattedValue}` }
+                                }
+                            }
                         }
                     });
                     chartPorTecnicoObjs.push(ch);
                 });
             }
-            
-            // OS por Setor
-            const setores = [...new Set(resultados.map(r => r.setor).filter(Boolean))].sort();
-            const setorData = setores.map(s => resultados.filter(r => r.setor === s).length);
-            
-            chartSetoresObj = new Chart(document.getElementById('chart-setores'), {
+
+            const contagemSetores = new Map();
+            resultados.forEach(resultado => {
+                const setor = String(resultado.setor || '').trim();
+                if (setor) contagemSetores.set(setor, (contagemSetores.get(setor) || 0) + 1);
+            });
+            const setores = [...contagemSetores.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).reverse();
+            const plotSetores = document.getElementById('chart-setores').parentElement;
+            plotSetores.style.height = `${Math.max(278, setores.length * 32 + 58)}px`;
+
+            chartSetoresObj = new Chart(document.getElementById('chart-setores').getContext('2d'), {
                 type: 'bar',
+                plugins: [pluginEstadoVazio],
                 data: {
-                    labels: setores,
-                    datasets: [{ label: 'Quantidade de OS', data: setorData, backgroundColor: '#39ff14' }]
+                    labels: setores.map(item => item[0]),
+                    datasets: [{
+                        label: 'Ordens de serviço',
+                        data: setores.map(item => item[1]),
+                        backgroundColor: 'rgba(0, 132, 61, 0.82)',
+                        hoverBackgroundColor: '#39ff14',
+                        borderColor: '#00843d',
+                        borderWidth: 1,
+                        borderRadius: 6,
+                        borderSkipped: false,
+                        maxBarThickness: 24
+                    }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    indexAxis: 'y',
                     scales: {
-                        x: { grid: { display: false } },
-                        y: { beginAtZero: true, grid: { color: '#f0f0f0' } }
+                        x: { beginAtZero: true, grid: { color: 'rgba(24, 59, 39, 0.07)' }, ticks: { precision: 0, stepSize: 1 } },
+                        y: { grid: { display: false }, ticks: { font: { size: 11, weight: '600' } } }
                     },
-                    elements: { bar: { borderRadius: 8, borderSkipped: false } }
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { padding: 12, cornerRadius: 10, callbacks: { label: contexto => ` ${contexto.formattedValue} OS` } }
+                    }
                 }
             });
-            
-            // OS por Máquina (top 10)
-            const maquinaCountsMap = {};
+
+            const maquinaCountsMap = new Map();
             resultados.forEach(r => {
                 if (r.maquinaId) {
-                    maquinaCountsMap[r.maquinaId] = (maquinaCountsMap[r.maquinaId] || 0) + 1;
+                    maquinaCountsMap.set(r.maquinaId, (maquinaCountsMap.get(r.maquinaId) || 0) + 1);
                 }
             });
-            const maquinasCountsArr = Object.entries(maquinaCountsMap).map(([id,count]) => {
+            const maquinasCountsArr = [...maquinaCountsMap.entries()].map(([id, count]) => {
                 const m = maquinas.find(x => x.id === id) || { nome: id, patrimonio: '' };
-                return { label: `${m.nome}${m.patrimonio ? ' - ' + m.patrimonio : ''}`, count };
-            }).sort((a,b) => b.count - a.count).slice(0,10);
+                return { label: `${m.nome || id}${m.patrimonio ? ' - ' + m.patrimonio : ''}`, count };
+            }).sort((a, b) => b.count - a.count || a.label.localeCompare(b.label)).slice(0, 10).reverse();
             
-            chartMaquinasObj = new Chart(document.getElementById('chart-maquinas'), {
+            chartMaquinasObj = new Chart(document.getElementById('chart-maquinas').getContext('2d'), {
                 type: 'bar',
+                plugins: [pluginEstadoVazio],
                 data: {
                     labels: maquinasCountsArr.map(x => x.label),
-                    datasets: [{ label: 'Quantidade de OS', data: maquinasCountsArr.map(x => x.count), backgroundColor: '#00bcd4' }]
+                    datasets: [{
+                        label: 'Ordens de serviço',
+                        data: maquinasCountsArr.map(x => x.count),
+                        backgroundColor: 'rgba(57, 255, 20, 0.78)',
+                        hoverBackgroundColor: '#39ff14',
+                        borderColor: '#00843d',
+                        borderWidth: 1,
+                        borderRadius: 6,
+                        borderSkipped: false,
+                        maxBarThickness: 24
+                    }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    indexAxis: 'y',
                     scales: {
-                        x: { ticks: { autoSkip: true, maxRotation: 45, minRotation: 0 }, grid: { display: false } },
-                        y: { beginAtZero: true, grid: { color: '#f0f0f0' } }
+                        x: { beginAtZero: true, grid: { color: 'rgba(24, 59, 39, 0.07)' }, ticks: { precision: 0, stepSize: 1 } },
+                        y: { grid: { display: false }, ticks: { font: { size: 10, weight: '600' } } }
                     },
-                    elements: { bar: { borderRadius: 8, borderSkipped: false } }
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { padding: 12, cornerRadius: 10, callbacks: { label: contexto => ` ${contexto.formattedValue} OS` } }
+                    }
                 }
             });
         } catch (e) {
