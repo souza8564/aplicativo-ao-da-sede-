@@ -656,8 +656,12 @@
 
         #relatorios .report-chart-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 18px;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 14px;
+        }
+
+        #relatorios .report-chart-grid > .report-chart-card {
+            width: 100%;
         }
 
         #relatorios .report-chart-card {
@@ -710,10 +714,8 @@
 
         /* Mini-charts por técnico */
         .mini-charts-container {
-            display: flex;
-            flex-wrap: wrap;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            grid-template-columns: minmax(0, 1fr);
             gap: 14px;
             margin-top: 18px;
             align-items: stretch;
@@ -1921,6 +1923,12 @@
                 min-width: 0;
                 margin-bottom: 16px;
                 padding: 20px 16px;
+                overflow: hidden;
+            }
+
+            #app-main-layout .os-card > * {
+                min-width: 0;
+                max-width: 100%;
             }
 
             #app-main-layout .os-card h2 {
@@ -1991,14 +1999,25 @@
                 gap: 8px;
             }
 
-            #app-main-layout table {
-                display: block;
+            #app-main-layout .mobile-table-scroll {
                 width: 100%;
-                min-width: 100% !important;
+                min-width: 0;
                 max-width: 100%;
                 overflow-x: auto;
+                overflow-y: hidden;
                 -webkit-overflow-scrolling: touch;
-                white-space: nowrap;
+                overscroll-behavior-x: contain;
+                border-radius: 10px;
+            }
+
+            #app-main-layout .mobile-table-scroll > table {
+                display: table !important;
+                width: max-content;
+                min-width: 100% !important;
+                max-width: none;
+                overflow: visible;
+                table-layout: auto;
+                white-space: normal;
             }
 
             #app-main-layout table thead {
@@ -2026,7 +2045,14 @@
                 min-height: 0;
                 padding: 10px 12px;
                 white-space: normal;
+                overflow-wrap: anywhere;
                 vertical-align: middle;
+            }
+
+            #app-main-layout .os-card p,
+            #app-main-layout .os-card label,
+            #app-main-layout .os-card button {
+                overflow-wrap: anywhere;
             }
 
             #app-main-layout table td::before {
@@ -5697,7 +5723,39 @@
         }, 2400);
     }
 
+    function prepararTabelasResponsivas() {
+        const app = document.getElementById('app-main-layout');
+        if (!app) return;
+
+        const envolverTabelas = raiz => {
+            if (raiz.nodeType !== Node.ELEMENT_NODE) return;
+            const tabelas = [];
+            if (raiz.matches('table')) tabelas.push(raiz);
+            tabelas.push(...raiz.querySelectorAll('table'));
+
+            tabelas.forEach(tabela => {
+                const pai = tabela.parentElement;
+                if (!pai || pai.classList.contains('mobile-table-scroll')) return;
+                if (pai.style.overflowX === 'auto') {
+                    pai.classList.add('mobile-table-scroll');
+                    return;
+                }
+
+                const rolagem = document.createElement('div');
+                rolagem.className = 'mobile-table-scroll';
+                pai.insertBefore(rolagem, tabela);
+                rolagem.appendChild(tabela);
+            });
+        };
+
+        envolverTabelas(app);
+        new MutationObserver(mudancas => {
+            mudancas.forEach(mudanca => mudanca.addedNodes.forEach(envolverTabelas));
+        }).observe(app, { childList: true, subtree: true });
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
+        prepararTabelasResponsivas();
         mostrarApresentacaoInicial();
 
         // Login com Email
@@ -8335,21 +8393,49 @@
     function imprimirRelatorio() {
         if (!relatorioAtual) return;
         const relatorioAtualElement = document.getElementById('relatorios').cloneNode(true);
-        const imagensGraficos = new Map();
-        document.getElementById('relatorios').querySelectorAll('canvas').forEach(canvas => {
-            imagensGraficos.set(canvas.id, canvas.toDataURL('image/png'));
-        });
-        relatorioAtualElement.querySelectorAll('canvas').forEach(canvas => {
+        const imagensGraficos = Array.from(document.getElementById('relatorios').querySelectorAll('canvas'))
+            .map(canvas => canvas.toDataURL('image/png'));
+        relatorioAtualElement.querySelectorAll('canvas').forEach((canvas, indice) => {
             const imagem = document.createElement('img');
-            imagem.src = imagensGraficos.get(canvas.id) || '';
+            imagem.src = imagensGraficos[indice] || '';
             imagem.alt = canvas.parentElement.querySelector('h3')?.textContent || 'Gráfico do relatório';
-            imagem.style.cssText = 'display:block;width:100%;height:160px;object-fit:contain;';
+            imagem.style.cssText = 'display:block;width:100%;height:180px;object-fit:contain;';
             canvas.replaceWith(imagem);
         });
         relatorioAtualElement.querySelectorAll('button').forEach(botao => botao.remove());
         const janela = window.open('', '_blank');
         if (!janela) return;
-        janela.document.write(`<html><head><meta charset="utf-8"><title>Relatório de OS</title><style>body{font-family:Arial,sans-serif;margin:20px;color:#222}.relatorio{max-width:1100px;margin:0 auto}.relatorio h1{color:#00843d}.relatorio table{width:100%;border-collapse:collapse}.relatorio th,.relatorio td{border:1px solid #ddd;padding:6px;text-align:left}.relatorio th{background:#f2f2f2}.relatorio .chart-card{page-break-inside:avoid}@media print{body{margin:10mm}}</style></head><body><div class="relatorio"><h1>Relatório de OS</h1>${relatorioAtualElement.innerHTML}<p>Gerado em: ${new Date().toLocaleDateString('pt-BR')}</p></div></body></html>`);
+        janela.document.write(`<html><head><meta charset="utf-8"><title>Relatório de OS</title><style>
+            *{box-sizing:border-box}
+            body{font-family:Arial,sans-serif;margin:12px;color:#222;font-size:10pt}
+            .relatorio{width:100%;max-width:100%;margin:0 auto}
+            .os-card{width:100%;max-width:none;margin:0;padding:0;border:0;box-shadow:none;background:#fff}
+            .relatorio h1{color:#00843d;font-size:18pt;margin:0 0 10px}
+            .report-toolbar{display:none!important}
+            .report-chart-grid,.mini-charts-container{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+            .report-chart-card,.report-results-panel,.mini-chart-card{width:100%;min-width:0;margin:0 0 8px;padding:8px;border:1px solid #ccc;border-radius:4px;box-shadow:none;background:#fff}
+            .report-chart-card{min-height:0!important}
+            .report-chart-card,.mini-chart-card{break-inside:avoid;page-break-inside:avoid}
+            .report-chart-card h3,.report-results-panel h3{margin:0 0 5px;font-size:11pt}
+            .report-chart-description{margin:3px 0 6px;font-size:8pt}
+            .report-chart-plot{height:auto!important;min-height:0!important}
+            .report-chart-plot img,.mini-chart-card img{display:block;width:100%;height:42mm!important;max-height:42mm;object-fit:contain}
+            .report-results-panel{margin-top:8px}
+            .mobile-table-scroll{width:100%;max-width:100%;overflow:visible}
+            table{width:100%!important;min-width:0!important;max-width:100%;border-collapse:collapse;table-layout:auto;font-size:7pt}
+            th,td{border:1px solid #bbb;padding:3px 4px;text-align:left;overflow-wrap:anywhere;white-space:normal}
+            th{background:#eee!important}
+            thead{display:table-header-group}
+            tr{break-inside:avoid;page-break-inside:avoid}
+            button{display:none!important}
+            @page{size:A4 landscape;margin:10mm}
+            @media print{
+                body{margin:0;font-size:9pt}
+                .report-chart-card,.report-results-panel,.mini-chart-card{break-inside:avoid;page-break-inside:avoid}
+                table{font-size:6.5pt}
+                th,td{padding:2px 3px}
+            }
+        </style></head><body><div class="relatorio"><h1>Relatório de OS</h1>${relatorioAtualElement.innerHTML}<p>Gerado em: ${new Date().toLocaleDateString('pt-BR')}</p></div></body></html>`);
         janela.document.close();
         janela.focus();
         const imagens = Array.from(janela.document.images);
