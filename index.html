@@ -2724,7 +2724,6 @@
                         <label for="filtro-mes-os" style="margin-left: 15px;">MÃªs:</label>
                         <input type="month" id="filtro-mes-os">
                         <button type="button" id="btn-exportar-mes-os" class="btn-action" style="margin-left: 10px;">Exportar mÃªs CSV</button>
-                        <button type="button" id="btn-limpar-os" class="btn-action btn-delete" style="display:none; margin-left: 10px;">Limpar todas as OS</button>
                     </div>
                     <table id="tabela-os">
                         <thead>
@@ -2746,6 +2745,29 @@
             <div id="visualizar-os" class="tabcontent">
                 <div class="os-card">
                     <h2>Visualizar e imprimir OS</h2>
+                    <div id="filtros-visualizacao-os" style="margin-bottom:20px;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
+                        <div>
+                            <label for="visualizar-os-data">Data:</label><br>
+                            <input type="date" id="visualizar-os-data">
+                        </div>
+                        <div>
+                            <label for="visualizar-os-numero">Número da OS:</label><br>
+                            <input type="text" id="visualizar-os-numero" placeholder="Ex.: 123" inputmode="numeric">
+                        </div>
+                        <div>
+                            <label for="visualizar-os-maquina">Máquina:</label><br>
+                            <select id="visualizar-os-maquina">
+                                <option value="">Todas</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="visualizar-os-setor">Setor:</label><br>
+                            <select id="visualizar-os-setor">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                        <button type="button" id="btn-limpar-filtros-visualizacao-os" class="btn-action">Limpar filtros</button>
+                    </div>
                     <table id="tabela-os-visualizacao">
                         <thead><tr><th>Número</th><th>Solicitante</th><th>Setor</th><th>Equipamento</th><th>Data</th><th>Status</th><th>Ações</th></tr></thead>
                         <tbody></tbody>
@@ -6008,7 +6030,17 @@
         document.getElementById('filtro-tecnico').addEventListener('change', carregarOrdensServico);
         document.getElementById('filtro-mes-os').addEventListener('change', atualizarTabelaOS);
         document.getElementById('btn-exportar-mes-os').addEventListener('click', exportarOSDoMes);
-        document.getElementById('btn-limpar-os').addEventListener('click', limparTodasOS);
+        document.getElementById('visualizar-os-data').addEventListener('input', atualizarTabelaOSVisualizacao);
+        document.getElementById('visualizar-os-numero').addEventListener('input', atualizarTabelaOSVisualizacao);
+        document.getElementById('visualizar-os-maquina').addEventListener('change', atualizarTabelaOSVisualizacao);
+        document.getElementById('visualizar-os-setor').addEventListener('change', atualizarTabelaOSVisualizacao);
+        document.getElementById('btn-limpar-filtros-visualizacao-os').addEventListener('click', () => {
+            document.getElementById('visualizar-os-data').value = '';
+            document.getElementById('visualizar-os-numero').value = '';
+            document.getElementById('visualizar-os-maquina').value = '';
+            document.getElementById('visualizar-os-setor').value = '';
+            atualizarTabelaOSVisualizacao();
+        });
         document.getElementById('btn-notificacoes').addEventListener('click', () => { document.getElementById('notification-dropdown').classList.toggle('open'); marcarNotificacoesLidas(); });
         document.getElementById('btn-exportar-compras').addEventListener('click', exportarComprasCSV);
         document.getElementById('btn-imprimir-compras').addEventListener('click', imprimirCompras);
@@ -7121,8 +7153,34 @@
     function atualizarTabelaOSVisualizacao() {
         const tbody = document.querySelector('#tabela-os-visualizacao tbody');
         if (!tbody) return;
+
+        atualizarFiltrosVisualizacaoOS();
+
         tbody.innerHTML = '';
-        ordensServico.forEach(os => {
+        const filtroData = document.getElementById('visualizar-os-data')?.value || '';
+        const filtroNumero = (document.getElementById('visualizar-os-numero')?.value || '').trim().replace(/^#/, '').toLowerCase();
+        const filtroMaquina = document.getElementById('visualizar-os-maquina')?.value || '';
+        const filtroSetor = document.getElementById('visualizar-os-setor')?.value || '';
+
+        const ordensFiltradas = ordensServico.filter(os => {
+            const numero = String(os.numero || '').toLowerCase();
+            const setor = String(os.setor || '').trim();
+            const maquina = maquinas.find(item => item.id === os.maquinaId);
+            const nomeMaquina = String(os.equipamento || maquina?.nome || '').trim();
+
+            if (filtroData && String(os.data || '').slice(0, 10) !== filtroData) return false;
+            if (filtroNumero && !numero.includes(filtroNumero)) return false;
+            if (filtroSetor && setor !== filtroSetor) return false;
+            if (filtroMaquina) {
+                const passaPorId = String(os.maquinaId || '') === filtroMaquina;
+                const nomeFiltro = filtroMaquina.startsWith('nome:') ? filtroMaquina.slice(5) : filtroMaquina;
+                const passaPorNome = !os.maquinaId && nomeMaquina === nomeFiltro;
+                if (!passaPorId && !passaPorNome) return false;
+            }
+            return true;
+        });
+
+        ordensFiltradas.forEach(os => {
             const solicitante = solicitantes.find(item => item.id === os.solicitanteId) || {};
             const statusText = os.status === 'pendente' ? 'Pendente' : os.status === 'andamento' ? 'Em Andamento' : os.status === 'concluida' ? 'Concluída' : 'Cancelada';
             const tr = document.createElement('tr');
@@ -7134,6 +7192,47 @@
             visualizarOS(btn.dataset.id, false);
             setTimeout(imprimirOS, 100);
         }));
+    }
+
+    function atualizarFiltrosVisualizacaoOS() {
+        const selectMaquina = document.getElementById('visualizar-os-maquina');
+        const selectSetor = document.getElementById('visualizar-os-setor');
+        if (!selectMaquina || !selectSetor) return;
+
+        const maquinaAtual = selectMaquina.value;
+        const setorAtual = selectSetor.value;
+
+        const opcoesMaquina = new Map();
+        ordensServico.forEach(os => {
+            if (os.maquinaId) {
+                const maquina = maquinas.find(item => item.id === os.maquinaId);
+                opcoesMaquina.set(os.maquinaId, maquina?.nome || os.equipamento || 'Máquina');
+            } else if (os.equipamento) {
+                opcoesMaquina.set(`nome:${os.equipamento}`, os.equipamento);
+            }
+        });
+        maquinas.forEach(maquina => {
+            if (maquina.id) opcoesMaquina.set(maquina.id, maquina.nome || 'Máquina');
+        });
+
+        selectMaquina.innerHTML = '<option value="">Todas</option>' + [...opcoesMaquina.entries()]
+            .sort((a, b) => a[1].localeCompare(b[1]))
+            .map(([valor, nome]) => `<option value="${valor}">${nome}</option>`)
+            .join('');
+        if ([...opcoesMaquina.keys()].includes(maquinaAtual)) selectMaquina.value = maquinaAtual;
+
+        const setoresCadastrados = [
+            ...ordensServico.map(os => String(os.setor || '').trim()),
+            ...maquinas.map(maquina => String(maquina.setor || '').trim()),
+            ...solicitantes.map(solicitante => String(solicitante.setor || '').trim()),
+            ...factoryStores.map(store => String(store.setor || '').trim())
+        ];
+        const setores = [...new Set(setoresCadastrados.filter(Boolean))]
+            .sort((a, b) => a.localeCompare(b));
+        selectSetor.innerHTML = '<option value="">Todos</option>' + setores
+            .map(setor => `<option value="${setor}">${setor}</option>`)
+            .join('');
+        if (setores.includes(setorAtual)) selectSetor.value = setorAtual;
     }
 
     // ============================================
