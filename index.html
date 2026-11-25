@@ -3447,6 +3447,7 @@
     let notificacoes = [];
     let preventivas = [];
     let apontamentos = [];
+    let osEmEdicaoId = null;
     const graficosCompras = {};
     const EMAIL_MESTRE_SISTEMA = 'souza73e@gmail.com';
     const ABAS_DISPONIVEIS = [
@@ -5954,6 +5955,7 @@
                 document.getElementById('btn-voltar-area-trabalho').style.display = tabId === 'dashboard' ? 'none' : 'inline-flex';
                 const tab = document.getElementById(tabId);
                 if (tab) tab.classList.add('active');
+                if (tabId !== 'nova-os') osEmEdicaoId = null;
                 
                 // Atualiza dados específicos da aba
                 switch(tabId) {
@@ -6506,34 +6508,67 @@
                 return;
             }
 
-            // Busca o último número de OS
+            const dadosOS = {
+                solicitanteId,
+                setor,
+                equipamento,
+                serial,
+                tipoManutencao,
+                tecnicoId: tecnicoIds[0],
+                tecnicoIds,
+                tecnicoNomes,
+                maquinaId,
+                data,
+                horaAbertura,
+                prazo: prazo || null,
+                problema,
+                diagnostico: diagnostico || '',
+                solucao: solucao || '',
+                status,
+                dataConclusao: status === 'concluida' ? new Date().toISOString().split('T')[0] : null
+            };
+
+            if (osEmEdicaoId) {
+                const osId = osEmEdicaoId;
+                db.collection('ordensServico').doc(osId).update(dadosOS)
+                    .then(() => {
+                        const index = ordensServico.findIndex(item => item.id === osId);
+                        if (index >= 0) {
+                            ordensServico[index] = { ...ordensServico[index], ...dadosOS };
+                        }
+                        osEmEdicaoId = null;
+                        document.getElementById('osForm').reset();
+                        atualizarSelectMaquinas();
+                        document.getElementById('os-serial').value = '';
+                        document.getElementById('os-data').valueAsDate = new Date();
+                        document.getElementById('os-hora-abertura').value = horaLocalAtual();
+                        atualizarTabelaOS();
+                        atualizarTabelaOSVisualizacao();
+                        atualizarTabelaHistorico();
+                        atualizarDashboard();
+                        preencherOSNovaCompra();
+                        renderizarCompras();
+                        alert('Alterações da Ordem de Serviço salvas com sucesso!');
+                        document.querySelector('[data-tab="visualizar-os"]').click();
+                        visualizarOS(osId);
+                    })
+                    .catch(err => {
+                        console.error('Erro ao atualizar OS:', err);
+                        alert(`Erro ao atualizar OS [${err.code || 'desconhecido'}]: ${err.message || err}`);
+                    });
+                return;
+            }
+
+            // Busca o último número somente ao criar uma nova OS
             db.collection('ordensServico').orderBy('numero', 'desc').limit(1).get()
                 .then(snapshot => {
                     let ultimoNumero = 0;
                     snapshot.forEach(doc => {
-                        ultimoNumero = doc.data().numero || 0;
+                        ultimoNumero = Number(doc.data().numero) || 0;
                     });
-                    const novoNumero = ultimoNumero + 1;
-
                     const novaOS = {
-                        numero: novoNumero,
-                        solicitanteId,
-                        setor,
-                        equipamento,
-                        serial,
-                        tipoManutencao,
-                        tecnicoId: tecnicoIds[0],
-                        tecnicoIds,
-                        tecnicoNomes,
-                        maquinaId,
-                        data,
-                        horaAbertura,
-                        prazo: prazo || null,
-                        problema,
-                        diagnostico: diagnostico || '',
-                        solucao: solucao || '',
-                        status,
-                        dataConclusao: status === 'concluida' ? new Date().toISOString().split('T')[0] : null,
+                        ...dadosOS,
+                        numero: ultimoNumero + 1,
                         criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                     };
                     return db.collection('ordensServico').add(novaOS).then(docRef => ({
@@ -7246,9 +7281,10 @@
         }
         const os = ordensServico.find(o => o.id === osId);
         if (!os) return;
-        
+
         // Abre a aba Nova OS
         document.querySelector('[data-tab="nova-os"]').click();
+        osEmEdicaoId = osId;
         
         // Preenche os campos
         document.getElementById('os-solicitante').value = os.solicitanteId;
@@ -7273,12 +7309,7 @@
         document.getElementById('os-diagnostico').value = os.diagnostico || '';
         document.getElementById('os-solucao').value = os.solucao || '';
         document.getElementById('os-status').value = os.status;
-        
-        // Remove a OS antiga
-        db.collection('ordensServico').doc(osId).delete().then(() => {
-            carregarOrdensServico();
-            alert('Edite os dados e clique em "Salvar OS" para confirmar.');
-        });
+        alert('Edite os dados e clique em "Salvar OS" para confirmar.');
     }
 
     // ============================================
